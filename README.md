@@ -1,4 +1,4 @@
-# csc207-Project
+# CSC207 Project
 
 Team Members:
 - Nada Alomrani - nadaalomranii

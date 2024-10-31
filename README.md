@@ -17,3 +17,6 @@ Nada:
 
 Sarah:
 - Bob logs in and out of his account. His information is stored when he logs out and is still there when he logs back in. He can change his password and delete his account. 
+
+
+We are women in STEM :)

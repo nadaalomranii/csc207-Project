@@ -1,5 +1,11 @@
 # csc207-Project
 
+Team Members:
+- Nada Alomrani - nadaalomranii
+- Sarah Hira - sarah.hira
+- Alisha Zariff - alisha.zariff
+- Miral Yousef - miralyousef
+
 User Stories:
 
 Team:

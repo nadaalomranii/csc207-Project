@@ -1,6 +1,6 @@
 # CSC207 Project
 
-Team Members:
+### Team Members:
 - Nada Alomrani - nadaalomranii
 - Sarah Hira - sarah.hira
 - Alisha Zariff - alisha.zariff

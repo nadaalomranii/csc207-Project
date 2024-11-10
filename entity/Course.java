@@ -14,6 +14,12 @@ public interface Course {
     String getName();
 
     /**
+     * Returns the name of the course code.
+     * @return the name of the course code.
+     */
+    String getCourseCode();
+
+    /**
      * Returns the list of the assignments.
      * @return the list of the assignments.
      */

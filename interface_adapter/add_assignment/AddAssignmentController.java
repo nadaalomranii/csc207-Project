@@ -26,9 +26,4 @@ public class AddAssignmentController {
 
         addAssignmentUseCaseInteractor.execute(addAssignmentInputData);
     }
-
-    /**
-     * Executes the "switch to assignmentView" Use case.
-     */
-    public void switchToAssignmentView() { addAssignmentUseCaseInteractor.switchToAssignmentView();}
 }

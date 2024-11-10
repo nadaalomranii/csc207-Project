@@ -3,6 +3,8 @@ package app;
 import data_access.DataAccessInterface;
 import entity.AssignmentFactory;
 import entity.CommonAssignmentFactory;
+import entity.CommonCourseFactory;
+import entity.CourseFactory;
 import interface_adapter.add_assignment.AddAssignmentController;
 import interface_adapter.add_assignment.AddAssignmentPresenter;
 import interface_adapter.add_assignment.AddAssignmentViewModel;
@@ -15,6 +17,7 @@ import use_case.add_assignment.AddAssignmentInputBoundary;
 import use_case.add_course.AddCourseOutputBoundary;
 import use_case.add_course.AddCourseInputBoundary;
 import use_case.add_course.AddCourseInteractor;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +25,7 @@ import java.awt.*;
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
+    private final CourseFactory courseFactory = new CommonCourseFactory();
     private final AssignmentFactory assignmentFactory = new CommonAssignmentFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
@@ -93,12 +97,12 @@ public class AppBuilder {
      */
     public AppBuilder addAddAssignmentUseCase() {
         final AddAssignmentOutputBoundary addAssignmentOutputBoundary = new AddAssignmentPresenter(
-                viewManagerModel, addAssignmentViewModel, addAssignmentViewModel);
+                assignmentListViewModel, viewManagerModel);
         final AddAssignmentInputBoundary addAssignmentInteractor = new AddAssignmentInteractor(
                 userDataAccessObject, addAssignmentOutputBoundary);
 
         final AddAssignmentController addAssignmentController = new AddAssignmentController(addAssignmentInteractor);
-        addAssignmentView.setLoginController(addAssignmentController);
+        assignmentAddView.setLoginController(addAssignmentController);
         return this;
     }
 
@@ -108,12 +112,12 @@ public class AppBuilder {
      */
     public AppBuilder addAddCourseUseCase() {
         final AddCourseOutputBoundary addCourseOutputBoundary = new AddCoursePresenter(
-                viewManagerModel, addAssignmentViewModel, addAssignmentViewModel);
+                viewManagerModel, courseListViewModel);
         final AddCourseInputBoundary addCourseInteractor = new AddCourseInteractor(
-                userDataAccessObject, addCourseOutputBoundary);
+                userDataAccessObject, addCourseOutputBoundary, courseFactory);
 
         final AddCourseController addCourseController = new AddCourseController(addCourseInteractor);
-        CourseAddView.setLoginController(addCourseController);
+        courseAddView.setLoginController(addCourseController);
         return this;
     }
 

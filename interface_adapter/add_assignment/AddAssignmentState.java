@@ -6,6 +6,10 @@ public class AddAssignmentState {
     private String grade;
     private String weight;
 
+    public AddAssignmentState() {
+
+    }
+
     private String getAssignmentName() {return assignmentName;}
 
     private void setAssignmentName(String assignmentName) {this.assignmentName = assignmentName;}

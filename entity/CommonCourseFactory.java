@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +9,8 @@ import java.util.List;
 public class CommonCourseFactory implements CourseFactory {
 
     @Override
-    public Course create(String name, List<Assignment> assignments) {
-        return new CommonCourse(name, assignments);
+    public Course create(String name, String courseCode) {
+        final List<Assignment> assignments = new ArrayList<>();
+        return new CommonCourse(name, courseCode, assignments);
     }
 }

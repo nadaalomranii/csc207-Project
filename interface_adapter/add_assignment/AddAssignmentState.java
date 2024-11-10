@@ -10,19 +10,19 @@ public class AddAssignmentState {
 
     }
 
-    private String getAssignmentName() {return assignmentName;}
+    public String getAssignmentName() {return assignmentName;}
 
-    private void setAssignmentName(String assignmentName) {this.assignmentName = assignmentName;}
+    public void setAssignmentName(String assignmentName) {this.assignmentName = assignmentName;}
 
-    private String getDueDate() {return dueDate;}
+    public String getDueDate() {return dueDate;}
 
-    private void setDueDate(String dueDate) {this.dueDate = dueDate;}
+    public void setDueDate(String dueDate) {this.dueDate = dueDate;}
 
-    private String getGrade() {return grade;}
+    public String getGrade() {return grade;}
 
-    private void getGrade(String score) {this.grade = score;}
+    public void setGrade(String score) {this.grade = score;}
 
-    private String getWeight() {return weight;}
+    public String getWeight() {return weight;}
 
-    private void getWeight(String score) {this.weight = score;}
+    public void setWeight(String score) {this.weight = score;}
 }

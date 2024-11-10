@@ -1,6 +1,8 @@
 package use_case.add_assignment;
 
 import data_access.DataAccessInterface;
+import entity.Assignment;
+import entity.CommonAssignment;
 
 /**
  * The Add Assignment Interactor.
@@ -17,7 +19,7 @@ public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
 
     @Override
     public void execute(AddAssignmentInputData addAssignmentInputData) {
-        Assignment assignment = new Assignment(
+        Assignment assignment = new CommonAssignment(
                 addAssignmentInputData.getName(),
                 addAssignmentInputData.getDueDate(),
                 addAssignmentInputData.getScore(),

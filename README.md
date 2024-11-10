@@ -1,6 +1,6 @@
-# csc207-Project
+# CSC207 Project
 
-Team Members:
+### Team Members:
 - Nada Alomrani - nadaalomranii
 - Sarah Hira - sarah.hira
 - Alisha Zariff - alisha.zariff
@@ -22,7 +22,4 @@ Nada:
 - Bob wants to check what his final grade would be hypothetically if he got a specific mark on the next assignment. He enters a hypothetical mark for a set assignment and the program returns his hypothetical final grade. This hypothetical mark and final grade are not stored in his account. When he logs out this information is deleted (goes back to his actual grades)
 
 Sarah:
-- Bob logs in and out of his account. His information is stored when he logs out and is still there when he logs back in. He can change his password and delete his account. 
-
-
-We are women in STEM :)
+- Bob logs in and out of his account. His information is stored when he logs out and is still there when he logs back in. He can change his password and delete his account.

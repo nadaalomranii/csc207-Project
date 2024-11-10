@@ -1,6 +1,7 @@
 package data_access;
 
 import entity.Assignment;
+import entity.CommonAssignment;
 import entity.Course;
 import use_case.add_assignment.AddAssignmentCourseDataAccessInterface;
 import use_case.add_course.AddCourseDataAccessInterface;
@@ -11,10 +12,10 @@ import java.util.Map;
 
 public class DataAccessInterface implements AddCourseDataAccessInterface, AddAssignmentCourseDataAccessInterface {
 
-    private final Map<String, Map<Course, List<Assignment>>> courses = new HashMap<>();
+    private final Map<String, Map<Course, List<CommonAssignment>>> courses = new HashMap<>();
 
     @Override
-    public void saveAssignment(Assignment assignment) {
+    public void saveAssignment(CommonAssignment assignment) {
         courses.get(assignment.getCourseCode()).put(assignment.getCourse(), assignment);
     }
 

@@ -6,13 +6,13 @@ import data_access.DataAccessInterface;
  * The Add Assignment Interactor.
  */
 public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
-    private AddAssignmentCourseDataAccessInterface courseDataAccessObject;
+    private DataAccessInterface courseDataAccessObject;
     private AddAssignmentOutputBoundary addAssignmentPresenter;
 
     public AddAssignmentInteractor(DataAccessInterface courseDataAccessInterface,
                                    AddAssignmentOutputBoundary addAssignmentOutputBoundary) {
-        this.courseDataAccessObject = courseDataAccessObject;
-        this.addAssignmentPresenter = addAssignmentPresenter;
+        this.courseDataAccessObject = courseDataAccessInterface;
+        this.addAssignmentPresenter = addAssignmentOutputBoundary;
     }
 
     @Override
@@ -21,7 +21,8 @@ public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
                 addAssignmentInputData.getName(),
                 addAssignmentInputData.getDueDate(),
                 addAssignmentInputData.getScore(),
-                addAssignmentInputData.getWeight()
+                addAssignmentInputData.getWeight(),
+                addAssignmentInputData.getCourseCode()
         );
 
         // Save the assignment to the data store

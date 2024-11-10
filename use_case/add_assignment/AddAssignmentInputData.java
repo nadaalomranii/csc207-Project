@@ -32,5 +32,7 @@ public class AddAssignmentInputData {
     public double getWeight() {
         return weight;
     }
-    public String getCourseCode(){ return courseCode;}
+    public String getCourseCode() {
+        return courseCode;
+    }
 }

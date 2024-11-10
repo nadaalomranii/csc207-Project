@@ -1,15 +1,16 @@
 package interface_adapter.add_assignment;
 
+import interface_adapter.ViewManagerModel;
 import use_case.add_assignment.AddAssignmentOutputBoundary;
 import use_case.add_assignment.AddAssignmentOutputData;
 
 public class AddAssignmentPresenter implements AddAssignmentOutputBoundary {
-    private final AddAssignmentViewModel addAssignmentViewModel;
+    private final AssignmentListViewModel assignmentListViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public AddAssignmentPresenter(AddAssignmentViewModel addAssignmentViewModel,
+    public AddAssignmentPresenter(AssignmentListViewModel assignmentListViewModel,
                                    ViewManagerModel viewManagerModel) {
-        this.addAssignmentViewModel = addAssignmentViewModel;
+        this.assignmentListViewModel = assignmentListViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 

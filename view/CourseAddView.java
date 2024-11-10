@@ -29,7 +29,7 @@ public class CourseAddView extends JPanel implements ActionListener, PropertyCha
     private final JButton cancel;
     private AddCourseController addCourseController;
 
-    // Some cool suggestions from IntelliJ
+    // Some suggestions from IntelliJ
 //    private final JTextField courseDescriptionField = new JTextField(15);
 //    private final JTextField courseStartTimeField = new JTextField(15);
 //    private final JTextField courseEndTimeField = new JTextField(15);

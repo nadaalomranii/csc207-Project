@@ -1,14 +1,16 @@
 package use_case.add_assignment;
 
+import data_access.DataAccessInterface;
+
 /**
  * The Add Assignment Interactor.
  */
-public class AddAssignmentIteractor implements AddAssignmentInputBoundary {
+public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
     private AddAssignmentCourseDataAccessInterface courseDataAccessObject;
     private AddAssignmentOutputBoundary addAssignmentPresenter;
 
-    public AddAssignmentIteractor(AddAssignmentCourseDataAccessInterface courseDataAccessInterface,
-                                  AddAssignmentOutputBoundary addAssignmentOutputBoundary) {
+    public AddAssignmentInteractor(DataAccessInterface courseDataAccessInterface,
+                                   AddAssignmentOutputBoundary addAssignmentOutputBoundary) {
         this.courseDataAccessObject = courseDataAccessObject;
         this.addAssignmentPresenter = addAssignmentPresenter;
     }

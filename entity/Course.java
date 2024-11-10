@@ -22,6 +22,12 @@ public interface Course {
     /**
      * Returns the list of the assignments.
      * @return the list of the assignments.
-     */
     List<Assignment> getAssignments();
+     */
+
+    /**
+     * Returns the code of the course.
+     * @return the code of the course.
+     */
+    String getCode();
 }

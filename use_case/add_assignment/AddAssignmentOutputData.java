@@ -1,7 +1,7 @@
 package use_case.add_assignment;
 
 public class AddAssignmentOutputData {
-    private String message;
+    private final String message;
 
     public AddAssignmentOutputData(String message) {
         this.message = message;

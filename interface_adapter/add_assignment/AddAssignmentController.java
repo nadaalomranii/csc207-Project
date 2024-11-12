@@ -20,7 +20,7 @@ public class AddAssignmentController {
      * @param score The score (grade) of the assignment
      * @param weight The weight (in percentage)
      */
-    public void execute(String name, String dueDate, double score, double weight, String courseCode) {
+    public void execute(String name, String dueDate, String score, String weight, String courseCode) {
         final AddAssignmentInputData addAssignmentInputData = new AddAssignmentInputData(
                 name, dueDate, score, weight, courseCode);
 

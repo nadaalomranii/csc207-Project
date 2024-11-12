@@ -88,7 +88,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addAssignmentListView() {
-//        assignmentListViewModel = new AssignmentListViewModel();
+        assignmentListViewModel = new AssignmentListViewModel();
         assignmentListView = new AssignmentListView(assignmentListViewModel);
         cardPanel.add(assignmentListView, assignmentListView.getViewName());
         return this;
@@ -100,9 +100,9 @@ public class AppBuilder {
      */
     public AppBuilder addAddAssignmentUseCase() {
         final AddAssignmentOutputBoundary addAssignmentOutputBoundary = new AddAssignmentPresenter(
-                assignmentListViewModel, viewManagerModel, addAssignmentViewModel);
+                assignmentListViewModel, viewManagerModel);
         final AddAssignmentInputBoundary addAssignmentInteractor = new AddAssignmentInteractor(
-                userDataAccessObject, addAssignmentOutputBoundary);
+                userDataAccessObject, addAssignmentOutputBoundary, assignmentFactory);
 
         final AddAssignmentController addAssignmentController = new AddAssignmentController(addAssignmentInteractor);
         assignmentAddView.setAddAssignmentController(addAssignmentController);

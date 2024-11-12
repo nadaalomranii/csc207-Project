@@ -8,21 +8,19 @@ import use_case.add_assignment.AddAssignmentOutputData;
 
 public class AddAssignmentPresenter implements AddAssignmentOutputBoundary {
     private final AssignmentListViewModel assignmentListViewModel;
-    private final AddAssignmentViewModel addAssignmentViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public AddAssignmentPresenter(AssignmentListViewModel assignmentListViewModel,
-                                  ViewManagerModel viewManagerModel,
-                                  AddAssignmentViewModel addAssignmentViewModel) {
+                                  ViewManagerModel viewManagerModel) {
         this.assignmentListViewModel = assignmentListViewModel;
         this.viewManagerModel = viewManagerModel;
-        this.addAssignmentViewModel = addAssignmentViewModel;
     }
 
     @Override
     public void prepareSuccessView(AddAssignmentOutputData outputData) {
         final AssignmentListState assignmentListState = assignmentListViewModel.getState();
 
+        assignmentListState.setCourse(outputData.getCourse());
         // TODO: need something here to add the assignment to the assignment list state
 
         this.assignmentListViewModel.setState(assignmentListState);

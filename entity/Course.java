@@ -17,7 +17,7 @@ public interface Course {
      * Returns the name of the course code.
      * @return the name of the course code.
      */
-    String getCourseCode();
+//    String getCourseName();
 
     /**
      * Returns the list of the assignments.

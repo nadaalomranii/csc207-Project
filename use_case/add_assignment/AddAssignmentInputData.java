@@ -1,5 +1,7 @@
 package use_case.add_assignment;
 
+import entity.Course;
+
 /**
  * The input data for the Add Assignment Use Case.
  */
@@ -9,14 +11,14 @@ public class AddAssignmentInputData {
     private final String dueDate;
     private final float score;
     private final float weight;
-    private final String courseCode;
+    private final Course course;
 
-    public AddAssignmentInputData(String name, String dueDate, String score, String weight, String courseCode) {
+    public AddAssignmentInputData(String name, String dueDate, String score, String weight, Course course) {
         this.name = name;
         this.dueDate = dueDate;
         this.score = Float.parseFloat(score);
         this.weight = Float.parseFloat(weight);
-        this.courseCode = courseCode;
+        this.course = course;
     }
 
     // Getters
@@ -32,7 +34,5 @@ public class AddAssignmentInputData {
     public float getWeight() {
         return weight;
     }
-    public String getCourseCode() {
-        return courseCode;
-    }
+    public Course getCourse() {return course;}
 }

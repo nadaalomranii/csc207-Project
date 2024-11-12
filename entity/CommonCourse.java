@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * An implementation of the Course interface.
  */
-public class CommonCourse implements Course{
+public class CommonCourse implements Course {
     private final String name;
     private final String courseCode;
     private final List<Assignment> assignments;
@@ -21,12 +21,16 @@ public class CommonCourse implements Course{
         return name;
     }
 
+//    @Override
+//    public String getCourseName() {
+//        return courseCode;
+//    }
+
     @Override
-    public String getCourseCode() {
+    public String getCode() {
         return courseCode;
     }
 
-    @Override
     public List<Assignment> getAssignments() {
         return assignments;
     }

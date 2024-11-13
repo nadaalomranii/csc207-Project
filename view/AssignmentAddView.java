@@ -14,6 +14,8 @@ import interface_adapter.add_assignment.AddAssignmentState;
 import interface_adapter.add_assignment.AddAssignmentViewModel;
 import interface_adapter.add_assignment.AddAssignmentController;
 
+import static java.lang.String.valueOf;
+
 /**
  * The view for when the user is adding a course.
  */
@@ -65,7 +67,8 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
                                     currentState.getAssignmentName(),
                                     currentState.getGrade(),
                                     currentState.getWeight(),
-                                    currentState.getDueDate()
+                                    currentState.getDueDate(),
+                                    currentState.getCourse()
                             );
                         }
                     }
@@ -189,8 +192,8 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
 
     private void setFields(AddAssignmentState state) {
         assignmentNameField.setText(state.getAssignmentName());
-        assignmentGradeField.getText(state.getGrade());
-        assignmentWeightField.getText(state.getWeight());
+        assignmentGradeField.setText(state.getGrade());
+        assignmentWeightField.setText(state.getWeight());
         assignmentDueDateField.setText(state.getDueDate());
     }
 

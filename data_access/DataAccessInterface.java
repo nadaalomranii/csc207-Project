@@ -12,11 +12,16 @@ import java.util.Map;
 
 public class DataAccessInterface implements AddCourseDataAccessInterface, AddAssignmentCourseDataAccessInterface {
 
-    private final Map<String, Map<Course, List<CommonAssignment>>> courses = new HashMap<>();
+    private final Map<String, Map<Course, List<Assignment>>> courses = new HashMap<>();
 
     @Override
-    public void saveAssignment(CommonAssignment assignment) {
-        courses.get(assignment.getCourseCode()).put(assignment.getCourse(), assignment);
+    public void saveAssignment(Assignment assignment, Course course) {
+        // The course already exists in courses
+        // Add the new assignment to the current assignments
+        List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
+        currentAssignments.add(assignment);
+
+        courses.get(course.getCode()).put(course, currentAssignments);
     }
 
     @Override
@@ -25,7 +30,7 @@ public class DataAccessInterface implements AddCourseDataAccessInterface, AddAss
     }
 
     @Override
-    public void save(Course course) {
+    public void saveCourse(Course course) {
         courses.put(course.getCode(), new HashMap<>());
     }
 }

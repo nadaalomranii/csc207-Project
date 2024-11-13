@@ -1,7 +1,8 @@
 package use_case.add_assignment;
 
-import entity.CommonAssignment;
+import entity.Assignment;
+import entity.Course;
 
 public interface AddAssignmentCourseDataAccessInterface {
-    void saveAssignment(CommonAssignment assignment);
+    void saveAssignment(Assignment assignment, Course course);
 }

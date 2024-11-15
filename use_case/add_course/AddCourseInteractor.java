@@ -1,7 +1,7 @@
 package use_case.add_course;
 
-import entity.User;
-import entity.UserFactory;
+import entity.Course;
+import entity.CourseFactory;
 
 /**
  * The Add Course Interactor.
@@ -10,11 +10,11 @@ public class AddCourseInteractor implements AddCourseInputBoundary {
 
     // declare attributes
     private final AddCourseDataAccessInterface courseDataAccessObject;
-    private final AddCourseOutputBoundary courseresenter;
+    private final AddCourseOutputBoundary coursePresenter;
     private final CourseFactory courseFactory;
 
     // initialise object
-    public AddCourseInteractor(AddCourseUserDataAccessInterface addCourseDataAccessInterface,
+    public AddCourseInteractor(AddCourseDataAccessInterface addCourseDataAccessInterface,
                                AddCourseOutputBoundary addCourseOutputBoundary,
                                CourseFactory courseFactory) {
 
@@ -31,19 +31,23 @@ public class AddCourseInteractor implements AddCourseInputBoundary {
         final String name = addCourseInputData.getName();
 
         // course already exists; prepare fail view
-        if (courseDataAccessObject.existsByName(name)) {
+
+        if (courseDataAccessObject.existsByCode(addCourseInputData.getCode())) {
             coursePresenter.prepareFailView(name + ": course already exists.");
         }
 
         // course name does exists
         else {
-
-            // prepare success view
-            coursePresenter.prepareSuccessView(name + "added")
-
-            // TODO: add course to courseDataAccessObject
-            final Course course = courseDataAccessObject.add()
+            final Course course = CourseFactory.create(addCourseInputData.getName(), addCourseInputData.getCode());
+            final AddCourseOutputData addCourseOutputData = new AddCourseOutputData(course.getCode(), false);
+            coursePresenter.prepareSuccessView(addCourseOutputData);
+            courseDataAccessObject.save(course);
 
         }
     }
+    @Override
+    public void switchToAssignmentView(){
+        coursePresenter.switchToAssignmentView();
+    }
+
 }

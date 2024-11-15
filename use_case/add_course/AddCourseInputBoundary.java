@@ -11,4 +11,8 @@ public interface AddCourseInputBoundary {
      */
     void execute(AddCourseInputData addCourseInputData);
 
+    /**
+     * Switches view to Assignment Vie.
+     */
+    void switchToAssignmentView();
 }

@@ -15,4 +15,10 @@ public interface AddCourseOutputBoundary {
      * @param errorMessage the explanation of the failure
      */
     void prepareFailView(String errorMessage);
+
+    /**
+     * Switches view to Assignment Vie.
+     */
+    void switchToAssignmentView();
+
 }

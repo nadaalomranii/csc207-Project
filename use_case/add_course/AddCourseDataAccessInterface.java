@@ -14,7 +14,7 @@ public interface AddCourseDataAccessInterface {
      * Saves the course.
      * @param course the course to save
      */
-    void save(Course course);
+    void saveCourse(Course course);
 }
 
 

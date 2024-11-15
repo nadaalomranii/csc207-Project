@@ -3,7 +3,7 @@ package entity;
 /**
  * An implementation of the Assignment interface.
  */
-public class CommonAssignment implements Assignment{
+public class CommonAssignment implements Assignment {
     private final String name;
     private final float grade;
     private final float weight;

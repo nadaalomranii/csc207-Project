@@ -1,5 +1,10 @@
 package use_case.add_assignment;
-// The output boundary will present the result (success or error message)
+
+/**
+ * The output boundary for the Add Assignment Use Case.
+ */
 public interface AddAssignmentOutputBoundary {
-    void present(AddAssignmentOutputData outputData);
+    void prepareSuccessView(AddAssignmentOutputData outputData);
+
+    void prepareFailView(String errorMessage);
 }

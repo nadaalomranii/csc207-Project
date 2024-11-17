@@ -9,9 +9,9 @@ public class CommonAssignment implements Assignment {
     private final String name;
     private final float grade;
     private final float weight;
-    private final String dueDate;
+    private final Date dueDate;
 
-    public CommonAssignment(String name, float grade, float weight, String dueDate) {
+    public CommonAssignment(String name, float grade, float weight, Date dueDate) {
         this.name = name;
         this.grade = grade;
         this.weight = weight;

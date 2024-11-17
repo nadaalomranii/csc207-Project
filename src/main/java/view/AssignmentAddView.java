@@ -42,19 +42,27 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         final JLabel title = new JLabel("Add Assignment");
+        // Pink text
+        title.setForeground(Color.getHSBColor(0.9F, 0F, 0.05F));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+
+        // Set up view formatting
+        this.setBackground(Color.getHSBColor(0.9F, 0.2F, 1F));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         final LabelTextPanel assignmentNameInfo = new LabelTextPanel(new JLabel("Assignment Name: "), assignmentNameField);
-        final LabelTextPanel assignmentGradeInfo = new LabelTextPanel(new JLabel("Obtained Grade: "), assignmentNameField);
-        final LabelTextPanel assignmentWeightInfo = new LabelTextPanel(new JLabel("Assignment Name: "), assignmentNameField);
+        final LabelTextPanel assignmentGradeInfo = new LabelTextPanel(new JLabel("Obtained Grade: "), assignmentGradeField);
+        final LabelTextPanel assignmentWeightInfo = new LabelTextPanel(new JLabel("Assignment Name: "), assignmentWeightField);
         final LabelTextPanel assignmentDueDateInfo = new LabelTextPanel(new JLabel("Due Date: "), assignmentDueDateField);
 
         // Add buttons
         final JPanel buttons = new JPanel();
-        addAssignment = new JButton("Add Assignment");
+        addAssignment = new StyledButton("Add Assignment");
         buttons.add(addAssignment);
-        cancel = new JButton("Cancel");
+        cancel = new StyledButton("Cancel");
         buttons.add(cancel);
+        buttons.setBackground(Color.getHSBColor(0.9F, 0F, 0.05F));
 
         // Add button functionality
         addAssignment.addActionListener(

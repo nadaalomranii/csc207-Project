@@ -5,6 +5,10 @@ import entity.AssignmentFactory;
 import entity.CommonAssignmentFactory;
 import entity.CommonCourseFactory;
 import entity.CourseFactory;
+
+// for testing
+import entity.Course;
+
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_assignment.AddAssignmentController;
 import interface_adapter.add_assignment.AddAssignmentPresenter;
@@ -134,7 +138,6 @@ public class AppBuilder {
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
-
         viewManagerModel.setState(courseListView.getViewName());
         viewManagerModel.firePropertyChanged();
 

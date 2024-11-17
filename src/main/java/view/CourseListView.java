@@ -36,6 +36,7 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Course buttons
+        // TODO: how many buttons in a row?
         final JPanel allCoursesPanel = new JPanel();
         for (Course course : courses) {
             courseButton = new JButton(course.getCode());

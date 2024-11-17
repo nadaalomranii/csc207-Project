@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Date;
+
 /**
  * The representation of an assignment in our program.
  */
@@ -25,7 +27,8 @@ public interface Assignment {
 
     /**
      * Returns the due date of the assignment.
+     *
      * @return the due date of the assignment.
      */
-    String getDueDate();
+    Date getDueDate();
 }

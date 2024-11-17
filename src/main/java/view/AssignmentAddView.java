@@ -65,9 +65,9 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
 
                             addAssignmentController.execute(
                                     currentState.getAssignmentName(),
+                                    currentState.getDueDate(),
                                     currentState.getGrade(),
                                     currentState.getWeight(),
-                                    currentState.getDueDate(),
                                     currentState.getCourse()
                             );
                         }

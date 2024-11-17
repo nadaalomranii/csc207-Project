@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Date;
+
 /**
  * An implementation of the Assignment interface.
  */
@@ -32,7 +34,7 @@ public class CommonAssignment implements Assignment {
     }
 
     @Override
-    public String getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 }

@@ -55,7 +55,7 @@ public class CourseAddView extends JPanel implements ActionListener, PropertyCha
 
         // Add buttons
         final JPanel buttons = new JPanel();
-        addCourse = new StyledButton("Add Assignment");
+        addCourse = new StyledButton("Add Course");
         buttons.add(addCourse);
         cancel = new StyledButton("Cancel");
         buttons.add(cancel);

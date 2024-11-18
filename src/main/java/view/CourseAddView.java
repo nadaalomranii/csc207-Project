@@ -42,12 +42,12 @@ public class CourseAddView extends JPanel implements ActionListener, PropertyCha
 
         final JLabel title = new JLabel("Add Course");
         // Pink text
-        title.setForeground(Color.getHSBColor(0.9F, 0.2F, 1F));
+        title.setForeground(Color.getHSBColor(0.9F, 0F, 0.05F));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
 
         // Set up view formatting
-        this.setBackground(Color.getHSBColor(0.9F, 0F, 0.05F));
+        this.setBackground(Color.getHSBColor(0.9F, 0.2F, 1F));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         final LabelTextPanel courseNameInfo = new LabelTextPanel(new JLabel("Course Name: "), courseNameField);
@@ -55,7 +55,7 @@ public class CourseAddView extends JPanel implements ActionListener, PropertyCha
 
         // Add buttons
         final JPanel buttons = new JPanel();
-        addCourse = new StyledButton("Add Assignment");
+        addCourse = new StyledButton("Add Course");
         buttons.add(addCourse);
         cancel = new StyledButton("Cancel");
         buttons.add(cancel);

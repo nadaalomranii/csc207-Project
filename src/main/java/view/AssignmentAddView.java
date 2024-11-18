@@ -38,9 +38,6 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
         this.addAssignmentViewModel = addAssignmentViewModel;
         this.addAssignmentViewModel.addPropertyChangeListener(this);
 
-        this.setBackground(Color.getHSBColor(28, 73, 69));
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         final JLabel title = new JLabel("Add Assignment");
         // Pink text
         title.setForeground(Color.getHSBColor(0.9F, 0F, 0.05F));

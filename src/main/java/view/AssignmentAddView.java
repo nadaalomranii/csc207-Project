@@ -1,10 +1,12 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -13,6 +15,7 @@ import javax.swing.event.DocumentListener;
 import interface_adapter.add_assignment.AddAssignmentState;
 import interface_adapter.add_assignment.AddAssignmentViewModel;
 import interface_adapter.add_assignment.AddAssignmentController;
+import raven.datetime.component.date.DatePicker;
 
 import static java.lang.String.valueOf;
 
@@ -158,7 +161,11 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
 
             private void documentListenerHelper() {
                 final AddAssignmentState currentState = addAssignmentViewModel.getState();
-                currentState.setDueDate(assignmentDueDateField.getText());
+                // HERE
+                String assignmentDueDateInput = assignmentDueDateField.getText();
+                Date date = new Date();
+                date.setTime(Long.parseLong(assignmentDueDateInput));
+                currentState.setDueDate(date);
                 addAssignmentViewModel.setState(currentState);
             }
 
@@ -199,7 +206,9 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
         assignmentNameField.setText(state.getAssignmentName());
         assignmentGradeField.setText(state.getGrade());
         assignmentWeightField.setText(state.getWeight());
-        assignmentDueDateField.setText(state.getDueDate());
+        //Here
+        String dateText = state.getDueDate().toString();
+        assignmentDueDateField.setText(dateText);
     }
 
     public String getViewName() {

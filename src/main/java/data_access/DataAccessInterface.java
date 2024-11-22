@@ -6,6 +6,7 @@ import entity.Course;
 import use_case.add_assignment.AddAssignmentCourseDataAccessInterface;
 import use_case.add_course.AddCourseDataAccessInterface;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,10 @@ public class DataAccessInterface implements AddCourseDataAccessInterface, AddAss
         // The course already exists in courses
         // Add the new assignment to the current assignments
         List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
+        if (currentAssignments == null) {
+            // TODO: Add Assignment as type?
+            currentAssignments = new ArrayList<>();
+        }
         currentAssignments.add(assignment);
 
         courses.get(course.getCode()).put(course, currentAssignments);

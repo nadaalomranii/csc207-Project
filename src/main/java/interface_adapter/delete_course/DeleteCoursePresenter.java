@@ -1,11 +1,14 @@
 package interface_adapter.delete_course;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.course_list.CourseListState;
 import interface_adapter.course_list.CourseListViewModel;
 import use_case.delete_course.DeleteCourseOutputBoundary;
 import use_case.delete_course.DeleteCourseOutputData;
-import view.CourseListView;
 
+/**
+ * The Presenter for the Delete Course Use Case.
+ */
 public class DeleteCoursePresenter implements DeleteCourseOutputBoundary {
     private final DeleteCourseViewModel deleteCourseViewModel;
     private final CourseListViewModel courseListViewModel;
@@ -20,14 +23,24 @@ public class DeleteCoursePresenter implements DeleteCourseOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(DeleteCourseOutputData response) {
+    public void prepareSuccessView(DeleteCourseOutputData outputData) {
         // On success, switch to the course list view
-        final DeleteCourseState deleteCourseState = deleteCourseViewModel.getState();
-        DeleteCourseState.
+        CourseListState courseListState = courseListViewModel.getState();
+        this.courseListViewModel.setState(courseListState);
+        courseListViewModel.firePropertyChanged();
+        deleteCourseViewModel.firePropertyChanged("delete course");
+        viewManagerModel.setState(courseListViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(DeleteCourseOutputData deleteCourseOutputData) {
+        // This use case cannot currently fail
+    }
 
+    @Override
+    public void switchToCourseListView() {
+        viewManagerModel.setState(courseListViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 }

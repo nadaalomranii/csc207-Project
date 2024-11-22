@@ -5,7 +5,7 @@ import entity.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AddAssignmentInteractorTest {
+class AddAssignmentInteractorTest {
     @Test
     void successTest() {
         CourseFactory factory = new CommonCourseFactory();

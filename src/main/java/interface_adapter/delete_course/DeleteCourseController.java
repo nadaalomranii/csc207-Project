@@ -19,5 +19,5 @@ public class DeleteCourseController {
 
         deleteCourseInteractor.execute(deleteCourseInputData);
     }
-    // TODO: see if we need to switch to a view here
+    public void switchToCourseListView() { deleteCourseInteractor.switchToCourseListView(); }
 }

@@ -15,4 +15,9 @@ public interface DeleteCourseOutputBoundary {
      * @param deleteCourseOutputData: the output data
      */
     void prepareFailView(DeleteCourseOutputData deleteCourseOutputData);
+
+    /**
+     * Switches to the course list view.
+     */
+    void switchToCourseListView();
 }

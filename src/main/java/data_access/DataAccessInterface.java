@@ -21,7 +21,7 @@ public class DataAccessInterface implements AddCourseDataAccessInterface, AddAss
         // Add the new assignment to the current assignments
         List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
         if (currentAssignments == null) {
-            // TODO: Add Assignment as type?
+            // TODO: Add Assignment as <type>?
             currentAssignments = new ArrayList<>();
         }
         currentAssignments.add(assignment);

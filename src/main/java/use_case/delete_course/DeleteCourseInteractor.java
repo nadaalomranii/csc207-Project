@@ -27,4 +27,9 @@ public class DeleteCourseInteractor implements DeleteCourseInputBoundary{
 
         deleteCoursePresenter.prepareSuccessView(deleteCourseOutputData);
     }
+
+    @Override
+    public void switchToCourseListView() {
+        deleteCoursePresenter.switchToCourseListView();
+    }
 }

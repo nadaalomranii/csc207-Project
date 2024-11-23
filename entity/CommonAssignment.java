@@ -5,7 +5,7 @@ package entity;
  */
 public class CommonAssignment implements Assignment {
     private final String name;
-    private final float grade;
+    private float grade;
     private final float weight;
     private final String dueDate;
 
@@ -34,5 +34,10 @@ public class CommonAssignment implements Assignment {
     @Override
     public String getDueDate() {
         return dueDate;
+    }
+
+    // setter
+    public void updateGrade(float newGrade) {
+        this.grade = newGrade;
     }
 }

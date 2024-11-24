@@ -19,6 +19,7 @@ public class Mail {
 
     public Mail(User user, Assignment assignment, Course course) throws MessagingException {
         Mail mail = new Mail(user, assignment, course);
+        // TODO: Builder here?
         mail.setupServerProperties();
         mail.draftEmail(user, assignment, course);
         mail.sendEmail();
@@ -76,10 +77,6 @@ public class Mail {
 
         Date dueDate = assignment.getDueDate();
         Date today = new Date();
-
-        // if (dueDate.before(today)) {}
-            //TODO: Raise Error;
-
 
         Calendar notifyDate = Calendar.getInstance();
         notifyDate.setTime(dueDate);

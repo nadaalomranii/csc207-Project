@@ -24,25 +24,27 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
     private JButton courseButton;
     private final JButton addCourseButton;
 
-    public CourseListView(CourseListViewModel courseListViewModel, Course[] courses) {
+    public CourseListView(CourseListViewModel courseListViewModel) {
         this.courseListViewModel = courseListViewModel;
         this.courseListViewModel.addPropertyChangeListener(this);
 
         this.setBackground(Color.getHSBColor(28, 73, 69));
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        FlowLayout flowLayout = new FlowLayout();
+        this.setLayout(flowLayout);
 
         // title
         final JLabel title = new JLabel("Courses");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Course buttons
-        // TODO: how many buttons in a row?
         final JPanel allCoursesPanel = new JPanel();
+        Course[] courses = courseListViewModel.getState().getCourses();
         for (Course course : courses) {
             courseButton = new JButton(course.getCode());
             allCoursesPanel.add(courseButton);
         }
         allCoursesPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
 
         // add course button
         final JPanel addCoursePanel = new JPanel();

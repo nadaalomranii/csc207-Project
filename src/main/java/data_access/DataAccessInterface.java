@@ -5,13 +5,14 @@ import entity.CommonAssignment;
 import entity.Course;
 import use_case.add_assignment.AddAssignmentCourseDataAccessInterface;
 import use_case.add_course.AddCourseDataAccessInterface;
+import use_case.delete_course.DeleteCourseDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DataAccessInterface implements AddCourseDataAccessInterface, AddAssignmentCourseDataAccessInterface {
+public class DataAccessInterface implements AddCourseDataAccessInterface, AddAssignmentCourseDataAccessInterface, DeleteCourseDataAccessInterface {
 
     private final Map<String, Map<Course, List<Assignment>>> courses = new HashMap<>();
 
@@ -20,6 +21,10 @@ public class DataAccessInterface implements AddCourseDataAccessInterface, AddAss
         // The course already exists in courses
         // Add the new assignment to the current assignments
         List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
+        if (currentAssignments == null) {
+            // TODO: Add Assignment as <type>?
+            currentAssignments = new ArrayList<>();
+        }
         currentAssignments.add(assignment);
 
         courses.get(course.getCode()).put(course, currentAssignments);
@@ -43,4 +48,9 @@ public class DataAccessInterface implements AddCourseDataAccessInterface, AddAss
         return courseObjects;
     }
 
+
+    @Override
+    public void deleteCourse(Course course) {
+        courses.remove(course.getCode());
+    }
 }

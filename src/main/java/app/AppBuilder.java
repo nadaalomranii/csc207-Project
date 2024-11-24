@@ -138,7 +138,7 @@ public class AppBuilder {
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
-        viewManagerModel.setState(courseListView.getViewName());
+        viewManagerModel.setState(courseAddView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;

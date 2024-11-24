@@ -1,5 +1,8 @@
 package entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String name;
     private String username;
@@ -15,6 +18,7 @@ public class User {
     public String getName() { return name; }
     public String getUsername() { return username; }
     public String getEmail() { return password; }
+
 
 
 

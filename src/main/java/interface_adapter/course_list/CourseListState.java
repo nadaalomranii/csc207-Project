@@ -1,15 +1,15 @@
 package interface_adapter.course_list;
 
 import entity.Course;
+import use_case.add_course.AddCourseDataAccessInterface;
 import use_case.add_course.AddCourseOutputData;
+
+import java.util.Collection;
+import java.util.List;
 
 public class CourseListState {
 
-    private Course course;
+    private AddCourseDataAccessInterface addCourseDataAccessInterface;
 
-    // public Course[] getCourses() {return courses;}
-    public void setCourse(AddCourseOutputData course) { this.course = course.getCourse(); }
-    public Course getCourse() { return course; }
-    //public void addCourses(Course[] courses) {this.courses = courses;}
-
+    public List<Course> getCourses() { return addCourseDataAccessInterface.getCourses(); }
 }

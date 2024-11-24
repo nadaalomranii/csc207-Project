@@ -26,7 +26,6 @@ public class AddCoursePresenter implements AddCourseOutputBoundary {
         // TODO: Need to add the course to the course state
 
         this.courseListViewModel.setState(courseListState);
-        courseListState.setCourse(course);
         courseListViewModel.firePropertyChanged();
         viewManagerModel.setState(courseListViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

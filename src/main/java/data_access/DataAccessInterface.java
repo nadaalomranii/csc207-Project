@@ -6,6 +6,7 @@ import entity.Course;
 import use_case.add_assignment.AddAssignmentCourseDataAccessInterface;
 import use_case.add_course.AddCourseDataAccessInterface;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,4 +34,13 @@ public class DataAccessInterface implements AddCourseDataAccessInterface, AddAss
     public void saveCourse(Course course) {
         courses.put(course.getCode(), new HashMap<>());
     }
+
+    public List<Course> getCourses() {
+        List<Course> courseObjects = new ArrayList<>();
+        for (Map<Course, List<Assignment>> course : courses.values()) {
+            courseObjects.addAll(course.keySet());
+        }
+        return courseObjects;
+    }
+
 }

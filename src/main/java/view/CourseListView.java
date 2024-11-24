@@ -38,11 +38,14 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
 
         // Course buttons
         final JPanel allCoursesPanel = new JPanel();
-        Course[] courses = courseListViewModel.getState().getCourses();
-        for (Course course : courses) {
-            courseButton = new JButton(course.getCode());
-            allCoursesPanel.add(courseButton);
-        }
+        Course course = courseListViewModel.getState().getCourse();
+        courseButton= new JButton(course.getCode());
+        allCoursesPanel.add(courseButton);
+//        Course[] courses = courseListViewModel.getState().getCourses();
+//        for (Course course : courses) {
+//            courseButton = new JButton(course.getCode());
+//            allCoursesPanel.add(courseButton);
+//        }
         allCoursesPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 

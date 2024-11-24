@@ -39,7 +39,7 @@ public class AddCourseInteractor implements AddCourseInputBoundary {
         // course name does exists
         else {
             final Course course = courseFactory.create(addCourseInputData.getName(), addCourseInputData.getCode());
-            final AddCourseOutputData addCourseOutputData = new AddCourseOutputData(course.getCode(), false);
+            final AddCourseOutputData addCourseOutputData = new AddCourseOutputData(course, false);
             coursePresenter.prepareSuccessView(addCourseOutputData);
             courseDataAccessObject.saveCourse(course);
 

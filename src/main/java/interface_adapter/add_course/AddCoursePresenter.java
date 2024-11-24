@@ -19,13 +19,14 @@ public class AddCoursePresenter implements AddCourseOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(AddCourseOutputData outputData) {
+    public void prepareSuccessView(AddCourseOutputData course) {
         // On success, switch to the Course List View
         final CourseListState courseListState = courseListViewModel.getState();
 
         // TODO: Need to add the course to the course state
 
         this.courseListViewModel.setState(courseListState);
+        courseListState.setCourse(course);
         courseListViewModel.firePropertyChanged();
         viewManagerModel.setState(courseListViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

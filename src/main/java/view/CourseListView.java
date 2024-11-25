@@ -11,6 +11,8 @@ import javax.swing.*;
 import interface_adapter.course_list.CourseListState;
 import interface_adapter.course_list.CourseListViewModel;
 
+import entity.Course;
+
 /**
  * The view for when the user is adding a course.
  */
@@ -19,36 +21,40 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
     private final String viewName = "Course List";
     private final CourseListViewModel courseListViewModel;
 
-    private final JTextField courseNameField = new JTextField(15);
-    private final JTextField courseCodeField = new JTextField(15);
-
-    private final JButton addCourse;
-    private final JButton cancel;
+    private JButton courseButton;
+    private final JButton addCourseButton;
 
     public CourseListView(CourseListViewModel courseListViewModel) {
         this.courseListViewModel = courseListViewModel;
         this.courseListViewModel.addPropertyChangeListener(this);
 
         this.setBackground(Color.getHSBColor(28, 73, 69));
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        FlowLayout flowLayout = new FlowLayout();
+        this.setLayout(flowLayout);
 
-        final JLabel title = new JLabel("Add Course");
+        // title
+        final JLabel title = new JLabel("Courses");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        final LabelTextPanel courseNameInfo = new LabelTextPanel(new JLabel("Course Name: "), courseNameField);
-        final LabelTextPanel courseCodeInfo = new LabelTextPanel(new JLabel("Course Code: "), courseCodeField);
+        // Course buttons
+        final JPanel allCoursesPanel = new JPanel();
+        Course[] courses = courseListViewModel.getState().getCourses();
+        for (Course course : courses) {
+            courseButton = new JButton(course.getCode());
+            allCoursesPanel.add(courseButton);
+        }
+        allCoursesPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Add buttons
-        final JPanel buttons = new JPanel();
-        addCourse = new JButton("Add Course");
-        buttons.add(addCourse);
-        cancel = new JButton("Cancel");
-        buttons.add(cancel);
+
+        // add course button
+        final JPanel addCoursePanel = new JPanel();
+        addCourseButton = new JButton("Add Course");
+        addCoursePanel.add(addCourseButton);
+        addCoursePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.add(title);
-        this.add(courseNameInfo);
-        this.add(courseCodeInfo);
-        this.add(buttons);
+        this.add(allCoursesPanel);
+        this.add(addCoursePanel);
     }
 
     @Override

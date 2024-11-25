@@ -22,6 +22,7 @@ import use_case.add_course.AddCourseInputBoundary;
 import use_case.add_course.AddCourseInteractor;
 import view.*;
 
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -129,12 +130,12 @@ public class AppBuilder {
      * @return the application
      */
     public JFrame build() {
-        final JFrame application = new JFrame("Courses: ");
+        final JFrame application = new JFrame("AssignMate");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(courseListView.getViewName());
+        viewManagerModel.setState(assignmentAddView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;

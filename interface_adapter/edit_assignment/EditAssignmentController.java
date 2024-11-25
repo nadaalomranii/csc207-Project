@@ -15,7 +15,7 @@ public class EditAssignmentController {
 
     /**
      * Executes the edit assignment Use Case.
-     * @param n the new password
+     * @param password the new password
      * @param username the user whose password to change
      */
     public void execute(String password, String username) {

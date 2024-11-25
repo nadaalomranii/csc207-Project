@@ -1,5 +1,6 @@
 package entity;
 
+
 import java.util.Date;
 
 /**
@@ -15,5 +16,4 @@ public interface AssignmentFactory {
      * @return the new assignment
      */
     Assignment create(String name, float grade, float weight, Date dueDate);
-
 }

@@ -1,10 +1,12 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -13,6 +15,7 @@ import javax.swing.event.DocumentListener;
 import interface_adapter.add_assignment.AddAssignmentState;
 import interface_adapter.add_assignment.AddAssignmentViewModel;
 import interface_adapter.add_assignment.AddAssignmentController;
+import raven.datetime.component.date.DatePicker;
 
 import static java.lang.String.valueOf;
 
@@ -38,23 +41,28 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
         this.addAssignmentViewModel = addAssignmentViewModel;
         this.addAssignmentViewModel.addPropertyChangeListener(this);
 
-        this.setBackground(Color.getHSBColor(28, 73, 69));
+        final JLabel title = new JLabel("Add Assignment");
+        // Pink text
+        title.setForeground(Color.getHSBColor(0.9F, 0F, 0.05F));
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+
+        // Set up view formatting
+        this.setBackground(Color.getHSBColor(0.9F, 0.2F, 1F));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        final JLabel title = new JLabel("Add Assignment");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         final LabelTextPanel assignmentNameInfo = new LabelTextPanel(new JLabel("Assignment Name: "), assignmentNameField);
-        final LabelTextPanel assignmentGradeInfo = new LabelTextPanel(new JLabel("Obtained Grade: "), assignmentNameField);
-        final LabelTextPanel assignmentWeightInfo = new LabelTextPanel(new JLabel("Assignment Name: "), assignmentNameField);
+        final LabelTextPanel assignmentGradeInfo = new LabelTextPanel(new JLabel("Obtained Grade: "), assignmentGradeField);
+        final LabelTextPanel assignmentWeightInfo = new LabelTextPanel(new JLabel("Assignment Name: "), assignmentWeightField);
         final LabelTextPanel assignmentDueDateInfo = new LabelTextPanel(new JLabel("Due Date: "), assignmentDueDateField);
 
         // Add buttons
         final JPanel buttons = new JPanel();
-        addAssignment = new JButton("Add Assignment");
+        addAssignment = new StyledButton("Add Assignment");
         buttons.add(addAssignment);
-        cancel = new JButton("Cancel");
+        cancel = new StyledButton("Cancel");
         buttons.add(cancel);
+        buttons.setBackground(Color.getHSBColor(0.9F, 0F, 0.05F));
 
         // Add button functionality
         addAssignment.addActionListener(
@@ -65,9 +73,9 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
 
                             addAssignmentController.execute(
                                     currentState.getAssignmentName(),
+                                    currentState.getDueDate(),
                                     currentState.getGrade(),
                                     currentState.getWeight(),
-                                    currentState.getDueDate(),
                                     currentState.getCourse()
                             );
                         }
@@ -153,7 +161,11 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
 
             private void documentListenerHelper() {
                 final AddAssignmentState currentState = addAssignmentViewModel.getState();
-                currentState.setDueDate(assignmentDueDateField.getText());
+                // HERE
+                String assignmentDueDateInput = assignmentDueDateField.getText();
+                Date date = new Date();
+                date.setTime(Long.parseLong(assignmentDueDateInput));
+                currentState.setDueDate(date);
                 addAssignmentViewModel.setState(currentState);
             }
 
@@ -194,7 +206,9 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
         assignmentNameField.setText(state.getAssignmentName());
         assignmentGradeField.setText(state.getGrade());
         assignmentWeightField.setText(state.getWeight());
-        assignmentDueDateField.setText(state.getDueDate());
+        //Here
+        String dateText = state.getDueDate().toString();
+        assignmentDueDateField.setText(dateText);
     }
 
     public String getViewName() {

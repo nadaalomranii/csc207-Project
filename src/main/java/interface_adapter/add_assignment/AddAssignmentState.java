@@ -2,9 +2,11 @@ package interface_adapter.add_assignment;
 
 import entity.Course;
 
+import java.util.Date;
+
 public class AddAssignmentState {
     private String assignmentName;
-    private String dueDate;
+    private Date dueDate;
     private String grade;
     private String weight;
     private Course course;
@@ -17,9 +19,9 @@ public class AddAssignmentState {
 
     public void setAssignmentName(String assignmentName) {this.assignmentName = assignmentName;}
 
-    public String getDueDate() {return dueDate;}
+    public Date getDueDate() {return dueDate;}
 
-    public void setDueDate(String dueDate) {this.dueDate = dueDate;}
+    public void setDueDate(Date dueDate) {this.dueDate = dueDate;}
 
     public String getGrade() {return grade;}
 

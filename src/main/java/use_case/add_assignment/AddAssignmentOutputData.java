@@ -12,6 +12,10 @@ public class AddAssignmentOutputData {
         this.course = course;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
     public Course getCourse() {
         return course;
     }

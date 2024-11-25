@@ -40,21 +40,26 @@ public class CourseAddView extends JPanel implements ActionListener, PropertyCha
         this.addCourseViewModel = addCourseViewModel;
         this.addCourseViewModel.addPropertyChangeListener(this);
 
-        this.setBackground(Color.getHSBColor(28, 73, 69));
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         final JLabel title = new JLabel("Add Course");
+        // Pink text
+        title.setForeground(Color.getHSBColor(0.9F, 0F, 0.05F));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+
+        // Set up view formatting
+        this.setBackground(Color.getHSBColor(0.9F, 0.2F, 1F));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         final LabelTextPanel courseNameInfo = new LabelTextPanel(new JLabel("Course Name: "), courseNameField);
         final LabelTextPanel courseCodeInfo = new LabelTextPanel(new JLabel("Course Code: "), courseCodeField);
 
         // Add buttons
         final JPanel buttons = new JPanel();
-        addCourse = new JButton("Add Course");
+        addCourse = new StyledButton("Add Course");
         buttons.add(addCourse);
-        cancel = new JButton("Cancel");
+        cancel = new StyledButton("Cancel");
         buttons.add(cancel);
+        buttons.setBackground(Color.getHSBColor(0.9F, 0F, 0.05F));
 
         // Add button functionality
         addCourse.addActionListener(

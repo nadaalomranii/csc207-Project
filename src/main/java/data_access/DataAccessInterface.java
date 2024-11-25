@@ -8,12 +8,12 @@ import use_case.add_course.AddCourseDataAccessInterface;
 import use_case.delete_course.DeleteCourseDataAccessInterface;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DataAccessInterface implements AddCourseDataAccessInterface, AddAssignmentCourseDataAccessInterface, DeleteCourseDataAccessInterface {
-
     private final Map<String, Map<Course, List<Assignment>>> courses = new HashMap<>();
 
     @Override

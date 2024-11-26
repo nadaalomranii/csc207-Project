@@ -16,10 +16,7 @@ public class AddCourseInputData {
         this.code = code;
     }
 
-    String getName() {
-        return name;
-    }
-
+    String getName() { return name; }
     String getCode() {
         return code;
     }

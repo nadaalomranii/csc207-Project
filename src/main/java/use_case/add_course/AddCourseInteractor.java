@@ -31,12 +31,12 @@ public class AddCourseInteractor implements AddCourseInputBoundary {
         final String name = addCourseInputData.getName();
 
         // course already exists; prepare fail view
-
         if (courseDataAccessObject.existsByCode(addCourseInputData.getCode())) {
-            coursePresenter.prepareFailView(name + ": course already exists.");
+            final AddCourseOutputData addCourseOutputData = new AddCourseOutputData();
+            coursePresenter.prepareFailView(addCourseOutputData,name + ": course already exists.");
         }
 
-        // course name does exists
+        // course name does not exist
         else {
             final Course course = courseFactory.create(addCourseInputData.getName(), addCourseInputData.getCode());
             final AddCourseOutputData addCourseOutputData = new AddCourseOutputData(course, false);
@@ -45,9 +45,8 @@ public class AddCourseInteractor implements AddCourseInputBoundary {
 
         }
     }
-    @Override
-    public void switchToAssignmentView(){
-        coursePresenter.switchToAssignmentView();
-    }
+    // TODO: implement this?
+    //@Override
+    //public void switchToAssignmentView(){coursePresenter.switchToAssignmentView();}
 
 }

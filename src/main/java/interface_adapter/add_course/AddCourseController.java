@@ -27,5 +27,5 @@ public class AddCourseController {
     /**
      * Executes the "switch to AssignmentView" Use Case.
      */
-    public void switchToAssignmentView() {addCourseUseCaseInteractor.switchToAssignmentView();}
+    //public void switchToAssignmentView() {addCourseUseCaseInteractor.switchToAssignmentView();}
 }

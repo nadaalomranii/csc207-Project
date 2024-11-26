@@ -40,6 +40,7 @@ public class DataAccessInterface implements AddCourseDataAccessInterface, AddAss
         courses.put(course.getCode(), new HashMap<>());
     }
 
+
     @Override
     public List<Course> getCourses() {
         List<Course> courseObjects = new ArrayList<>();

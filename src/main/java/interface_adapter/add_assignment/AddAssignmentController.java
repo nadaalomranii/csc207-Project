@@ -4,6 +4,7 @@ import entity.Course;
 import use_case.add_assignment.AddAssignmentInputBoundary;
 import use_case.add_assignment.AddAssignmentInputData;
 
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -23,7 +24,7 @@ public class AddAssignmentController {
      * @param score The score (grade) of the assignment
      * @param weight The weight (in percentage)
      */
-    public void execute(String name, Date dueDate, String score, String weight, Course course) {
+    public void execute(String name, Date dueDate, String score, String weight, Course course) throws ParseException {
         final AddAssignmentInputData addAssignmentInputData = new AddAssignmentInputData(
                 name, dueDate, score, weight, course);
 

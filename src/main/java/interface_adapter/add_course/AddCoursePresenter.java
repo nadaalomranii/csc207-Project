@@ -28,13 +28,15 @@ public class AddCoursePresenter implements AddCourseOutputBoundary {
         viewManagerModel.firePropertyChanged();
     }
 
+    //TODO: implement this
     @Override
-    public void prepareFailView(String errorMessage) {
-        // Assume that it never fails
-    }
-
-    @Override
-    public void switchToAssignmentView() {
+    public void prepareFailView(AddCourseOutputData addCourseOutputData, String errorMessage) {
 
     }
+
+
+    // TODO: implement this
+    //@Override
+    //public void switchToAssignmentView() {
+    //}
 }

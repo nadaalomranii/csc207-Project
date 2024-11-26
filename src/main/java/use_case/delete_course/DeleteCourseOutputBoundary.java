@@ -10,11 +10,13 @@ public interface DeleteCourseOutputBoundary {
      */
     void prepareSuccessView(DeleteCourseOutputData deleteCourseOutputData);
 
-    /**
-     * Prepares the fail view for the delete course use case.
-     * @param deleteCourseOutputData: the output data
-     */
-    void prepareFailView(DeleteCourseOutputData deleteCourseOutputData);
+
+//    /**
+//     * Prepares the fail view for the delete course use case.
+//     * @param deleteCourseOutputData: the output data
+//     */
+//    void prepareFailView(DeleteCourseOutputData deleteCourseOutputData);
+    // can never fail
 
     /**
      * Switches to the course list view.

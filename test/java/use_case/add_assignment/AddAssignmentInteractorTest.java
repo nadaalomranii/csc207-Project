@@ -5,6 +5,8 @@ import entity.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Date;
+
 class AddAssignmentInteractorTest {
     @Test
     void successTest() {
@@ -12,8 +14,9 @@ class AddAssignmentInteractorTest {
         AssignmentFactory assignmentFactory = new CommonAssignmentFactory();
         Course course = factory.create("Software Design", "CSC207");
 
+        Date date = new Date(2024, 12, 1);
         AddAssignmentInputData inputData = new AddAssignmentInputData("Course Project",
-                "December 3, 2024",
+                date,
                 "100",
                 "25", course);
         DataAccessInterface courseRepository = new DataAccessInterface();
@@ -26,7 +29,6 @@ class AddAssignmentInteractorTest {
         AddAssignmentOutputBoundary successPresenter = new AddAssignmentOutputBoundary() {
             @Override
             public void prepareSuccessView(AddAssignmentOutputData outputData) {
-                // TODO: Why does add assignment output data not output the assignment itself?
                 assertEquals(outputData.getCourse(), course);
             }
 

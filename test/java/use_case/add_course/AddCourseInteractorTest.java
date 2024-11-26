@@ -22,8 +22,6 @@ class AddCourseInteractorTest {
         AddCourseOutputBoundary successPresenter = new AddCourseOutputBoundary() {
             @Override
             public void prepareSuccessView(AddCourseOutputData outputData) {
-                //assertEquals(outputData.getCourse(), course);
-                // TODO: the course object that outputData returns is different from the course object we created, why?
                 assertEquals(outputData.getCode(), course.getCode());
                 assertEquals(outputData.getName(), course.getName());
             }
@@ -33,9 +31,8 @@ class AddCourseInteractorTest {
                 fail("Use case failure is unexpected/n"+errorMessage);
             }
 
-            //@Override
-            //public void switchToAssignmentView() {
-            //}
+            @Override
+            public void switchToCourseView() {}
         };
 
         AddCourseInputBoundary interactor = new AddCourseInteractor(courseRepository, successPresenter, factory);
@@ -68,9 +65,8 @@ class AddCourseInteractorTest {
                 assertTrue(outputData.isUseCaseFailed());
             }
 
-            //@Override
-            //public void switchToAssignmentView() {
-            //}
+            @Override
+            public void switchToCourseView() {}
         };
 
         AddCourseInputBoundary interactor = new AddCourseInteractor(courseRepository, successPresenter, factory);

@@ -18,8 +18,8 @@ public interface AddCourseOutputBoundary {
     void prepareFailView(AddCourseOutputData outputData, String errorMessage);
 
     /**
-     * Switches view to Assignment View.
+     * Switches view to Course List View.
      */
-    //void switchToAssignmentView();
+    void switchToCourseView();
 
 }

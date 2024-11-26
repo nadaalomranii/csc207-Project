@@ -36,9 +36,7 @@ public class DataAccessInterface implements AddCourseDataAccessInterface, AddAss
     }
 
     @Override
-    public void saveCourse(Course course) {
-        courses.put(course.getCode(), new HashMap<>());
-    }
+    public void saveCourse(Course course) {courses.put(course.getCode(), new HashMap<>());}
 
 
     @Override

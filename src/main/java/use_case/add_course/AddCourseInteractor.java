@@ -36,7 +36,7 @@ public class AddCourseInteractor implements AddCourseInputBoundary {
             coursePresenter.prepareFailView(addCourseOutputData,name + ": course already exists.");
         }
 
-        // course name does not exist
+        // course name does not exist; create course, save it and prepare success view
         else {
             final Course course = courseFactory.create(addCourseInputData.getName(), addCourseInputData.getCode());
             final AddCourseOutputData addCourseOutputData = new AddCourseOutputData(course, false);
@@ -45,8 +45,8 @@ public class AddCourseInteractor implements AddCourseInputBoundary {
 
         }
     }
-    // TODO: implement this?
-    //@Override
-    //public void switchToAssignmentView(){coursePresenter.switchToAssignmentView();}
+
+    @Override
+    public void switchToCourseView(){ coursePresenter.switchToCourseView();}
 
 }

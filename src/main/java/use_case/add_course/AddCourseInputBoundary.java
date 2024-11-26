@@ -12,7 +12,7 @@ public interface AddCourseInputBoundary {
     void execute(AddCourseInputData addCourseInputData);
 
     /**
-     * Switches view to Assignment Vie.
+     * Switches view to Course List View.
      */
-    //void switchToAssignmentView();
+    void switchToCourseView();
 }

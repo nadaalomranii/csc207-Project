@@ -120,7 +120,7 @@ public class AppBuilder {
      */
     public AppBuilder addAddCourseUseCase() {
         final AddCourseOutputBoundary addCourseOutputBoundary = new AddCoursePresenter(
-                viewManagerModel, courseListViewModel);
+                viewManagerModel, addCourseViewModel, courseListViewModel);
         final AddCourseInputBoundary addCourseInteractor = new AddCourseInteractor(
                 userDataAccessObject, addCourseOutputBoundary, courseFactory);
 

@@ -16,7 +16,6 @@ class AddAssignmentInteractorTest {
         AssignmentFactory assignmentFactory = new CommonAssignmentFactory();
         Course course = factory.create("Software Design", "CSC207");
 
-        //TODO: test the parse thing
         AddAssignmentInputData inputData = new AddAssignmentInputData("Course Project",
                 new Date(2024, Calendar.DECEMBER, 3),
                 "100",

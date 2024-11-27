@@ -17,5 +17,4 @@ public interface SendNotificationOutputBoundary {
      */
     void prepareFailView(SendNotificationOutputData outputData, String errorMessage);
 
-
 }

@@ -30,7 +30,8 @@ public interface Assignment {
      * @return the due date of the assignment.
      */
     String getDueDate();
-     *
+
+    /**
      * @return the due date of the assignment.
      */
     Date getDueDate();

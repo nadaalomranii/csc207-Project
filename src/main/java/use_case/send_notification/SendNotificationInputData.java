@@ -1,15 +1,31 @@
 package use_case.send_notification;
 
 
+import entity.Assignment;
+import entity.Course;
+import entity.User;
+
 /**
  * The input data for the Send Notification Use Case.
  */
 public class SendNotificationInputData {
 
-    // TODO: what stuff do we need to do this
+    private final User user;
+    private final Course course;
+    private final Assignment assignment;
 
-    public SendNotificationInputData() {}
+    public SendNotificationInputData(User user, Course course, Assignment assignment) {
+        this.user = user;
+        this.course = course;
+        this.assignment = assignment;
+    }
 
-    // TODO:getters
+    public User getUser() { return user; }
+
+    public Assignment getAssignment() {return assignment;}
+
+    public Course getCourse() {
+        return course;
+    }
 
 }

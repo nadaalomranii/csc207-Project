@@ -18,12 +18,18 @@ import interface_adapter.add_course.AddCoursePresenter;
 import interface_adapter.add_course.AddCourseViewModel;
 import interface_adapter.assignment_list.AssignmentListViewModel;
 import interface_adapter.course_list.CourseListViewModel;
+import interface_adapter.delete_assignment.DeleteAssignmentController;
+import interface_adapter.delete_assignment.DeleteAssignmentPresenter;
+import interface_adapter.delete_assignment.DeleteAssignmentViewModel;
 import use_case.add_assignment.AddAssignmentInteractor;
 import use_case.add_assignment.AddAssignmentOutputBoundary;
 import use_case.add_assignment.AddAssignmentInputBoundary;
 import use_case.add_course.AddCourseOutputBoundary;
 import use_case.add_course.AddCourseInputBoundary;
 import use_case.add_course.AddCourseInteractor;
+import use_case.delete_assignment.DeleteAssignmentInputBoundary;
+import use_case.delete_assignment.DeleteAssignmentInteractor;
+import use_case.delete_assignment.DeleteAssignmentOutputBoundary;
 import view.*;
 
 
@@ -52,6 +58,7 @@ public class AppBuilder {
     private AssignmentListView assignmentListView;
     private AssignmentListViewModel assignmentListViewModel;
 
+    private DeleteAssignmentViewModel deleteAssignmentViewModel;
 
     public AppBuilder() { cardPanel.setLayout(cardLayout); }
 
@@ -126,6 +133,18 @@ public class AppBuilder {
 
         final AddCourseController addCourseController = new AddCourseController(addCourseInteractor);
         courseAddView.setAddCourseController(addCourseController);
+        return this;
+    }
+
+    public AppBuilder deleteAssignmentUseCase() {
+        //TODO: where is this used?
+        final DeleteAssignmentOutputBoundary deleteAssignmentOutputBoundary = new DeleteAssignmentPresenter(assignmentListViewModel, viewManagerModel);
+        final DeleteAssignmentInputBoundary deleteAssignmentInteractor = new DeleteAssignmentInteractor(
+                userDataAccessObject, deleteAssignmentOutputBoundary);
+
+        final DeleteAssignmentController deleteAssignmentController = new DeleteAssignmentController(deleteAssignmentInteractor);
+        //TODO: setDeleteAssignmentController?
+        assignmentListView.setDeleteAssignmentController(deleteAssignmentController);
         return this;
     }
 

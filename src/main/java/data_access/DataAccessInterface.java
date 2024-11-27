@@ -1,18 +1,19 @@
 package data_access;
 
 import entity.Assignment;
-import entity.CommonAssignment;
 import entity.Course;
 import use_case.add_assignment.AddAssignmentCourseDataAccessInterface;
 import use_case.add_course.AddCourseDataAccessInterface;
+import use_case.delete_assignment.DeleteAssignmentDataAccessInterface;
 import use_case.delete_course.DeleteCourseDataAccessInterface;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class DataAccessInterface implements AddCourseDataAccessInterface, AddAssignmentCourseDataAccessInterface, DeleteCourseDataAccessInterface {
+public class DataAccessInterface implements
+        AddCourseDataAccessInterface,
+        AddAssignmentCourseDataAccessInterface,
+        DeleteCourseDataAccessInterface,
+        DeleteAssignmentDataAccessInterface,{
 
     private final Map<String, Map<Course, List<Assignment>>> courses = new HashMap<>();
 
@@ -52,5 +53,17 @@ public class DataAccessInterface implements AddCourseDataAccessInterface, AddAss
     @Override
     public void deleteCourse(Course course) {
         courses.remove(course.getCode());
+    }
+
+
+    @Override
+    public void deleteAssignment(String assignmentName, Course course) {
+        List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
+        for (Assignment assignment: currentAssignments){
+            if (assignment.getName().equals(assignmentName)){
+                currentAssignments.remove(assignment);
+                break;
+            }
+        }
     }
 }

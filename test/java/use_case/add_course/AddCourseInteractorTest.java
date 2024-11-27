@@ -17,6 +17,7 @@ class AddCourseInteractorTest {
         CourseFactory factory = new CommonCourseFactory();
         AddCourseInputData courseInputData = new AddCourseInputData("Software Design", "CSC207");
         Course course = factory.create(courseInputData.getName(), courseInputData.getCode());
+
         DataAccessInterface courseRepository = new DataAccessInterface();
 
         AddCourseOutputBoundary successPresenter = new AddCourseOutputBoundary() {
@@ -56,7 +57,7 @@ class AddCourseInteractorTest {
 
             @Override
             public void prepareSuccessView(AddCourseOutputData outputData) {
-                fail("Use case success is unexpected/n");
+                fail("Use case success is unexpected");
             }
 
             @Override
@@ -66,7 +67,9 @@ class AddCourseInteractorTest {
             }
 
             @Override
-            public void switchToCourseView() {}
+            public void switchToCourseView() {
+
+            }
         };
 
         AddCourseInputBoundary interactor = new AddCourseInteractor(courseRepository, successPresenter, factory);

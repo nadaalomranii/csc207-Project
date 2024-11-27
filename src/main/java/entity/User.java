@@ -3,7 +3,7 @@ package entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements CommonUser {
     private String name;
     private String username;
     private String password;
@@ -15,10 +15,18 @@ public class User {
         this.password = password;
         this.email = email;
     }
-    public String getName() { return name; }
-    public String getUsername() { return username; }
-    public String getEmail() { return password; }
 
+    @Override
+    public String getName() { return name; }
+
+    @Override
+    public String getUsername() { return username; }
+
+    @Override
+    public String getPassword() { return password; }
+
+    @Override
+    public String getEmail() { return password; }
 
 
 

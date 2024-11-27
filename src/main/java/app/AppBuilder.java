@@ -5,10 +5,6 @@ import entity.AssignmentFactory;
 import entity.CommonAssignmentFactory;
 import entity.CommonCourseFactory;
 import entity.CourseFactory;
-
-// for testing
-import entity.Course;
-
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_assignment.AddAssignmentController;
 import interface_adapter.add_assignment.AddAssignmentPresenter;
@@ -153,11 +149,11 @@ public class AppBuilder {
      * @return the application
      */
     public JFrame build() {
-        final JFrame application = new JFrame("Courses: ");
+        final JFrame application = new JFrame("AssignMate");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
-        viewManagerModel.setState(courseAddView.getViewName());
+        viewManagerModel.setState(courseListView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;

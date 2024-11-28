@@ -26,4 +26,8 @@ public class EditAssignmentInputData {
 
         return newScore;
     }
+
+    public String getName() {
+        return assignment.getName();
+    }
 }

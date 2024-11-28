@@ -25,6 +25,17 @@ public class EditAssignmentInteractor implements EditAssignmentInputBoundary {
         final Assignment assignment = assignmentFactory.create(editAssignmentInputData.getAssignment().getName(),
                 editAssignmentInputData.getNewScore(), editAssignmentInputData.getAssignment().getWeight(),
                  editAssignmentInputData.getAssignment().getDueDate());
+
+        // get assignment name
+        final String name = editAssignmentInputData.getName();
+
+        // assignment name already exists; prepare fail view
+        if (dataAccess.existsByName(assignment.getName())) {
+            editAssignmentPresenter.prepareFailView(name + ": assignment already exists.");
+        }
+
+        // assignment name doesn't exist
+        else {
         dataAccess.editAssignment(assignment);
 
         final EditAssignmentOutputData editAssignmentOutputData = new EditAssignmentOutputData(assignment.getGrade()
@@ -32,4 +43,4 @@ public class EditAssignmentInteractor implements EditAssignmentInputBoundary {
 
         editAssignmentPresenter.prepareSuccessView(editAssignmentOutputData);
     }
-}
+}}

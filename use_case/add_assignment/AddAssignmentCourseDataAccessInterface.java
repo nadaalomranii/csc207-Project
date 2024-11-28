@@ -4,5 +4,12 @@ import entity.Assignment;
 import entity.Course;
 
 public interface AddAssignmentCourseDataAccessInterface {
+    /**
+     * Checks if the course already exists.
+     * @param name the assignment name to look for
+     * @return true if a course with the given code exists; false otherwise
+     */
+    boolean existsByName(String name);
+
     void saveAssignment(Assignment assignment, Course course);
 }

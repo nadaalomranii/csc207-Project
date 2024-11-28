@@ -26,6 +26,8 @@ import use_case.add_course.AddCourseInteractor;
 import use_case.delete_assignment.DeleteAssignmentInputBoundary;
 import use_case.delete_assignment.DeleteAssignmentInteractor;
 import use_case.delete_assignment.DeleteAssignmentOutputBoundary;
+import use_case.send_notification.SendNotificationOutputBoundary;
+import use_case.send_notification.SendNotificationOutputData;
 import view.*;
 
 

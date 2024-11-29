@@ -3,7 +3,7 @@ package use_case.add_assignment;
 import entity.Assignment;
 import entity.Course;
 
-public interface AddAssignmentCourseDataAccessInterface {
+public interface AddAssignmentDataAccessInterface {
     /**
      * Checks if the course already exists.
      * @param name the assignment name to look for

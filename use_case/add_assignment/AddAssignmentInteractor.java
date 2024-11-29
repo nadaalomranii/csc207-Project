@@ -7,7 +7,7 @@ import entity.*;
  * The Add Assignment Interactor.
  */
 public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
-    private final AddAssignmentCourseDataAccessInterface assignmentDataAccessObject;
+    private final AddAssignmentDataAccessInterface assignmentDataAccessObject;
     private final AddAssignmentOutputBoundary addAssignmentPresenter;
     private final AssignmentFactory assignmentFactory;
 

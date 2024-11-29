@@ -3,16 +3,21 @@ package data_access;
 import entity.Assignment;
 import entity.CommonAssignment;
 import entity.Course;
-import use_case.add_assignment.AddAssignmentCourseDataAccessInterface;
+import use_case.add_assignment.AddAssignmentDataAccessInterface;
 import use_case.add_course.AddCourseDataAccessInterface;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DataAccessInterface implements AddCourseDataAccessInterface, AddAssignmentCourseDataAccessInterface {
+public class DataAccessInterface implements AddCourseDataAccessInterface, AddAssignmentDataAccessInterface {
 
     private final Map<String, Map<Course, List<Assignment>>> courses = new HashMap<>();
+
+    @Override
+    public boolean existsByName(String name) {
+        return false;
+    }
 
     @Override
     public void saveAssignment(Assignment assignment, Course course) {

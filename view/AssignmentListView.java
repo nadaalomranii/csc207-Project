@@ -26,7 +26,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private final JTextField assignmentDueDateField = new JTextField(15);
 
     private final JButton addAssignment;
-    private final JButton cancel;
+    private final JButton deleteAssignment;
 
     // NEW FOR TABLE
     private final JTable assignmentTable; // The table to display assignment data
@@ -51,8 +51,9 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         final JPanel buttons = new JPanel();
         addAssignment = new JButton("Add Assignment");
         buttons.add(addAssignment);
-        cancel = new JButton("Cancel");
-        buttons.add(cancel);
+        deleteAssignment = new JButton("Delete Assignment");
+        buttons.add(deleteAssignment);
+        deleteAssignment.addActionListener(this);
 
         this.add(title);
         this.add(assignmentNameInfo);
@@ -88,9 +89,29 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
             assignmentGradeField.setText("");
             assignmentWeightField.setText("");
             assignmentDueDateField.setText("");
+        } else if (evt.getSource() == deleteAssignment) {
+            // Handle delete assignment button click
+            int selectedRow = assignmentTable.getSelectedRow();
+            if (selectedRow != -1) { // Ensure a row is selected
+                int confirm = JOptionPane.showConfirmDialog(
+                        this,
+                        "Are you sure you want to delete this assignment?",
+                        "Delete Confirmation",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (confirm == JOptionPane.YES_OPTION) {
+                    tableModel.removeRow(selectedRow); // Remove the selected row
+                    JOptionPane.showMessageDialog(this, "Assignment deleted successfully.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No assignment selected. Please select a row to delete.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
         }
     }
 
+    // TODO work through these issues
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final AssignmentListState state = (AssignmentListState) evt.getNewValue();

@@ -1,43 +1,26 @@
 package interface_adapter.edit_assignment;
 
+import entity.Assignment;
+
 /**
- * The State information representing the logged-in user.
+ * The State information representing the assignment.
  */
-// TODO change according to make it specific to edit assignment
+
 public class EditAssignmentState {
-    private String username = "";
+    private Assignment assignment;
 
-    private String password = "";
-    private String passwordError;
+    private float newScore;
 
-    public EditAssignmentState(EditAssignmentState copy) {
-        username = copy.username;
-        password = copy.password;
-        passwordError = copy.passwordError;
-    }
-
-    // Because of the previous copy constructor, the default constructor must be explicit.
     public EditAssignmentState() {
 
     }
 
-    public String getUsername() {
-        return username;
-    }
+    public Assignment getAssignment() {return assignment;}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    public void setAssignment(Assignment assignment) {this.assignment = assignment;}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public float getNewScore() {return newScore;}
 
-    public void setPasswordError(String passwordError) {
-        this.passwordError = passwordError;
-    }
+    public void setNewScore(float newScore) {this.newScore = newScore;}
 
-    public String getPassword() {
-        return password;
-    }
 }

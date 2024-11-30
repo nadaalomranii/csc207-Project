@@ -1,7 +1,7 @@
 package use_case.delete_course;
 
 /**
- * The output boundary for the change password use case.
+ * The output boundary for the delete course use case.
  */
 public interface DeleteCourseOutputBoundary {
     /**

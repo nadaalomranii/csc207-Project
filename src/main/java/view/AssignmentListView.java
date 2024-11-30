@@ -15,7 +15,7 @@ import interface_adapter.delete_assignment.DeleteAssignmentController;
 /**
  * The view for when the user is adding a course.
  */
-public class AssignmentListView extends JPanel implements ActionListener, PropertyChangeListener {
+public class    AssignmentListView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final String viewName = "Assignment List";
     private final AssignmentListViewModel assignmentListViewModel;

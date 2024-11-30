@@ -74,17 +74,13 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
                         if (evt.getSource().equals(addAssignment)) {
                             final AddAssignmentState currentState = addAssignmentViewModel.getState();
 
-                            try {
-                                addAssignmentController.execute(
-                                        currentState.getAssignmentName(),
-                                        currentState.getDueDate(),
-                                        currentState.getGrade(),
-                                        currentState.getWeight(),
-                                        currentState.getCourse()
-                                );
-                            } catch (ParseException e) {
-                                throw new RuntimeException(e);
-                            }
+                            addAssignmentController.execute(
+                                    currentState.getAssignmentName(),
+                                    currentState.getDueDate(),
+                                    currentState.getGrade(),
+                                    currentState.getWeight(),
+                                    currentState.getCourse()
+                            );
                         }
                     }
                 }
@@ -166,40 +162,29 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
 
         assignmentDueDateField.getDocument().addDocumentListener(new DocumentListener() {
 
-            private void documentListenerHelper() throws ParseException {
-                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+            private void documentListenerHelper() {
                 final AddAssignmentState currentState = addAssignmentViewModel.getState();
+                // HERE
                 String assignmentDueDateInput = assignmentDueDateField.getText();
-                Date date = formatter.parse(assignmentDueDateInput);
+                Date date = new Date();
+                date.setTime(Long.parseLong(assignmentDueDateInput));
                 currentState.setDueDate(date);
                 addAssignmentViewModel.setState(currentState);
             }
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                try {
-                    documentListenerHelper();
-                } catch (ParseException ex) {
-                    throw new RuntimeException(ex);
-                }
+                documentListenerHelper();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                try {
-                    documentListenerHelper();
-                } catch (ParseException ex) {
-                    throw new RuntimeException(ex);
-                }
+                documentListenerHelper();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                try {
-                    documentListenerHelper();
-                } catch (ParseException ex) {
-                    throw new RuntimeException(ex);
-                }
+                documentListenerHelper();
             }
         });
 

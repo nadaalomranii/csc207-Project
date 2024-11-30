@@ -1,19 +1,16 @@
 package data_access;
 
 import entity.Assignment;
-import entity.CommonAssignment;
 import entity.Course;
 import use_case.add_assignment.AddAssignmentCourseDataAccessInterface;
 import use_case.add_course.AddCourseDataAccessInterface;
 import use_case.delete_course.DeleteCourseDataAccessInterface;
+import use_case.edit_course.EditCourseDataAccessInterface;
 
-import java.util.ArrayList;
+import java.util.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class DataAccessInterface implements AddCourseDataAccessInterface, AddAssignmentCourseDataAccessInterface, DeleteCourseDataAccessInterface {
+public class DataAccessInterface implements AddCourseDataAccessInterface, AddAssignmentCourseDataAccessInterface, DeleteCourseDataAccessInterface, EditCourseDataAccessInterface {
+    // The first key is the course code
     private final Map<String, Map<Course, List<Assignment>>> courses = new HashMap<>();
 
     @Override
@@ -37,11 +34,34 @@ public class DataAccessInterface implements AddCourseDataAccessInterface, AddAss
 
     @Override
     public void saveCourse(Course course) {
+        // Adds the course code as a key
         courses.put(course.getCode(), new HashMap<>());
+        // Adds the course corresponding to that course code
+        courses.get(course.getCode()).put(course, new ArrayList<>());
     }
 
     @Override
     public void deleteCourse(Course course) {
         courses.remove(course.getCode());
+    }
+
+    @Override
+    public void editCourse(Course course) {
+        Set<Course> currentCourse = courses.get(course.getCode()).keySet();
+        // This set only contains one course
+        for (Course c : currentCourse) {
+            c.changeName(course.getName());
+        }
+    }
+
+    @Override
+    public String checkName(String courseCode) {
+        Set<Course> currentCourse = courses.get(courseCode).keySet();
+        // This set only contains one course
+        String courseName = "";
+        for (Course c : currentCourse) {
+            courseName = c.getName();
+        }
+        return courseName;
     }
 }

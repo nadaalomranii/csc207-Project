@@ -30,4 +30,9 @@ public interface Course {
      * @return the code of the course.
      */
     String getCode();
+
+    /**
+     * Changes the name of the course
+     */
+    void changeName(String newName);
 }

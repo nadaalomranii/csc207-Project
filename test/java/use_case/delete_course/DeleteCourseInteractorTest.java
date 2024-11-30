@@ -22,7 +22,7 @@ public class DeleteCourseInteractorTest {
 
         // create a successPresenter that tests if the test cases are like what we expect
 
-        DeleteCourseOutputBoundary sucessPresenter = new DeleteCourseOutputBoundary() {
+        DeleteCourseOutputBoundary successPresenter = new DeleteCourseOutputBoundary() {
             @Override
             public void prepareSuccessView(DeleteCourseOutputData deleteCourseOutputData) {
                 // TODO: Why is the output data only outputs the course code, not the course object?
@@ -37,7 +37,7 @@ public class DeleteCourseInteractorTest {
                 // How to reach 100% code coverage
             }
         };
-        DeleteCourseInputBoundary interactor = new DeleteCourseInteractor(courseRepository, sucessPresenter, courseFactory);
+        DeleteCourseInputBoundary interactor = new DeleteCourseInteractor(courseRepository, successPresenter, courseFactory);
         interactor.execute(inputData);
 
         // check that the course no longer exists in the data

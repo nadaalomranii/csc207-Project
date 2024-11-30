@@ -32,14 +32,15 @@ public class DeleteCourseInteractorTest {
             @Override
             public void switchToCourseListView() {
                 // This is expected
-                // TOOD: this test works but we never reach the switch to course list view in the test
+                // TODO: this test works but we never reach the switch to course list view in the test
                 // same thing in lab 5
+                // How to reach 100% code coverage
             }
         };
         DeleteCourseInputBoundary interactor = new DeleteCourseInteractor(courseRepository, sucessPresenter, courseFactory);
         interactor.execute(inputData);
 
-        // check if the course no longer exists in the data
+        // check that the course no longer exists in the data
         boolean checkExists = courseRepository.existsByCode(course.getCode());
         assertFalse(checkExists);
     }

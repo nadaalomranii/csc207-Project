@@ -3,6 +3,10 @@ package use_case.add_assignment;
 import data_access.DataAccessInterface;
 import entity.*;
 import org.junit.jupiter.api.Test;
+
+import java.util.Calendar;
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AddAssignmentInteractorTest {
@@ -13,7 +17,7 @@ class AddAssignmentInteractorTest {
         Course course = factory.create("Software Design", "CSC207");
 
         AddAssignmentInputData inputData = new AddAssignmentInputData("Course Project",
-                "December 3, 2024",
+                new Date(2024, Calendar.DECEMBER, 3),
                 "100",
                 "25", course);
         DataAccessInterface courseRepository = new DataAccessInterface();

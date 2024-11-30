@@ -1,5 +1,8 @@
 package entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User implements CommonUser {
     private String name;
     private String username;
@@ -24,5 +27,7 @@ public class User implements CommonUser {
 
     @Override
     public String getEmail() { return password; }
+
+
 
 }

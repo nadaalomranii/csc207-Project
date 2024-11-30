@@ -7,7 +7,5 @@ public class DeleteCourseOutputData {
         this.courseCode = courseCode;
     }
 
-    public String getCourseCode() {
-        return courseCode;
-    }
+    public String getCourseCode() { return courseCode; }
 }

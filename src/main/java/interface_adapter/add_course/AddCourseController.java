@@ -21,12 +21,11 @@ public class AddCourseController {
      */
     public void execute(String name, String courseCode) {
         final AddCourseInputData addCourseInputData = new AddCourseInputData(name, courseCode);
-
         addCourseUseCaseInteractor.execute(addCourseInputData);
     }
 
     /**
      * Executes the "switch to AssignmentView" Use Case.
      */
-    public void switchToAssignmentView() {addCourseUseCaseInteractor.switchToAssignmentView();}
+    //public void switchToAssignmentView() {addCourseUseCaseInteractor.switchToAssignmentView();}
 }

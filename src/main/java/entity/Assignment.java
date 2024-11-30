@@ -27,6 +27,9 @@ public interface Assignment {
 
     /**
      * Returns the due date of the assignment.
+     * @return the due date of the assignment.
+     */
+    String getDueDate();
      *
      * @return the due date of the assignment.
      */

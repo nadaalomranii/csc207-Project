@@ -11,6 +11,7 @@ import javax.swing.*;
 import interface_adapter.course_list.CourseListState;
 import interface_adapter.course_list.CourseListViewModel;
 
+
 import entity.Course;
 
 /**

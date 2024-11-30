@@ -3,6 +3,7 @@ package use_case.add_assignment;
 import entity.Course;
 
 public class AddAssignmentOutputData {
+    // TODO: Delete message?
     private final String message;
     private final Course course;
 

@@ -30,7 +30,7 @@ public class EditCourseInteractor implements EditCourseInputBoundary {
     }
 
     @Override
-    public void switchToCourseListView() {
+    public void switchToAssignmentListView() {
         editCoursePresenter.switchToAssignmentListView();
     }
 }

@@ -15,5 +15,5 @@ public interface EditCourseInputBoundary {
     /**
      * Executes the switch to course list view.
      */
-    void switchToCourseListView();
+    void switchToAssignmentListView();
 }

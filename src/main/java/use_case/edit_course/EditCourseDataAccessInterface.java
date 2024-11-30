@@ -6,4 +6,7 @@ import entity.Course;
  */
 public interface EditCourseDataAccessInterface {
     void editCourse(Course course);
+
+    // Return the course name from the course code.
+    String checkName(String courseCode);
 }

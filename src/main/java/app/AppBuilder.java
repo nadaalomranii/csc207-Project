@@ -171,7 +171,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(courseEditView.getViewName());
+        viewManagerModel.setState(courseListView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;

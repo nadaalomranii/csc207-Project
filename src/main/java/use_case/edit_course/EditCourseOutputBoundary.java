@@ -15,9 +15,8 @@ public interface EditCourseOutputBoundary {
     /**
      * Prepares the fail view for the edit course use case.
      * Fails when the user input is empty for the course name and/or the course code.
-     * @param editCourseOutputData: the output data
      */
-    void prepareFailView(EditCourseOutputData editCourseOutputData);
+    void prepareFailView();
 
     /**
      * Switches to the Assignment list view.

@@ -21,11 +21,6 @@ public class CommonCourse implements Course {
         return name;
     }
 
-//    @Override
-//    public String getCourseName() {
-//        return courseCode;
-//    }
-
     @Override
     public String getCode() {
         return courseCode;

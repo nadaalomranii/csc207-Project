@@ -14,12 +14,20 @@ import interface_adapter.add_course.AddCoursePresenter;
 import interface_adapter.add_course.AddCourseViewModel;
 import interface_adapter.assignment_list.AssignmentListViewModel;
 import interface_adapter.course_list.CourseListViewModel;
+import interface_adapter.edit_course.EditCourseController;
+import interface_adapter.edit_course.EditCoursePresenter;
+import interface_adapter.edit_course.EditCourseState;
+import interface_adapter.edit_course.EditCourseViewModel;
 import use_case.add_assignment.AddAssignmentInteractor;
 import use_case.add_assignment.AddAssignmentOutputBoundary;
 import use_case.add_assignment.AddAssignmentInputBoundary;
 import use_case.add_course.AddCourseOutputBoundary;
 import use_case.add_course.AddCourseInputBoundary;
 import use_case.add_course.AddCourseInteractor;
+import use_case.edit_course.EditCourseInputBoundary;
+import use_case.edit_course.EditCourseInputData;
+import use_case.edit_course.EditCourseInteractor;
+import use_case.edit_course.EditCourseOutputBoundary;
 import view.*;
 
 import javax.swing.*;
@@ -46,6 +54,9 @@ public class AppBuilder {
 
     private AssignmentListView assignmentListView;
     private AssignmentListViewModel assignmentListViewModel;
+
+    private CourseEditView courseEditView;
+    private EditCourseViewModel editCourseViewModel;
 
 
     public AppBuilder() { cardPanel.setLayout(cardLayout); }
@@ -95,6 +106,17 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Assignment List View to the application.
+     * @return this builder
+     */
+    public AppBuilder addCourseEditView() {
+        editCourseViewModel = new EditCourseViewModel();
+        courseEditView = new CourseEditView(editCourseViewModel);
+        cardPanel.add(courseEditView, courseEditView.getViewName());
+        return this;
+    }
+
+    /**
      * Adds the Add Assignment Use Case to the application.
      * @return this builder
      */
@@ -125,6 +147,21 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Edit Course Use Case to the application
+     * @return this builder
+     */
+    public AppBuilder addEditCourseUseCase() {
+        final EditCourseOutputBoundary editCourseOutputBoundary = new EditCoursePresenter(
+                editCourseViewModel, assignmentListViewModel, viewManagerModel);
+        final EditCourseInputBoundary editCourseInteractor = new EditCourseInteractor(
+                userDataAccessObject, editCourseOutputBoundary, courseFactory);
+
+        final EditCourseController editCourseController = new EditCourseController(editCourseInteractor);
+        courseEditView.setEditCourseController(editCourseController);
+        return this;
+    }
+
+    /**
      * Creates the JFrame for the application and initially sets the Course List View to be displayed.
      * @return the application
      */
@@ -134,7 +171,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(courseListView.getViewName());
+        viewManagerModel.setState(courseEditView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;

@@ -11,8 +11,10 @@ public class main {
                                             .addAddCourseView()
                                             .addCourseListView()
                                             .addAssignmentListView()
+                                            .addCourseEditView()
                                             .addAddAssignmentUseCase()
                                             .addAddCourseUseCase()
+                                            .addEditCourseUseCase()
                                             .build();
 
         application.pack();

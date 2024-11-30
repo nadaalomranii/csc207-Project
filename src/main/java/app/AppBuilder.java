@@ -18,6 +18,9 @@ import interface_adapter.edit_course.EditCourseController;
 import interface_adapter.edit_course.EditCoursePresenter;
 import interface_adapter.edit_course.EditCourseState;
 import interface_adapter.edit_course.EditCourseViewModel;
+import interface_adapter.delete_assignment.DeleteAssignmentController;
+import interface_adapter.delete_assignment.DeleteAssignmentPresenter;
+import interface_adapter.delete_assignment.DeleteAssignmentViewModel;
 import use_case.add_assignment.AddAssignmentInteractor;
 import use_case.add_assignment.AddAssignmentOutputBoundary;
 import use_case.add_assignment.AddAssignmentInputBoundary;
@@ -28,7 +31,11 @@ import use_case.edit_course.EditCourseInputBoundary;
 import use_case.edit_course.EditCourseInputData;
 import use_case.edit_course.EditCourseInteractor;
 import use_case.edit_course.EditCourseOutputBoundary;
+import use_case.delete_assignment.DeleteAssignmentInputBoundary;
+import use_case.delete_assignment.DeleteAssignmentInteractor;
+import use_case.delete_assignment.DeleteAssignmentOutputBoundary;
 import view.*;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,6 +65,7 @@ public class AppBuilder {
     private CourseEditView courseEditView;
     private EditCourseViewModel editCourseViewModel;
 
+    private DeleteAssignmentViewModel deleteAssignmentViewModel;
 
     public AppBuilder() { cardPanel.setLayout(cardLayout); }
 
@@ -137,7 +145,7 @@ public class AppBuilder {
      */
     public AppBuilder addAddCourseUseCase() {
         final AddCourseOutputBoundary addCourseOutputBoundary = new AddCoursePresenter(
-                viewManagerModel, courseListViewModel);
+                viewManagerModel, addCourseViewModel, courseListViewModel);
         final AddCourseInputBoundary addCourseInteractor = new AddCourseInteractor(
                 userDataAccessObject, addCourseOutputBoundary, courseFactory);
 
@@ -161,6 +169,18 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder deleteAssignmentUseCase() {
+        //TODO: where is this used?
+        final DeleteAssignmentOutputBoundary deleteAssignmentOutputBoundary = new DeleteAssignmentPresenter(assignmentListViewModel, viewManagerModel);
+        final DeleteAssignmentInputBoundary deleteAssignmentInteractor = new DeleteAssignmentInteractor(
+                userDataAccessObject, deleteAssignmentOutputBoundary);
+
+        final DeleteAssignmentController deleteAssignmentController = new DeleteAssignmentController(deleteAssignmentInteractor);
+        //TODO: setDeleteAssignmentController?
+        assignmentListView.setDeleteAssignmentController(deleteAssignmentController);
+        return this;
+    }
+
     /**
      * Creates the JFrame for the application and initially sets the Course List View to be displayed.
      * @return the application
@@ -170,7 +190,6 @@ public class AppBuilder {
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
-
         viewManagerModel.setState(courseListView.getViewName());
         viewManagerModel.firePropertyChanged();
 

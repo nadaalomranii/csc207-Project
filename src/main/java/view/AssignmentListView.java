@@ -10,6 +10,7 @@ import javax.swing.*;
 
 import interface_adapter.assignment_list.AssignmentListViewModel;
 import interface_adapter.assignment_list.AssignmentListState;
+import interface_adapter.delete_assignment.DeleteAssignmentController;
 
 /**
  * The view for when the user is adding a course.
@@ -67,4 +68,6 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         return viewName;
     }
 
+    public void setDeleteAssignmentController(DeleteAssignmentController deleteAssignmentController) {
+    }
 }

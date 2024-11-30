@@ -1,6 +1,10 @@
 package use_case.add_course;
 
+import entity.Assignment;
 import entity.Course;
+
+import java.util.List;
+import java.util.Map;
 
 public interface AddCourseDataAccessInterface {
     /**
@@ -15,6 +19,8 @@ public interface AddCourseDataAccessInterface {
      * @param course the course to save
      */
     void saveCourse(Course course);
+
+    List<Course> getCourses();
 }
 
 

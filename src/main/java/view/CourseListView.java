@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -39,7 +40,7 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
 
         // Course buttons
         final JPanel allCoursesPanel = new JPanel();
-        Course[] courses = courseListViewModel.getState().getCourses();
+        List<Course> courses = courseListViewModel.getState().getCourses();
         for (Course course : courses) {
             courseButton = new JButton(course.getCode());
             allCoursesPanel.add(courseButton);

@@ -109,9 +109,8 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
             }
         }
         }
-    }
 
-    // TODO work through these issues
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final AssignmentListState state = (AssignmentListState) evt.getNewValue();

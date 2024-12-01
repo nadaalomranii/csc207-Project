@@ -33,7 +33,7 @@ public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
         final User user = addAssignmentInputData.getUser();
 
         // assignment name already exists; prepare fail view
-        if (assignmentDataAccessObject.assignmentExistsByName(name, course, user)) {
+        if (assignmentDataAccessObject.existsByName(name, course, user)) {
             addAssignmentPresenter.prepareFailView(name + ": assignment already exists.");
         }
 

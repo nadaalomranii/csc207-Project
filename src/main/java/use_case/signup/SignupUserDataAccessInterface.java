@@ -1,6 +1,9 @@
 package use_case.signup;
 
+import entity.Course;
 import entity.User;
+
+import java.util.List;
 
 /**
  * The DAO for the signup use case.
@@ -18,5 +21,5 @@ public interface SignupUserDataAccessInterface {
      * Saves the user.
      * @param user the user to save
      */
-    void save(User user);
+    void save(User user, List<Course> courses);
 }

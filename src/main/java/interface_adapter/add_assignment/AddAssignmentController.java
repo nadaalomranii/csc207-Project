@@ -1,6 +1,7 @@
 package interface_adapter.add_assignment;
 
 import entity.Course;
+import entity.User;
 import use_case.add_assignment.AddAssignmentInputBoundary;
 import use_case.add_assignment.AddAssignmentInputData;
 
@@ -24,9 +25,9 @@ public class AddAssignmentController {
      * @param score The score (grade) of the assignment
      * @param weight The weight (in percentage)
      */
-    public void execute(String name, Date dueDate, String score, String weight, Course course) throws ParseException {
+    public void execute(String name, Date dueDate, String score, String weight, Course course, User user) throws ParseException {
         final AddAssignmentInputData addAssignmentInputData = new AddAssignmentInputData(
-                name, dueDate, score, weight, course);
+                name, dueDate, score, weight, course, user);
 
         addAssignmentUseCaseInteractor.execute(addAssignmentInputData);
     }

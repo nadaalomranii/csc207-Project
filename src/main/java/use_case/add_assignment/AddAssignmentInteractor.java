@@ -25,8 +25,7 @@ public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
                 addAssignmentInputData.getScore(), addAssignmentInputData.getWeight(), addAssignmentInputData.getDueDate());
 
         // Save the assignment to the data store
-        // Temporary fix of casting commonassignment to assignment FIXED
-        courseDataAccessObject.saveAssignment(assignment, addAssignmentInputData.getCourse());
+        courseDataAccessObject.saveAssignment(assignment, addAssignmentInputData.getCourse(), addAssignmentInputData.getUser());
 
         // Prepare success output and send it to the presenter
         AddAssignmentOutputData outputData = new AddAssignmentOutputData("Assignment added successfully.",

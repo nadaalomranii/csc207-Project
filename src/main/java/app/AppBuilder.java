@@ -13,6 +13,9 @@ import interface_adapter.assignment_list.AssignmentListViewModel;
 import interface_adapter.course_list.CourseListController;
 import interface_adapter.course_list.CourseListState;
 import interface_adapter.course_list.CourseListViewModel;
+import interface_adapter.delete_course.DeleteCourseController;
+import interface_adapter.delete_course.DeleteCoursePresenter;
+import interface_adapter.delete_course.DeleteCourseViewModel;
 import interface_adapter.edit_course.EditCourseController;
 import interface_adapter.edit_course.EditCoursePresenter;
 import interface_adapter.edit_course.EditCourseState;
@@ -32,6 +35,9 @@ import use_case.add_assignment.AddAssignmentInputBoundary;
 import use_case.add_course.AddCourseOutputBoundary;
 import use_case.add_course.AddCourseInputBoundary;
 import use_case.add_course.AddCourseInteractor;
+import use_case.delete_course.DeleteCourseInputBoundary;
+import use_case.delete_course.DeleteCourseInteractor;
+import use_case.delete_course.DeleteCourseOutputBoundary;
 import use_case.edit_course.EditCourseInputBoundary;
 import use_case.edit_course.EditCourseInputData;
 import use_case.edit_course.EditCourseInteractor;
@@ -79,6 +85,8 @@ public class AppBuilder {
     private EditCourseViewModel editCourseViewModel;
 
     private DeleteAssignmentViewModel deleteAssignmentViewModel;
+
+    private DeleteCourseViewModel deleteCourseViewModel;
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -242,6 +250,19 @@ public class AppBuilder {
 
         final LoginController loginController = new LoginController(loginInteractor);
         loginView.setLoginController(loginController);
+        return this;
+    }
+
+    public AppBuilder addDeleteCourseUseCase() {
+        final DeleteCourseOutputBoundary deleteCourseOutputBoundary = new DeleteCoursePresenter(deleteCourseViewModel,
+                courseListViewModel,
+                viewManagerModel);
+        final DeleteCourseInputBoundary deleteCourseInteractor = new DeleteCourseInteractor(userDataAccessObject,
+                deleteCourseOutputBoundary,
+                courseFactory);
+
+        final DeleteCourseController deleteCourseController = new DeleteCourseController(deleteCourseInteractor);
+        assignmentListView.setDeleteCourseController(deleteCourseController);
         return this;
     }
 

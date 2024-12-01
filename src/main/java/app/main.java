@@ -6,18 +6,19 @@ public class main {
     public static void main(String[] args) {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
-//                                            .addAddAssignmentView()
+                                            .addAddAssignmentView()
                                             .addAddCourseView()
                                             .addCourseListView()
                                             .addAssignmentListView()
                                             .addSignUpView()
                                             .addLoginView()
                                             .addCourseEditView()
-//                                            .addAddAssignmentUseCase()
+                                            .addAddAssignmentUseCase()
                                             .addAddCourseUseCase()
                                             .addEditCourseUseCase()
                                             .addSignUpUseCase()
                                             .deleteAssignmentUseCase()
+                                            .addDeleteCourseUseCase()
                                             .loginUseCase()
                                             .addCourseListUseCase()
                                             .build();

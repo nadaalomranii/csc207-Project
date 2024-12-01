@@ -61,7 +61,7 @@ public class CourseEditView extends JPanel implements ActionListener, PropertyCh
                             final EditCourseState currentState = editCourseViewModel.getState();
 
                             editCourseController.execute(currentState.getCourseName(),
-                                    currentState.getCourseCode());
+                                    currentState.getCourseCode(), currentState.getUser());
                         }
                     }
                 }

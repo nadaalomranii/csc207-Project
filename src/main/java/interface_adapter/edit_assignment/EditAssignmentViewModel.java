@@ -1,12 +1,11 @@
-package src.main.java.interface_adapter.edit_assignment;
+package interface_adapter.edit_assignment;
 
 import interface_adapter.ViewModel;
-
-public class EditAssignmentViewModel extends ViewModel<EditAssignmentState> {
-
+//  Temporary fix but would be more efficient without the hefty import
+public class EditAssignmentViewModel extends ViewModel<src.main.java.interface_adapter.edit_assignment.EditAssignmentState> {
     public EditAssignmentViewModel() {
-        super("EditAssignment");
-        setState(new EditAssignmentState());
+        super("Edit Assignment");
+        setState(new src.main.java.interface_adapter.edit_assignment.EditAssignmentState());
     }
 }
 

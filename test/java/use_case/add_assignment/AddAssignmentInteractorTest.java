@@ -30,7 +30,6 @@ class AddAssignmentInteractorTest {
         AddAssignmentOutputBoundary successPresenter = new AddAssignmentOutputBoundary() {
             @Override
             public void prepareSuccessView(AddAssignmentOutputData outputData) {
-                // TODO: Why does add assignment output data not output the assignment itself?
                 assertEquals(outputData.getCourse(), course);
             }
 

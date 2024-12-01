@@ -11,7 +11,7 @@ public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
     private final AddAssignmentOutputBoundary addAssignmentPresenter;
     private final AssignmentFactory assignmentFactory;
 
-    public AddAssignmentInteractor(DataAccessInterface assignmentDataAccessInterface,
+    public AddAssignmentInteractor(AddAssignmentDataAccessInterface assignmentDataAccessInterface,
                                    AddAssignmentOutputBoundary addAssignmentOutputBoundary,
                                    AssignmentFactory assignmentFactory) {
         this.assignmentDataAccessObject = assignmentDataAccessInterface;
@@ -35,7 +35,6 @@ public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
         // assignment name doesn't exist
         else {
         // Save the assignment to the data store
-        // Temporary fix of casting commonassignment to assignment FIXED
         assignmentDataAccessObject.saveAssignment(assignment, addAssignmentInputData.getCourse());
 
         // Prepare success output and send it to the presenter

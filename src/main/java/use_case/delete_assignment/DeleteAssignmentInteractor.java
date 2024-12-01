@@ -17,7 +17,7 @@ public class DeleteAssignmentInteractor implements DeleteAssignmentInputBoundary
     public void execute(DeleteAssignmentInputData deleteAssignmentInputData) {
         Course course = deleteAssignmentInputData.getCourse();
         String assignmentName = deleteAssignmentInputData.getAssignmentName();
-        dataAccessObject.deleteAssignment(assignmentName, course);
+        dataAccessObject.deleteAssignment(assignmentName, course, deleteAssignmentInputData.getUser());
 
 
         final DeleteAssignmentOutputData deleteAssignmentOutputData = new DeleteAssignmentOutputData(assignmentName);

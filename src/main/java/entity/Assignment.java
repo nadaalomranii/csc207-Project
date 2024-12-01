@@ -26,7 +26,6 @@ public interface Assignment {
     float getWeight();
 
     /**
-     * Returns the due date of the assignment.
      * @return the due date of the assignment.
      */
     Date getDueDate();

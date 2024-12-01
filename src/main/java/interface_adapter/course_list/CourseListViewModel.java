@@ -5,7 +5,7 @@ import interface_adapter.ViewModel;
 public class CourseListViewModel extends ViewModel<CourseListState> {
 
     public CourseListViewModel() {
-        super("CourseList");
+        super("Course List");
         setState(new CourseListState());
     }
 }

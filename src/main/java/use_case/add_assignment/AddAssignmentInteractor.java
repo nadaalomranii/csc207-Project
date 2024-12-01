@@ -44,7 +44,7 @@ public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
 
         // Prepare success output and send it to the presenter
         AddAssignmentOutputData outputData = new AddAssignmentOutputData("Assignment added successfully.",
-                                                                        addAssignmentInputData.getCourse());
+                                                                        addAssignmentInputData.getCourse(), addAssignmentInputData.getUser());
         addAssignmentPresenter.prepareSuccessView(outputData);
     }
 }}

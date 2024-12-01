@@ -19,7 +19,6 @@ public class main {
                                             .addSignUpUseCase()
                                             .deleteAssignmentUseCase()
                                             .loginUseCase()
-                                            .addCourseListUseCase()
                                             .build();
 
         application.pack();

@@ -24,7 +24,6 @@ public class AddCoursePresenter implements AddCourseOutputBoundary {
     public void prepareSuccessView(AddCourseOutputData course) {
         // On success, switch to the Course List View
         final CourseListState courseListState = courseListViewModel.getState();
-        courseListState.setCourses(course.getCourses());
 //        courseListState.getCourse(outputData.getName()); // gives a list of course objects
         // TODO: Need to add the list of courses to the course list state
         // How to do without violating CA?

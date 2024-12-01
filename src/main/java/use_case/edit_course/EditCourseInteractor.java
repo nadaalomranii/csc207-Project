@@ -3,8 +3,6 @@ package use_case.edit_course;
 import entity.Course;
 import entity.CourseFactory;
 
-import java.util.ArrayList;
-
 public class EditCourseInteractor implements EditCourseInputBoundary {
     private final EditCourseDataAccessInterface dataAccessObject;
     private final EditCourseOutputBoundary editCoursePresenter;
@@ -21,7 +19,7 @@ public class EditCourseInteractor implements EditCourseInputBoundary {
     @Override
     public void execute(EditCourseInputData editCourseInputData) {
         final Course course = courseFactory.create(editCourseInputData.getCourseName(),
-                editCourseInputData.getCourseCode(), new ArrayList<>());
+                editCourseInputData.getCourseCode());
 
         dataAccessObject.editCourse(course, editCourseInputData.getUser());
 

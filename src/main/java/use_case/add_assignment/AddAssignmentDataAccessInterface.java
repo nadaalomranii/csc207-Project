@@ -12,7 +12,7 @@ public interface AddAssignmentDataAccessInterface {
      * @param course the course in which to check for the assignment
      * @param user the user associated with the course and assignment
      */
-    boolean assignmentExistsByName(String name, Course course, User user);
+    boolean existsByName(String name, Course course, User user);
 
     void saveAssignment(Assignment assignment, Course course, User user);
 }

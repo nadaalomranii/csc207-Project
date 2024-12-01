@@ -15,5 +15,5 @@ public interface EditAssignmentDataAccessInterface {
      * Updates the system to record this assignment's score.
      * @param assignment the assignment whose score is to be updated
      */
-    void editAssignment(Assignment assignment, Course course);
+    void editAssignment(Assignment assignment, Course course, User user);
 }

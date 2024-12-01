@@ -34,12 +34,12 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
     private final JTextField assignmentGradeField = new JTextField(15);
     private final JTextField assignmentWeightField = new JTextField(15);
     private final JTextField assignmentDueDateField = new JTextField(15);
-    
+
 
     private final JButton addAssignment;
     private final JButton cancel;
     private AddAssignmentController addAssignmentController;
-    
+
     public AssignmentAddView(AddAssignmentViewModel addAssignmentViewModel) {
         this.addAssignmentViewModel = addAssignmentViewModel;
         this.addAssignmentViewModel.addPropertyChangeListener(this);

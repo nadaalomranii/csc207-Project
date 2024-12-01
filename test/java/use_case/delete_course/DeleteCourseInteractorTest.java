@@ -3,6 +3,9 @@ package use_case.delete_course;
 import data_access.DataAccessInterface;
 import entity.*;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DeleteCourseInteractorTest {
@@ -12,7 +15,7 @@ public class DeleteCourseInteractorTest {
         UserFactory userFactory = new CommonUserFactory();
 
         // This is the course we want to save then delete
-        Course course = courseFactory.create("Software Design", "CSC207");
+        Course course = courseFactory.create("Software Design", "CSC207", new ArrayList<>());
         User user = userFactory.create("Nada", "nadaalomrani", "nada", "nada@gmail.com");
         DeleteCourseInputData inputData = new DeleteCourseInputData("Software Design", "CSC207", user);
 

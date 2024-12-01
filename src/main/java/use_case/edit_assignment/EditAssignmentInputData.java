@@ -1,6 +1,7 @@
 package use_case.edit_assignment;
 
 import entity.Assignment;
+import entity.Course;
 import entity.User;
 
 /**
@@ -12,10 +13,12 @@ public class EditAssignmentInputData {
     private final Assignment assignment;
     private final float newScore;
     private final User user;
+    private final Course course;
 
-    public EditAssignmentInputData(Assignment assignment, float newScore, User user) {
+    public EditAssignmentInputData(Assignment assignment, float newScore, User user, Course course) {
         this.assignment = assignment;
         this.newScore = newScore;
+        this.course = course;
         this.user = user;
     }
 
@@ -34,4 +37,6 @@ public class EditAssignmentInputData {
     }
 
     public User getUser() { return this.user; }
+
+    public Course getCourse() { return this.course; }
 }

@@ -4,6 +4,9 @@ import data_access.DataAccessInterface;
 import entity.*;
 import interface_adapter.edit_course.EditCoursePresenter;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -13,7 +16,7 @@ public class EditCourseInteractorTest {
         CourseFactory courseFactory = new CommonCourseFactory();
         UserFactory userFactory = new CommonUserFactory();
 
-        Course course = courseFactory.create("Software", "csc207");
+        Course course = courseFactory.create("Software", "csc207", new ArrayList<>());
         User user = userFactory.create("Nada", "nadaalomrani", "nada", "nada@gmail.com");
 
         EditCourseInputData inputData = new EditCourseInputData("Software Design", "csc207", user);

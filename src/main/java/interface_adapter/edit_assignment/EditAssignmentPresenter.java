@@ -3,7 +3,6 @@ package interface_adapter.edit_assignment;
 
 import use_case.edit_assignment.EditAssignmentOutputBoundary;
 import use_case.edit_assignment.EditAssignmentOutputData;
-import use_case.edit_assignment.EditAssignmentViewModel;
 import interface_adapter.assignment_list.AssignmentListViewModel;
 
 /**

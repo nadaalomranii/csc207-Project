@@ -19,8 +19,9 @@ import java.util.*;
 /**
  * The DAO for user data.
  */
-public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
-        LoginUserDataAccessInterface,
+public class DBUserDataAccessObject implements
+//        SignupUserDataAccessInterface,
+//        LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface {
     private static final int SUCCESS_CODE = 200;
@@ -47,7 +48,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
 
     /// /// /// /// ///
 
-    @Override
+//    @Override
     public User get(String username) {
         // Make an API call to get the user object.
         final OkHttpClient client = new OkHttpClient().newBuilder().build();
@@ -155,7 +156,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
 
     /// /// /// /// ///
 
-    @Override
+//    @Override
     public boolean existsByName(String username) {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -177,7 +178,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
 
     /// /// /// /// ///
 
-    @Override
+//    @Override
     public void save(User user, List<Course> courses) {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();

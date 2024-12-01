@@ -1,6 +1,7 @@
-package src.main.java.interface_adapter.edit_assignment;
+package interface_adapter.edit_assignment;
 
 import entity.Assignment;
+import entity.User;
 import src.main.java.use_case.edit_assignment.EditAssignmentInputBoundary;
 import src.main.java.use_case.edit_assignment.EditAssignmentInputData;
 import src.main.java.use_case.edit_assignment.EditAssignmentInteractor;
@@ -20,7 +21,7 @@ public class EditAssignmentController {
      * @param newScore the new score
      * @param assignment the assignment whose score has to change
      */
-    public void execute(float newScore, Assignment assignment) {
+    public void execute(float newScore, Assignment assignment, User user) {
         final EditAssignmentInputData editAssignmentInputData = new EditAssignmentInputData();
 
         EditAssignmentInteractor.execute(editAssignmentInputData);

@@ -3,6 +3,8 @@ package use_case.delete_course;
 import entity.Course;
 import entity.CourseFactory;
 
+import java.util.ArrayList;
+
 public class DeleteCourseInteractor implements DeleteCourseInputBoundary{
     private final DeleteCourseDataAccessInterface dataAccessObject;
     private final DeleteCourseOutputBoundary deleteCoursePresenter;
@@ -19,7 +21,7 @@ public class DeleteCourseInteractor implements DeleteCourseInputBoundary{
     @Override
     public void execute(DeleteCourseInputData deleteCourseInputData) {
         final Course course = courseFactory.create(deleteCourseInputData.getCourseName(),
-                deleteCourseInputData.getCourseCode());
+                deleteCourseInputData.getCourseCode(), new ArrayList<>());
 
         dataAccessObject.deleteCourse(course, deleteCourseInputData.getUser());
 

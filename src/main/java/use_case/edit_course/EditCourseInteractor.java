@@ -21,7 +21,7 @@ public class EditCourseInteractor implements EditCourseInputBoundary {
         final Course course = courseFactory.create(editCourseInputData.getCourseName(),
                 editCourseInputData.getCourseCode());
 
-        dataAccessObject.editCourse(course);
+        dataAccessObject.editCourse(course, editCourseInputData.getUser());
 
         final EditCourseOutputData editCourseOutputData = new EditCourseOutputData(course.getName(), course.getCode());
 

@@ -1,11 +1,14 @@
 package interface_adapter.edit_course;
 
+import entity.User;
+
 /**
  * The state for the edit course view model.
  */
 public class EditCourseState {
     private String courseName = "";
     private String courseCode = "";
+    private User user;
     private String editError;
 
     public String getCourseCode() {
@@ -23,6 +26,10 @@ public class EditCourseState {
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
+
+    public void setUser(User user) { this.user = user; }
+
+    public User getUser() { return user; }
 
     public String getEditError() {
         return editError;

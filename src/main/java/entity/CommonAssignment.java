@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class CommonAssignment implements Assignment {
     private final String name;
-    private final float grade;
+    private float grade;
     private final float weight;
     private final Date dueDate;
 
@@ -36,5 +36,10 @@ public class CommonAssignment implements Assignment {
     @Override
     public Date getDueDate() {
         return dueDate;
+    }
+
+    // setter
+    public void updateGrade(float newGrade) {
+        this.grade = newGrade;
     }
 }

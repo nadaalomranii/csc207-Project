@@ -80,7 +80,8 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
                                         currentState.getDueDate(),
                                         currentState.getGrade(),
                                         currentState.getWeight(),
-                                        currentState.getCourse()
+                                        currentState.getCourse(),
+                                        currentState.getUser()
                                 );
                             } catch (ParseException e) {
                                 throw new RuntimeException(e);

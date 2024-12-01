@@ -1,7 +1,7 @@
 package use_case.delete_course;
 
 /**
- * The output boundary for the change password use case.
+ * The output boundary for the delete course use case.
  */
 public interface DeleteCourseOutputBoundary {
     /**
@@ -10,11 +10,13 @@ public interface DeleteCourseOutputBoundary {
      */
     void prepareSuccessView(DeleteCourseOutputData deleteCourseOutputData);
 
-    /**
-     * Prepares the fail view for the delete course use case.
-     * @param deleteCourseOutputData: the output data
-     */
-    void prepareFailView(DeleteCourseOutputData deleteCourseOutputData);
+
+//    /**
+//     * Prepares the fail view for the delete course use case.
+//     * @param deleteCourseOutputData: the output data
+//     */
+//    void prepareFailView(DeleteCourseOutputData deleteCourseOutputData);
+    // can never fail
 
     /**
      * Switches to the course list view.

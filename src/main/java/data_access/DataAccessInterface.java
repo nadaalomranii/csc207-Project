@@ -4,12 +4,16 @@ import entity.Assignment;
 import entity.Course;
 import entity.User;
 
-import use_case.add_assignment.AddAssignmentCourseDataAccessInterface;
+import use_case.add_assignment.AddAssignmentDataAccessInterface;
 import use_case.add_course.AddCourseDataAccessInterface;
 import use_case.delete_assignment.DeleteAssignmentDataAccessInterface;
 import use_case.delete_course.DeleteCourseDataAccessInterface;
+import use_case.edit_course.EditCourseDataAccessInterface;
+import use_case.login.LoginUserDataAccessInterface;
 import use_case.send_notification.SendNotificationDataAccessInterface;
+import use_case.signup.SignupUserDataAccessInterface;
 
+import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -18,62 +22,93 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
-import java.util.*;
-
 public class DataAccessInterface implements
         AddCourseDataAccessInterface,
-        AddAssignmentCourseDataAccessInterface,
         DeleteCourseDataAccessInterface,
+        EditCourseDataAccessInterface,
         DeleteAssignmentDataAccessInterface,
-        SendNotificationDataAccessInterface {
-
-    private final Map<String, Map<Course, List<Assignment>>> courses = new HashMap<>();
+        SendNotificationDataAccessInterface,
+        SignupUserDataAccessInterface,
+        LoginUserDataAccessInterface,
+        AddAssignmentDataAccessInterface {
+    // The second key is the course code
+    private final Map<User, Map<String, Map<Course, List<Assignment>>>> users = new HashMap<>();
 
     @Override
-    public void saveAssignment(Assignment assignment, Course course) {
+    public void saveAssignment(Assignment assignment, Course course, User user) {
         // The course already exists in courses
         // Add the new assignment to the current assignments
+        Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
         List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
         if (currentAssignments == null) {
-            // TODO: Add Assignment as <type>?
             currentAssignments = new ArrayList<>();
         }
         currentAssignments.add(assignment);
-
-        courses.get(course.getCode()).put(course, currentAssignments);
+        users.get(user).get(course.getCode()).put(course, currentAssignments);
     }
 
     @Override
-    public boolean existsByCode(String code) {
+    public boolean existsByCode(String code, User user) {
+        Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
         return courses.containsKey(code);
     }
 
     @Override
-    public void saveCourse(Course course) {courses.put(course.getCode(), new HashMap<>());}
-
+    public void saveCourse(Course course, User user) {
+        // Adds the course code as a key
+        this.users.get(user).put(course.getCode(), new HashMap<>());
+        // Adds the course corresponding to that course code
+        this.users.get(user).get(course.getCode()).put(course, new ArrayList<>());
+    }
 
     @Override
-    public List<Course> getCourses() {
+    public List<Course> getCourses(User user) {
         List<Course> courseObjects = new ArrayList<>();
-        for (Map<Course, List<Assignment>> course : courses.values()) {
-            courseObjects.addAll(course.keySet());
+        Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
+        if (courses != null) {
+            for (Map<Course, List<Assignment>> course : courses.values()) {
+                courseObjects.addAll(course.keySet());
+            }
         }
         return courseObjects;
     }
 
 
     @Override
-    public void deleteCourse(Course course) {
-        courses.remove(course.getCode());
+    public void deleteCourse(Course course, User user) {
+        users.get(user).remove(course.getCode());
+    }
+
+    @Override
+    public void editCourse(Course course, User user) {
+        Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
+        Set<Course> currentCourse = courses.get(course.getCode()).keySet();
+        // This set only contains one course
+        for (Course c : currentCourse) {
+            c.changeName(course.getName());
+        }
+    }
+
+    @Override
+    public String checkName(String courseCode, User user) {
+        Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
+        Set<Course> currentCourse = courses.get(courseCode).keySet();
+        // This set only contains one course
+        String courseName = "";
+        for (Course c : currentCourse) {
+            courseName = c.getName();
+        }
+        return courseName;
     }
 
 
     @Override
-    public void deleteAssignment(String assignmentName, Course course) {
+    public void deleteAssignment(String assignmentName, Course course, User user) {
+        Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
         List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
         for (Assignment assignment: currentAssignments){
             if (assignment.getName().equals(assignmentName)){
-                currentAssignments.remove(assignment);
+                this.users.get(user).get(course.getCode()).get(course).remove(assignment);
                 break;
             }
         }
@@ -174,5 +209,58 @@ public class DataAccessInterface implements
         transport.connect(emailHost, fromEmail, fromPassword);
         transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
         transport.close();
+    }
+
+    @Override
+    public boolean existsByName(String username) {
+        boolean exists = false;
+        Set<User> allUsers = users.keySet();
+        for (User user : allUsers) {
+            if (user.getName().equals(username)) {
+                exists = true;
+                break;
+            }
+        }
+        return exists;
+    }
+
+
+    @Override
+    public void save(User user) {
+        users.put(user, new HashMap<>());
+    }
+
+    @Override
+    public User get(String username) {
+        Set<User> users = this.users.keySet();
+        for (User user : users) {
+            if (user.getName().equals(username)) {
+                return user;
+            }
+        }
+        // We are at the end of the loop and there is no user with this username
+        return null;
+    }
+
+    @Override
+    public String getCurrentUsername() {
+        return "";
+    }
+
+    @Override
+    public void setCurrentUsername(String username) {
+
+    }
+
+    @Override
+    public boolean existsByName(String name, Course course, User user) {
+        Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
+        List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
+        for (Assignment assignment : currentAssignments) {
+            if (assignment.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

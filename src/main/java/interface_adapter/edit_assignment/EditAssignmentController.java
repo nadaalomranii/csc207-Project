@@ -1,10 +1,10 @@
 package interface_adapter.edit_assignment;
 
 import entity.Assignment;
+import entity.User;
 import use_case.edit_assignment.EditAssignmentInputBoundary;
 import use_case.edit_assignment.EditAssignmentInputData;
 import use_case.edit_assignment.EditAssignmentInteractor;
-
 
 /**
  * Controller for the Edit Assignment Use Case.

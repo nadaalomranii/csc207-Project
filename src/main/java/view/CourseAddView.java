@@ -70,7 +70,8 @@ public class CourseAddView extends JPanel implements ActionListener, PropertyCha
 
                             addCourseController.execute(
                                     currentState.getCourseName(),
-                                    currentState.getCourseCode()
+                                    currentState.getCourseCode(),
+                                    currentState.getUser()
                             );
                         }
                     }

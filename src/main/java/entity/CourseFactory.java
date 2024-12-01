@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.List;
+
 /**
  * Factory for creating assignments.
  */
@@ -10,6 +12,6 @@ public interface CourseFactory {
      * @param courseCode the course's code.
      * @return the new course.
      */
-    Course create(String name, String courseCode);
+    Course create(String name, String courseCode, List<Assignment> assignments);
 
 }

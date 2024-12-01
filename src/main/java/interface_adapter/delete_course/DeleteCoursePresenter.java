@@ -33,10 +33,11 @@ public class DeleteCoursePresenter implements DeleteCourseOutputBoundary {
         viewManagerModel.firePropertyChanged();
     }
 
-    @Override
-    public void prepareFailView(DeleteCourseOutputData deleteCourseOutputData) {
-        // This use case cannot currently fail
-    }
+//    @Override
+//    public void prepareFailView(DeleteCourseOutputData deleteCourseOutputData) {
+//        // This use case cannot currently fail
+//    }
+    // Cannot fail
 
     @Override
     public void switchToCourseListView() {

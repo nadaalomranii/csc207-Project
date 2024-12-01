@@ -9,6 +9,7 @@ import use_case.delete_assignment.DeleteAssignmentOutputData;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,21 +32,27 @@ public class SendNotificationInteractor implements SendNotificationInputBoundary
         Course course = sendNotificationInputData.getCourse();
         List<Assignment> assignments = sendNotificationInputData.getAssignments();
 
-        assert assignments != null;
-        if (!assignments.isEmpty()) {
+        List<Assignment> newlyScheduledAssignments = new ArrayList<>();
+
+        if (assignments != null & !assignments.isEmpty()) {
             for (Assignment assignment : assignments) {
                 if (!assignment.isScheduled()) {
                     Session session = dataAccessObject.setupServerProperties();
                     MimeMessage email = dataAccessObject.draftEmail(session, user, course, assignment);
                     dataAccessObject.sendNotification(session, email);
                     assignment.setScheduled(true);
+                    newlyScheduledAssignments.add(assignment);
                 }
             }
         }
 
-
-        final SendNotificationOutputData sendNotificationOutputData = new SendNotificationOutputData();
-        sendNotificationPresenter.prepareSuccessView(sendNotificationOutputData);
+        final SendNotificationOutputData sendNotificationOutputData = new SendNotificationOutputData(newlyScheduledAssignments);
+        if (newlyScheduledAssignments.isEmpty()) {
+            sendNotificationPresenter.prepareFailView("No new assignments to schedule");
+        }
+        else {
+            sendNotificationPresenter.prepareSuccessView(sendNotificationOutputData);
+        }
     }
 }
 

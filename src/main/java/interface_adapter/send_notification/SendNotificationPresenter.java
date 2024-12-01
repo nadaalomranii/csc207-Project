@@ -22,7 +22,6 @@ public class SendNotificationPresenter implements SendNotificationOutputBoundary
     //TODO: check these
     @Override
     public void prepareSuccessView(SendNotificationOutputData outputData){
-        //On success, change state? but don't show anything.
         AddAssignmentState addAssignmentState = addAssignmentViewModel.getState();
         this.addAssignmentViewModel.setState(addAssignmentState);
         addAssignmentViewModel.firePropertyChanged();
@@ -32,12 +31,12 @@ public class SendNotificationPresenter implements SendNotificationOutputBoundary
     }
 
     @Override
-    public void prepareFailView(SendNotificationOutputData outputData, String errorMessage){
+    public void prepareFailView(String errorMessage){
         //On fail, pop up that says notification couldn't be scheduled, then go back to addAssignmentView
         AddAssignmentState addAssignmentState = addAssignmentViewModel.getState();
         this.addAssignmentViewModel.setState(addAssignmentState);
         addAssignmentViewModel.firePropertyChanged();
-        sendNotificationViewModel.firePropertyChanged("notification not scheduled");
+        sendNotificationViewModel.firePropertyChanged(errorMessage);
         viewManagerModel.setState(addAssignmentViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

@@ -12,9 +12,9 @@ public interface SendNotificationOutputBoundary {
 
     /**
      * Prepares the failure view for the Send Notification Use Case.
-     * @param outputData the output data
      * @param errorMessage the explanation of the failure
      */
-    void prepareFailView(SendNotificationOutputData outputData, String errorMessage);
+    void prepareFailView(String errorMessage);
 
+    void switchToAddAssignmentView();
 }

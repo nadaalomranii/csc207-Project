@@ -2,6 +2,7 @@ package interface_adapter.edit_assignment;
 
 import entity.Assignment;
 import entity.User;
+
 import use_case.edit_assignment.EditAssignmentInputBoundary;
 import use_case.edit_assignment.EditAssignmentInputData;
 import use_case.edit_assignment.EditAssignmentInteractor;
@@ -24,6 +25,6 @@ public class EditAssignmentController {
     public void execute(float newScore, Assignment assignment) {
         final EditAssignmentInputData editAssignmentInputData = new EditAssignmentInputData(assignment, newScore);
 
-        EditAssignmentInteractor.execute(editAssignmentInputData);
+        userEditAssignmentUseCaseInteractor.execute(editAssignmentInputData);
     }
 }

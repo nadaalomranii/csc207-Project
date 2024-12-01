@@ -44,6 +44,8 @@ import use_case.login.LoginOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import use_case.send_notification.SendNotificationOutputBoundary;
+import use_case.send_notification.SendNotificationOutputData;
 import view.*;
 
 
@@ -246,7 +248,7 @@ public class AppBuilder {
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
-        viewManagerModel.setState(signupView.getViewName());
+        viewManagerModel.setState(assignmentListView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;

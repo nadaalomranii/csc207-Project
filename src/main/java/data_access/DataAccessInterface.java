@@ -129,7 +129,7 @@ public class DataAccessInterface implements
     }
 
     @Override
-    public MimeMessage draftEmail(Session newSession, User user, Assignment assignment, Course course) throws MessagingException {
+    public MimeMessage draftEmail(Session session, User user, Course course, Assignment assignment) throws MessagingException {
         // TODO: remove my email address and use user email address - using mine to make sure algorithm holds.
         // Double check email stuff is fine RE: new InternetAddress(), throws AddressException
         String emailRecipient = user.getEmail();
@@ -145,7 +145,7 @@ public class DataAccessInterface implements
                 assignment.getWeight());
         Date emailSendDate = getNotifyDate(assignment);
 
-        MimeMessage mimeMessage = new MimeMessage(newSession);
+        MimeMessage mimeMessage = new MimeMessage(session);
         mimeMessage.addRecipients(Message.RecipientType.TO, emailRecipient);
         mimeMessage.setSubject(emailSubject);
 

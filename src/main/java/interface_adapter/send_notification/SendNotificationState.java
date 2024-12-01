@@ -4,20 +4,23 @@ import entity.Assignment;
 import entity.Course;
 import entity.User;
 
+import java.util.List;
+
 public class SendNotificationState {
 
     private User user;
     private Course course;
-    private Assignment assignment;
+    private List<Assignment> assignments;
 
     public SendNotificationState() {}
 
     public User getUser() {return user;}
     public Course getCourse() {return course;}
-    public Assignment getAssignment() {return assignment;}
+    public List<Assignment> getAssignments() {return assignments;}
 
-    public void setUser(User user) {this.user = user;}
-    public void setCourse(Course course) {this.course = course;}
-    public void setAssignment(Assignment assignment) {this.assignment = assignment;}
+    // TODO: do we actually need these?
+//    public void setUser(User user) {this.user = user;}
+//    public void setCourse(Course course) {this.course = course;}
+//    public void setAssignment(Assignment assignment) {this.assignments = assignments;}
 
 }

@@ -9,6 +9,7 @@ import use_case.delete_assignment.DeleteAssignmentOutputData;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
+import java.util.List;
 
 /**
  * The Send Notification Interactor.
@@ -27,16 +28,24 @@ public class SendNotificationInteractor implements SendNotificationInputBoundary
     @Override
     public void execute(SendNotificationInputData sendNotificationInputData) throws MessagingException {
         User user = sendNotificationInputData.getUser();
-        Assignment assignment = sendNotificationInputData.getAssignment();
         Course course = sendNotificationInputData.getCourse();
+        List<Assignment> assignments = sendNotificationInputData.getAssignments();
 
-        Session session = dataAccessObject.setupServerProperties();
-        MimeMessage email = dataAccessObject.draftEmail(session, user, assignment, course);
-        dataAccessObject.sendNotification(session, email);
+        assert assignments != null;
+        if (!assignments.isEmpty()) {
+            for (Assignment assignment : assignments) {
+                if (!assignment.isScheduled()) {
+                    Session session = dataAccessObject.setupServerProperties();
+                    MimeMessage email = dataAccessObject.draftEmail(session, user, course, assignment);
+                    dataAccessObject.sendNotification(session, email);
+                    assignment.setScheduled(true);
+                }
+            }
+        }
+
 
         final SendNotificationOutputData sendNotificationOutputData = new SendNotificationOutputData();
         sendNotificationPresenter.prepareSuccessView(sendNotificationOutputData);
     }
 }
-//TODO: where is the interactor used?
-//TODO: testing
+

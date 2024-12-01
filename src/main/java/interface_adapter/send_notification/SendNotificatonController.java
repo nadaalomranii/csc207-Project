@@ -7,6 +7,7 @@ import use_case.send_notification.SendNotificationInputBoundary;
 import use_case.send_notification.SendNotificationInputData;
 
 import javax.mail.MessagingException;
+import java.util.List;
 
 public class SendNotificatonController {
 
@@ -16,8 +17,8 @@ public class SendNotificatonController {
         this.sendNotificationInteractor = sendNotificationInteractor;
     }
 
-    public void execute(User user, Course course, Assignment assignment) throws MessagingException {
-        final SendNotificationInputData sendNotificationInputData = new SendNotificationInputData(user, course, assignment);
+    public void execute(User user, Course course, List<Assignment> assignments) throws MessagingException {
+        final SendNotificationInputData sendNotificationInputData = new SendNotificationInputData(user, course, assignments);
         sendNotificationInteractor.execute(sendNotificationInputData);
     }
 }

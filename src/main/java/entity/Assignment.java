@@ -34,5 +34,7 @@ public interface Assignment {
     /**
      * @return whether a notification has already been scheduled for this assignment.
      */
-    Boolean isScheduled();
+    boolean isScheduled();
+
+    void setScheduled(boolean scheduled);
 }

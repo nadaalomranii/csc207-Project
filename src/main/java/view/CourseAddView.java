@@ -108,7 +108,7 @@ public class CourseAddView extends JPanel implements ActionListener, PropertyCha
 
             private void documentListenerHelper() {
                 final AddCourseState currentState = addCourseViewModel.getState();
-                currentState.setCourseName(courseCodeField.getText());
+                currentState.setCourseCode(courseCodeField.getText());
                 addCourseViewModel.setState(currentState);
             }
 

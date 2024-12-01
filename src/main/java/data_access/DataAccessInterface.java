@@ -50,7 +50,11 @@ public class DataAccessInterface implements
     @Override
     public boolean existsByCode(String code, User user) {
         Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
-        return courses.containsKey(code);
+        if (courses != null) {
+            return courses.containsKey(code);
+        }
+        // There are no courses under the user, so we return false
+        return false;
     }
 
     @Override
@@ -212,7 +216,7 @@ public class DataAccessInterface implements
     }
 
     @Override
-    public boolean existsByName(String username) {
+    public boolean userExistsByName(String username) {
         boolean exists = false;
         Set<User> allUsers = users.keySet();
         for (User user : allUsers) {
@@ -224,6 +228,17 @@ public class DataAccessInterface implements
         return exists;
     }
 
+    @Override
+    public void save(User user, List<Course> courses) {
+        Map<String, Map<Course, List<Assignment>>> courseList = new HashMap<>();
+        for (Course course : courses) {
+            String courseCode = course.getCode();
+            Map<Course, List<Assignment>> courseMap = new HashMap<>();
+            courseMap.put(course, new ArrayList<>());
+            courseList.put(courseCode, courseMap);
+        }
+        users.put(user, courseList);
+    }
 
     @Override
     public void save(User user) {
@@ -232,8 +247,8 @@ public class DataAccessInterface implements
 
     @Override
     public User get(String username) {
-        Set<User> users = this.users.keySet();
-        for (User user : users) {
+        Set<User> allUsers = this.users.keySet();
+        for (User user : allUsers) {
             if (user.getName().equals(username)) {
                 return user;
             }
@@ -253,7 +268,7 @@ public class DataAccessInterface implements
     }
 
     @Override
-    public boolean existsByName(String name, Course course, User user) {
+    public boolean assignmentExistsByName(String name, Course course, User user) {
         Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
         List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
         for (Assignment assignment : currentAssignments) {

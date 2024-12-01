@@ -9,6 +9,10 @@ import java.util.List;
 
 import javax.swing.*;
 
+import interface_adapter.ViewManagerModel;
+import interface_adapter.add_course.AddCourseState;
+import interface_adapter.add_course.AddCourseViewModel;
+import interface_adapter.course_list.CourseListController;
 import interface_adapter.course_list.CourseListState;
 import interface_adapter.course_list.CourseListViewModel;
 
@@ -23,11 +27,16 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
     private final String viewName = "Course List";
     private final CourseListViewModel courseListViewModel;
     private final List<Course> courseList;
+    private CourseListController courseListController;
 
     private JButton courseButton;
     private final JButton addCourseButton;
 
-    public CourseListView(CourseListViewModel courseListViewModel, List<Course> courseList) {
+
+    public CourseListView(CourseListViewModel courseListViewModel,
+                          List<Course> courseList,
+                          ViewManagerModel viewManagerModel,
+                          AddCourseViewModel addCourseViewModel) {
         this.courseListViewModel = courseListViewModel;
         this.courseListViewModel.addPropertyChangeListener(this);
         this.courseList = courseList;
@@ -49,8 +58,9 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
 
         // Course buttons
         final JPanel allCoursesPanel = new JPanel();
-        if (this.courseList != null) {
-            for (Course course : this.courseList) {
+        List<Course> courses = courseListViewModel.getState().getCourses();
+        if (courses != null) {
+            for (Course course : courses) {
                 courseButton = new JButton(course.getCode());
                 allCoursesPanel.add(courseButton);
 
@@ -84,8 +94,14 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
         );
         addCoursePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        allCoursesPanel.setBackground(Color.getHSBColor(0.9F, 0F, 0.05F));
-        addCoursePanel.setBackground(Color.getHSBColor(0.9F, 0F, 0.05F));
+        addCourseButton.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                        courseListController.switchToCourseListView(viewManagerModel, addCourseViewModel, courseListViewModel);
+                    }
+                }
+        );
+
 
         this.add(title);
         this.add(allCoursesPanel);
@@ -111,4 +127,7 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
         return viewName;
     }
 
+    public void setCourseListController(CourseListController courseListController) {
+        this.courseListController = courseListController;
+    }
 }

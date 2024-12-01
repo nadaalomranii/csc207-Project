@@ -29,10 +29,10 @@ public interface Assignment {
      * Returns the due date of the assignment.
      * @return the due date of the assignment.
      */
-    String getDueDate();
+    Date getDueDate();
 
     /**
-     * @return the due date of the assignment.
+     * @return whether a notification has already been scheduled for this assignment.
      */
-    Date getDueDate();
+    Boolean isScheduled();
 }

@@ -1,5 +1,6 @@
 package use_case.edit_assignment;
 
+import data_access.DataAccessInterface;
 import entity.Assignment;
 import entity.AssignmentFactory;
 
@@ -8,11 +9,11 @@ import entity.AssignmentFactory;
  * The Edit Assignment Interactor.
  */
 public class EditAssignmentInteractor implements EditAssignmentInputBoundary {
-    private final src.main.java.use_case.edit_assignment.EditAssignmentDataAccessInterface dataAccess;
+    private final EditAssignmentDataAccessInterface dataAccess;
     private final EditAssignmentOutputBoundary editAssignmentPresenter;
     private final AssignmentFactory assignmentFactory;
 
-    public EditAssignmentInteractor(EditAssignmentDataAccessInterface assignmentDataAccess,
+    public EditAssignmentInteractor(DataAccessInterface assignmentDataAccess,
                                     EditAssignmentOutputBoundary editAssignmentOutputBoundary,
                                     AssignmentFactory assignmentFactory) {
         this.dataAccess = assignmentDataAccess;
@@ -31,13 +32,13 @@ public class EditAssignmentInteractor implements EditAssignmentInputBoundary {
         final String name = editAssignmentInputData.getName();
 
         // assignment name already exists; prepare fail view
-        if (dataAccess.existsByName(assignment.getName())) {
+        if (dataAccess.existsByName(assignment.getName(), editAssignmentInputData.getCourse(), editAssignmentInputData.getUser())) {
             editAssignmentPresenter.prepareFailView(name + ": assignment already exists.");
         }
 
         // assignment name doesn't exist
         else {
-        dataAccess.editAssignment(assignment);
+        dataAccess.editAssignment(assignment, editAssignmentInputData.getCourse(), editAssignmentInputData.getUser());
 
         final EditAssignmentOutputData editAssignmentOutputData = new EditAssignmentOutputData(assignment.getGrade()
                 , false);

@@ -21,9 +21,9 @@ public class DeleteCourseInteractor implements DeleteCourseInputBoundary{
         final Course course = courseFactory.create(deleteCourseInputData.getCourseName(),
                 deleteCourseInputData.getCourseCode());
 
-        dataAccessObject.deleteCourse(course);
+        dataAccessObject.deleteCourse(course, deleteCourseInputData.getUser());
 
-        final DeleteCourseOutputData deleteCourseOutputData = new DeleteCourseOutputData(course.getCode());
+        final DeleteCourseOutputData deleteCourseOutputData = new DeleteCourseOutputData(course.getCode(), deleteCourseInputData.getUser());
 
         deleteCoursePresenter.prepareSuccessView(deleteCourseOutputData);
     }

@@ -1,10 +1,7 @@
 package app;
 
 import data_access.DataAccessInterface;
-import entity.AssignmentFactory;
-import entity.CommonAssignmentFactory;
-import entity.CommonCourseFactory;
-import entity.CourseFactory;
+import entity.*;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_assignment.AddAssignmentController;
 import interface_adapter.add_assignment.AddAssignmentPresenter;
@@ -13,29 +10,52 @@ import interface_adapter.add_course.AddCourseController;
 import interface_adapter.add_course.AddCoursePresenter;
 import interface_adapter.add_course.AddCourseViewModel;
 import interface_adapter.assignment_list.AssignmentListViewModel;
+import interface_adapter.course_list.CourseListState;
 import interface_adapter.course_list.CourseListViewModel;
+import interface_adapter.edit_course.EditCourseController;
+import interface_adapter.edit_course.EditCoursePresenter;
+import interface_adapter.edit_course.EditCourseState;
+import interface_adapter.edit_course.EditCourseViewModel;
 import interface_adapter.delete_assignment.DeleteAssignmentController;
 import interface_adapter.delete_assignment.DeleteAssignmentPresenter;
 import interface_adapter.delete_assignment.DeleteAssignmentViewModel;
+import interface_adapter.login.LoginController;
+import interface_adapter.login.LoginPresenter;
+import interface_adapter.login.LoginViewModel;
+import interface_adapter.signup.SignupController;
+import interface_adapter.signup.SignupPresenter;
+import interface_adapter.signup.SignupViewModel;
 import use_case.add_assignment.AddAssignmentInteractor;
 import use_case.add_assignment.AddAssignmentOutputBoundary;
 import use_case.add_assignment.AddAssignmentInputBoundary;
 import use_case.add_course.AddCourseOutputBoundary;
 import use_case.add_course.AddCourseInputBoundary;
 import use_case.add_course.AddCourseInteractor;
+import use_case.edit_course.EditCourseInputBoundary;
+import use_case.edit_course.EditCourseInputData;
+import use_case.edit_course.EditCourseInteractor;
+import use_case.edit_course.EditCourseOutputBoundary;
 import use_case.delete_assignment.DeleteAssignmentInputBoundary;
 import use_case.delete_assignment.DeleteAssignmentInteractor;
 import use_case.delete_assignment.DeleteAssignmentOutputBoundary;
+import use_case.login.LoginInputBoundary;
+import use_case.login.LoginInteractor;
+import use_case.login.LoginOutputBoundary;
+import use_case.signup.SignupInputBoundary;
+import use_case.signup.SignupInteractor;
+import use_case.signup.SignupOutputBoundary;
 import view.*;
 
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     private final CourseFactory courseFactory = new CommonCourseFactory();
+    private final UserFactory userFactory = new CommonUserFactory();
     private final AssignmentFactory assignmentFactory = new CommonAssignmentFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
@@ -54,7 +74,16 @@ public class AppBuilder {
     private AssignmentListView assignmentListView;
     private AssignmentListViewModel assignmentListViewModel;
 
+    private CourseEditView courseEditView;
+    private EditCourseViewModel editCourseViewModel;
+
     private DeleteAssignmentViewModel deleteAssignmentViewModel;
+
+    private SignupView signupView;
+    private SignupViewModel signupViewModel;
+
+    private LoginView loginView;
+    private LoginViewModel loginViewModel;
 
     public AppBuilder() { cardPanel.setLayout(cardLayout); }
 
@@ -86,7 +115,10 @@ public class AppBuilder {
      */
     public AppBuilder addCourseListView() {
         courseListViewModel = new CourseListViewModel();
-        courseListView = new CourseListView(courseListViewModel);
+        CourseListState state = courseListViewModel.getState();
+        User user = state.getUser();
+        List<Course> courses = userDataAccessObject.getCourses(user);
+        courseListView = new CourseListView(courseListViewModel, courses);
         cardPanel.add(courseListView, courseListView.getViewName());
         return this;
     }
@@ -99,6 +131,35 @@ public class AppBuilder {
         assignmentListViewModel = new AssignmentListViewModel();
         assignmentListView = new AssignmentListView(assignmentListViewModel);
         cardPanel.add(assignmentListView, assignmentListView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Assignment List View to the application.
+     * @return this builder
+     */
+    public AppBuilder addCourseEditView() {
+        editCourseViewModel = new EditCourseViewModel();
+        courseEditView = new CourseEditView(editCourseViewModel);
+        cardPanel.add(courseEditView, courseEditView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the signup view to the application.
+     * @return this builder
+     */
+    public AppBuilder addSignUpView() {
+        signupViewModel = new SignupViewModel();
+        signupView = new SignupView(signupViewModel);
+        cardPanel.add(signupView, signupView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addLoginView() {
+        loginViewModel = new LoginViewModel();
+        loginView = new LoginView(loginViewModel);
+        cardPanel.add(loginView, loginView.getViewName());
         return this;
     }
 
@@ -132,15 +193,47 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Edit Course Use Case to the application
+     * @return this builder
+     */
+    public AppBuilder addEditCourseUseCase() {
+        final EditCourseOutputBoundary editCourseOutputBoundary = new EditCoursePresenter(
+                editCourseViewModel, assignmentListViewModel, viewManagerModel);
+        final EditCourseInputBoundary editCourseInteractor = new EditCourseInteractor(
+                userDataAccessObject, editCourseOutputBoundary, courseFactory);
+
+        final EditCourseController editCourseController = new EditCourseController(editCourseInteractor);
+        courseEditView.setEditCourseController(editCourseController);
+        return this;
+    }
+
+    public AppBuilder addSignUpUseCase() {
+        final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(
+                viewManagerModel, signupViewModel, courseListViewModel);
+        final SignupInputBoundary signupInteractor = new SignupInteractor(
+                userDataAccessObject, signupOutputBoundary, userFactory);
+        final SignupController signupController = new SignupController(signupInteractor);
+        signupView.setSignupController(signupController);
+        return this;
+    }
+
     public AppBuilder deleteAssignmentUseCase() {
-        //TODO: where is this used?
         final DeleteAssignmentOutputBoundary deleteAssignmentOutputBoundary = new DeleteAssignmentPresenter(assignmentListViewModel, viewManagerModel);
         final DeleteAssignmentInputBoundary deleteAssignmentInteractor = new DeleteAssignmentInteractor(
                 userDataAccessObject, deleteAssignmentOutputBoundary);
 
         final DeleteAssignmentController deleteAssignmentController = new DeleteAssignmentController(deleteAssignmentInteractor);
-        //TODO: setDeleteAssignmentController?
         assignmentListView.setDeleteAssignmentController(deleteAssignmentController);
+        return this;
+    }
+
+    public AppBuilder loginUseCase() {
+        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, courseListViewModel, loginViewModel);
+        final LoginInputBoundary loginInteractor = new LoginInteractor(userDataAccessObject, loginOutputBoundary);
+
+        final LoginController loginController = new LoginController(loginInteractor);
+        loginView.setLoginController(loginController);
         return this;
     }
 
@@ -153,7 +246,7 @@ public class AppBuilder {
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
-        viewManagerModel.setState(courseListView.getViewName());
+        viewManagerModel.setState(signupView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;

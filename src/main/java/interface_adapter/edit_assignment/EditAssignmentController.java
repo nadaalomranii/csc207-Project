@@ -5,6 +5,8 @@ import use_case.edit_assignment.EditAssignmentInputBoundary;
 import use_case.edit_assignment.EditAssignmentInputData;
 import use_case.edit_assignment.EditAssignmentInteractor;
 
+import java.util.Date;
+
 
 /**
  * Controller for the Edit Assignment Use Case.
@@ -18,11 +20,13 @@ public class EditAssignmentController {
 
     /**
      * Executes the edit assignment Use Case.
+     * @param name the new name
      * @param newScore the new score
-     * @param assignment the assignment whose score has to change
+     * @param weight the new weight
+     * @param dueDate the new duedate
      */
-    public void execute(float newScore, Assignment assignment) {
-        final EditAssignmentInputData editAssignmentInputData = new EditAssignmentInputData(assignment, newScore);
+    public void execute(String name, float newScore, float weight, Date dueDate) {
+        final EditAssignmentInputData editAssignmentInputData = new EditAssignmentInputData(name, newScore, weight, dueDate);
 
         EditAssignmentInteractor.execute(editAssignmentInputData);
     }

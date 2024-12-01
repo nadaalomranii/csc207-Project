@@ -1,6 +1,8 @@
 package use_case.edit_assignment;
 
 import entity.Assignment;
+import java.util.Date;
+
 
 /**
  * The input data for the Edit Assignment Use Case.
@@ -8,25 +10,37 @@ import entity.Assignment;
 
 public class EditAssignmentInputData {
 
-    private final Assignment assignment;
+    private final String name;
     private final float newScore;
+    private final float weight;
+    private final Date dueDate;
 
-    public EditAssignmentInputData(Assignment assignment, float newScore) {
-        this.assignment = assignment;
+    public EditAssignmentInputData(String name, float newScore, float weight, Date dueDate) {
+        this.name = name;
         this.newScore = newScore;
+        this.weight = weight;
+        this.dueDate = dueDate;
     }
 
     // Getters
-    public Assignment getAssignment() {
+    public String getName() {
 
-        return assignment;
+        return name;
     }
+
     public float getNewScore() {
 
         return newScore;
     }
 
-    public String getName() {
-        return assignment.getName();
+    public float getWeight() {
+
+        return weight;
     }
+
+    public Date getDueDate() {
+
+        return dueDate;
+    }
+
 }

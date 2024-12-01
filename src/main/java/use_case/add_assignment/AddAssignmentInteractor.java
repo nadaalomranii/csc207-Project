@@ -1,7 +1,8 @@
 package use_case.add_assignment;
 
 import data_access.DataAccessInterface;
-import entity.*;
+import entity.Course;
+import entity.User;
 
 /**
  * The Add Assignment Interactor.
@@ -26,9 +27,11 @@ public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
 
         // get assignment name
         final String name = assignment.getName();
+        final Course course = addAssignmentInputData.getCourse();
+        final User user = addAssignmentInputData.getUser();
 
         // assignment name already exists; prepare fail view
-        if (assignmentDataAccessObject.existsByName(assignment.getName())) {
+        if (assignmentDataAccessObject.existsByName(name, course, user)) {
             addAssignmentPresenter.prepareFailView(name + ": assignment already exists.");
         }
 

@@ -15,6 +15,9 @@ import entity.Assignment;
 import interface_adapter.assignment_list.AssignmentListViewModel;
 import interface_adapter.assignment_list.AssignmentListState;
 import interface_adapter.delete_assignment.DeleteAssignmentController;
+import interface_adapter.delete_course.DeleteCourseController;
+import interface_adapter.delete_course.DeleteCourseState;
+import interface_adapter.delete_course.DeleteCourseViewModel;
 import interface_adapter.send_notification.SendNotificationState;
 import interface_adapter.send_notification.SendNotificationViewModel;
 import interface_adapter.send_notification.SendNotificatonController;
@@ -27,6 +30,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private final String viewName = "Assignment List";
     private final AssignmentListViewModel assignmentListViewModel;
     private final SendNotificationViewModel sendNotificationViewModel;
+    private final DeleteCourseViewModel deleteCourseViewModel;
 
     private final JTextField assignmentNameField = new JTextField(15);
     private final JTextField assignmentGradeField = new JTextField(15);
@@ -36,8 +40,10 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private final JButton addAssignment;
     private final JButton deleteAssignment;
     private final JButton scheduleNotification;
+    private final JButton deleteCourse;
 
     private SendNotificatonController sendNotificationController;
+    private DeleteCourseController deleteCourseController;
 
     // NEW FOR TABLE
     private final JTable assignmentTable; // The table to display assignment data
@@ -45,6 +51,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
     public AssignmentListView(AssignmentListViewModel assignmentListViewModel) {
         this.assignmentListViewModel = assignmentListViewModel;
+        this.deleteCourseViewModel = new DeleteCourseViewModel();
         this.sendNotificationViewModel = new SendNotificationViewModel();
         this.assignmentListViewModel.addPropertyChangeListener(this);
 
@@ -67,6 +74,22 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         buttons.add(deleteAssignment);
         deleteAssignment.addActionListener(this);
         scheduleNotification = new JButton("Schedule Emails for New Assignments");
+        // The delete course button
+        deleteCourse = new JButton("Delete Course");
+        buttons.add(deleteCourse);
+
+        deleteCourse.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(deleteCourse)) {
+                        final AssignmentListState currentState = assignmentListViewModel.getState();
+
+                        // Executes the delete course use case.
+                        deleteCourseController.execute(currentState.getCourse().getCode(),
+                                currentState.getCourse().getName(),
+                                currentState.getUser());
+                    }
+                }
+        );
 
         this.add(title);
         this.add(assignmentNameInfo);
@@ -81,7 +104,6 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         assignmentTable = new JTable(tableModel);
         JScrollPane tableScrollPane = new JScrollPane(assignmentTable); // Add table to scroll pane
         this.add(tableScrollPane, BorderLayout.CENTER); // Add table to the center of the layout
-
     }
 
     @Override
@@ -103,7 +125,9 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
             assignmentWeightField.setText("");
             assignmentDueDateField.setText("");
 
-        } else if (evt.getSource() == scheduleNotification) {
+        }
+
+        else if (evt.getSource() == scheduleNotification) {
             final SendNotificationState currentState = sendNotificationViewModel.getState();
 
             // run sendNotification Use Case
@@ -137,7 +161,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
                 JOptionPane.showMessageDialog(this, "No assignment selected. Please select a row to delete.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-        }
+    }
 
 
     @Override
@@ -171,5 +195,9 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     }
 
     public void setDeleteAssignmentController(DeleteAssignmentController deleteAssignmentController) {
+    }
+
+    public void setDeleteCourseController(DeleteCourseController deleteCourseController) {
+        this.deleteCourseController = deleteCourseController;
     }
 }

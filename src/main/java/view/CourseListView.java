@@ -22,28 +22,49 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
 
     private final String viewName = "Course List";
     private final CourseListViewModel courseListViewModel;
+    private final List<Course> courseList;
 
     private JButton courseButton;
     private final JButton addCourseButton;
 
-    public CourseListView(CourseListViewModel courseListViewModel) {
+    public CourseListView(CourseListViewModel courseListViewModel, List<Course> courseList) {
         this.courseListViewModel = courseListViewModel;
         this.courseListViewModel.addPropertyChangeListener(this);
-
-        this.setBackground(Color.getHSBColor(28, 73, 69));
-        FlowLayout flowLayout = new FlowLayout();
-        this.setLayout(flowLayout);
+        this.courseList = courseList;
 
         // title
         final JLabel title = new JLabel("Courses");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // Pink text
+        title.setForeground(Color.getHSBColor(0.9F, 0F, 0.05F));
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+
+        // Set up view formatting
+        this.setBackground(Color.getHSBColor(0.9F, 0.2F, 1F));
+        FlowLayout flowLayout = new FlowLayout();
+        this.setLayout(flowLayout);
+        //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
         // Course buttons
         final JPanel allCoursesPanel = new JPanel();
-        List<Course> courses = courseListViewModel.getState().getCourses();
-        for (Course course : courses) {
-            courseButton = new JButton(course.getCode());
-            allCoursesPanel.add(courseButton);
+        if (this.courseList != null) {
+            for (Course course : this.courseList) {
+                courseButton = new JButton(course.getCode());
+                allCoursesPanel.add(courseButton);
+
+                // add button functionality
+                courseButton.addActionListener(
+                        new ActionListener() {
+                            public void actionPerformed(ActionEvent evt) {
+                                if (evt.getSource().equals(courseButton)) {
+                                    // TODO: go to assignment list view of this course
+                                }
+                            }
+                        }
+                );
+            }
         }
         allCoursesPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -52,12 +73,26 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
         final JPanel addCoursePanel = new JPanel();
         addCourseButton = new JButton("Add Course");
         addCoursePanel.add(addCourseButton);
+        addCourseButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(addCourseButton)) {
+                            // TODO: go to add course view
+                        }
+                    }
+                }
+        );
         addCoursePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        allCoursesPanel.setBackground(Color.getHSBColor(0.9F, 0F, 0.05F));
+        addCoursePanel.setBackground(Color.getHSBColor(0.9F, 0F, 0.05F));
 
         this.add(title);
         this.add(allCoursesPanel);
         this.add(addCoursePanel);
     }
+
+
 
     @Override
     public void actionPerformed(ActionEvent evt) {System.out.println("Click " + evt.getActionCommand());}
@@ -69,6 +104,7 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
     }
 
     private void setFields(CourseListState state) {
+        // TODO: are there any fields to set?
     }
 
     public String getViewName() {

@@ -12,7 +12,7 @@ public interface SendNotificationDataAccessInterface {
 
     Session setupServerProperties();
 
-    MimeMessage draftEmail(Session session, User user, Assignment assignment, Course course) throws MessagingException;
+    MimeMessage draftEmail(Session session, User user, Course course, Assignment assignment) throws MessagingException;
 
     void sendNotification(Session session, MimeMessage email) throws MessagingException;
 

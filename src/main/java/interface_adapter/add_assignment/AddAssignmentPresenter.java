@@ -21,7 +21,8 @@ public class AddAssignmentPresenter implements AddAssignmentOutputBoundary {
         final AssignmentListState assignmentListState = assignmentListViewModel.getState();
 
         assignmentListState.setCourse(outputData.getCourse());
-        // TODO: need something here to add the assignment to the assignment list state
+        assignmentListState.setUser(outputData.getUser());
+        // TODO: add the assignment from the output data to the assignment list state
 
         this.assignmentListViewModel.setState(assignmentListState);
         assignmentListViewModel.firePropertyChanged();

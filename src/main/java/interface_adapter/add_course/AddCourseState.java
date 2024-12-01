@@ -1,11 +1,12 @@
 package interface_adapter.add_course;
 
+import entity.User;
+
 public class AddCourseState {
     private String courseName;
     private String courseCode;
     private String AddCourseError;
-
-    public AddCourseState() {}
+    private User user;
 
     public String getCourseName() { return courseName; }
 
@@ -16,4 +17,10 @@ public class AddCourseState {
     public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
 
     public void setAddCourseError(String error) { this.AddCourseError = error; }
+
+    public void setUser(User user) { this.user = user; }
+
+    public String getAddCourseError() { return AddCourseError; }
+
+    public User getUser() { return user; }
 }

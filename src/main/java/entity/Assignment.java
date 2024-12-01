@@ -26,13 +26,14 @@ public interface Assignment {
     float getWeight();
 
     /**
-     * Returns the due date of the assignment.
-     * @return the due date of the assignment.
-     */
-    String getDueDate();
-
-    /**
      * @return the due date of the assignment.
      */
     Date getDueDate();
+
+    /**
+     * @return whether a notification has already been scheduled for this assignment.
+     */
+    boolean isScheduled();
+
+    void setScheduled(boolean scheduled);
 }

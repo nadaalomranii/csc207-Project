@@ -1,12 +1,11 @@
 package interface_adapter.edit_assignment;
 
 import entity.Assignment;
+import entity.User;
+
 import use_case.edit_assignment.EditAssignmentInputBoundary;
 import use_case.edit_assignment.EditAssignmentInputData;
 import use_case.edit_assignment.EditAssignmentInteractor;
-
-import java.util.Date;
-
 
 /**
  * Controller for the Edit Assignment Use Case.
@@ -20,14 +19,12 @@ public class EditAssignmentController {
 
     /**
      * Executes the edit assignment Use Case.
-     * @param name the new name
      * @param newScore the new score
-     * @param weight the new weight
-     * @param dueDate the new duedate
+     * @param assignment the assignment whose score has to change
      */
-    public void execute(String name, float newScore, float weight, Date dueDate) {
-        final EditAssignmentInputData editAssignmentInputData = new EditAssignmentInputData(name, newScore, weight, dueDate);
+    public void execute(float newScore, Assignment assignment) {
+        final EditAssignmentInputData editAssignmentInputData = new EditAssignmentInputData(assignment, newScore);
 
-        EditAssignmentInteractor.execute(editAssignmentInputData);
+        userEditAssignmentUseCaseInteractor.execute(editAssignmentInputData);
     }
 }

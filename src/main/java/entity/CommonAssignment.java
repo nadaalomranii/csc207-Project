@@ -10,12 +10,14 @@ public class CommonAssignment implements Assignment {
     private float grade;
     private final float weight;
     private final Date dueDate;
+    private boolean scheduled;
 
     public CommonAssignment(String name, float grade, float weight, Date dueDate) {
         this.name = name;
         this.grade = grade;
         this.weight = weight;
         this.dueDate = dueDate;
+        this.scheduled = false;
     }
 
     @Override
@@ -42,4 +44,8 @@ public class CommonAssignment implements Assignment {
     public void updateGrade(float newGrade) {
         this.grade = newGrade;
     }
+
+    @Override
+    public boolean isScheduled() {return scheduled;}
+    public void setScheduled(boolean scheduled) {this.scheduled = scheduled;}
 }

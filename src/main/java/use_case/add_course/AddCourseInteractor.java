@@ -3,6 +3,8 @@ package use_case.add_course;
 import entity.Course;
 import entity.CourseFactory;
 
+import java.util.ArrayList;
+
 /**
  * The Add Course Interactor.
  */
@@ -33,16 +35,16 @@ public class AddCourseInteractor implements AddCourseInputBoundary {
         // course already exists; prepare fail view
         if (courseDataAccessObject.existsByCode(addCourseInputData.getCode(), addCourseInputData.getUser())) {
             final AddCourseOutputData addCourseOutputData = new AddCourseOutputData();
-            coursePresenter.prepareFailView(addCourseOutputData,name + ": course already exists.");
+            coursePresenter.prepareFailView(addCourseOutputData, name + ": course already exists.");
         }
 
         // course name does not exist; create course, save it and prepare success view
         else {
-            final Course course = courseFactory.create(addCourseInputData.getName(), addCourseInputData.getCode());
-            final AddCourseOutputData addCourseOutputData = new AddCourseOutputData(course, false);
-            coursePresenter.prepareSuccessView(addCourseOutputData);
+            final Course course = courseFactory.create(addCourseInputData.getName(), addCourseInputData.getCode(), new ArrayList<>());
             courseDataAccessObject.saveCourse(course, addCourseInputData.getUser());
+            final AddCourseOutputData addCourseOutputData = new AddCourseOutputData(course, false);
 
+            coursePresenter.prepareSuccessView(addCourseOutputData);
         }
     }
 

@@ -10,6 +10,7 @@ import interface_adapter.add_course.AddCourseController;
 import interface_adapter.add_course.AddCoursePresenter;
 import interface_adapter.add_course.AddCourseViewModel;
 import interface_adapter.assignment_list.AssignmentListViewModel;
+import interface_adapter.course_list.CourseListController;
 import interface_adapter.course_list.CourseListState;
 import interface_adapter.course_list.CourseListViewModel;
 import interface_adapter.edit_course.EditCourseController;
@@ -118,7 +119,7 @@ public class AppBuilder {
         CourseListState state = courseListViewModel.getState();
         User user = state.getUser();
         List<Course> courses = userDataAccessObject.getCourses(user);
-        courseListView = new CourseListView(courseListViewModel, courses);
+        courseListView = new CourseListView(courseListViewModel, courses, viewManagerModel, addCourseViewModel);
         cardPanel.add(courseListView, courseListView.getViewName());
         return this;
     }
@@ -218,6 +219,13 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addCourseListUseCase() {
+        final CourseListController courseListController = new CourseListController();
+
+        courseListView.setCourseListController(courseListController);
+        return this;
+    }
+
     public AppBuilder deleteAssignmentUseCase() {
         final DeleteAssignmentOutputBoundary deleteAssignmentOutputBoundary = new DeleteAssignmentPresenter(assignmentListViewModel, viewManagerModel);
         final DeleteAssignmentInputBoundary deleteAssignmentInteractor = new DeleteAssignmentInteractor(
@@ -246,7 +254,7 @@ public class AppBuilder {
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
-        viewManagerModel.setState(signupView.getViewName());
+        viewManagerModel.setState(assignmentListView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;

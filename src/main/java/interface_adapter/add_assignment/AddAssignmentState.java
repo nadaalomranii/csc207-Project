@@ -1,6 +1,7 @@
 package interface_adapter.add_assignment;
 
 import entity.Course;
+import entity.User;
 
 import java.util.Date;
 
@@ -10,6 +11,7 @@ public class AddAssignmentState {
     private String grade;
     private String weight;
     private Course course;
+    private User user;
 
     public AddAssignmentState() {
 
@@ -34,4 +36,8 @@ public class AddAssignmentState {
     public void setCourse(Course course) {this.course = course;}
 
     public Course getCourse() {return course;}
+
+    public void setUser(User user) {this.user = user;}
+
+    public User getUser() {return user;}
 }

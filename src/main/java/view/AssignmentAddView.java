@@ -6,7 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -71,13 +74,18 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
                         if (evt.getSource().equals(addAssignment)) {
                             final AddAssignmentState currentState = addAssignmentViewModel.getState();
 
-                            addAssignmentController.execute(
-                                    currentState.getAssignmentName(),
-                                    currentState.getDueDate(),
-                                    currentState.getGrade(),
-                                    currentState.getWeight(),
-                                    currentState.getCourse()
-                            );
+                            try {
+                                addAssignmentController.execute(
+                                        currentState.getAssignmentName(),
+                                        currentState.getDueDate(),
+                                        currentState.getGrade(),
+                                        currentState.getWeight(),
+                                        currentState.getCourse(),
+                                        currentState.getUser()
+                                );
+                            } catch (ParseException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     }
                 }
@@ -159,29 +167,40 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
 
         assignmentDueDateField.getDocument().addDocumentListener(new DocumentListener() {
 
-            private void documentListenerHelper() {
+            private void documentListenerHelper() throws ParseException {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
                 final AddAssignmentState currentState = addAssignmentViewModel.getState();
-                // HERE
                 String assignmentDueDateInput = assignmentDueDateField.getText();
-                Date date = new Date();
-                date.setTime(Long.parseLong(assignmentDueDateInput));
+                Date date = formatter.parse(assignmentDueDateInput);
                 currentState.setDueDate(date);
                 addAssignmentViewModel.setState(currentState);
             }
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
+                try {
+                    documentListenerHelper();
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
+                try {
+                    documentListenerHelper();
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
+                try {
+                    documentListenerHelper();
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 

@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -21,13 +22,15 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
 
     private final String viewName = "Course List";
     private final CourseListViewModel courseListViewModel;
+    private final List<Course> courseList;
 
     private JButton courseButton;
     private final JButton addCourseButton;
 
-    public CourseListView(CourseListViewModel courseListViewModel) {
+    public CourseListView(CourseListViewModel courseListViewModel, List<Course> courseList) {
         this.courseListViewModel = courseListViewModel;
         this.courseListViewModel.addPropertyChangeListener(this);
+        this.courseList = courseList;
 
         this.setBackground(Color.getHSBColor(28, 73, 69));
         FlowLayout flowLayout = new FlowLayout();
@@ -39,10 +42,11 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
 
         // Course buttons
         final JPanel allCoursesPanel = new JPanel();
-        Course[] courses = courseListViewModel.getState().getCourses();
-        for (Course course : courses) {
-            courseButton = new JButton(course.getCode());
-            allCoursesPanel.add(courseButton);
+        if (this.courseList != null) {
+            for (Course course : this.courseList) {
+                courseButton = new JButton(course.getCode());
+                allCoursesPanel.add(courseButton);
+            }
         }
         allCoursesPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 

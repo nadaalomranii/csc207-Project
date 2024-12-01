@@ -1,20 +1,21 @@
 package use_case.add_assignment;
 
 import data_access.DataAccessInterface;
-import entity.*;
+import entity.Course;
+import entity.User;
 
 /**
  * The Add Assignment Interactor.
  */
 public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
-    private final DataAccessInterface courseDataAccessObject;
+    private final AddAssignmentDataAccessInterface assignmentDataAccessObject;
     private final AddAssignmentOutputBoundary addAssignmentPresenter;
     private final AssignmentFactory assignmentFactory;
 
-    public AddAssignmentInteractor(DataAccessInterface courseDataAccessInterface,
+    public AddAssignmentInteractor(AddAssignmentDataAccessInterface assignmentDataAccessInterface,
                                    AddAssignmentOutputBoundary addAssignmentOutputBoundary,
                                    AssignmentFactory assignmentFactory) {
-        this.courseDataAccessObject = courseDataAccessInterface;
+        this.assignmentDataAccessObject = assignmentDataAccessInterface;
         this.addAssignmentPresenter = addAssignmentOutputBoundary;
         this.assignmentFactory = assignmentFactory;
     }
@@ -24,13 +25,24 @@ public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
         final Assignment assignment = assignmentFactory.create(addAssignmentInputData.getName(),
                 addAssignmentInputData.getScore(), addAssignmentInputData.getWeight(), addAssignmentInputData.getDueDate());
 
+        // get assignment name
+        final String name = assignment.getName();
+        final Course course = addAssignmentInputData.getCourse();
+        final User user = addAssignmentInputData.getUser();
+
+        // assignment name already exists; prepare fail view
+        if (assignmentDataAccessObject.existsByName(name, course, user)) {
+            addAssignmentPresenter.prepareFailView(name + ": assignment already exists.");
+        }
+
+        // assignment name doesn't exist
+        else {
         // Save the assignment to the data store
-        // Temporary fix of casting commonassignment to assignment FIXED
-        courseDataAccessObject.saveAssignment(assignment, addAssignmentInputData.getCourse());
+        assignmentDataAccessObject.saveAssignment(assignment, addAssignmentInputData.getCourse());
 
         // Prepare success output and send it to the presenter
         AddAssignmentOutputData outputData = new AddAssignmentOutputData("Assignment added successfully.",
                                                                         addAssignmentInputData.getCourse());
         addAssignmentPresenter.prepareSuccessView(outputData);
     }
-}
+}}

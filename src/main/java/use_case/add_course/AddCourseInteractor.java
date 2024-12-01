@@ -31,23 +31,22 @@ public class AddCourseInteractor implements AddCourseInputBoundary {
         final String name = addCourseInputData.getName();
 
         // course already exists; prepare fail view
-
-        if (courseDataAccessObject.existsByCode(addCourseInputData.getCode())) {
-            coursePresenter.prepareFailView(name + ": course already exists.");
+        if (courseDataAccessObject.existsByCode(addCourseInputData.getCode(), addCourseInputData.getUser())) {
+            final AddCourseOutputData addCourseOutputData = new AddCourseOutputData();
+            coursePresenter.prepareFailView(addCourseOutputData,name + ": course already exists.");
         }
 
-        // course name does exists
+        // course name does not exist; create course, save it and prepare success view
         else {
             final Course course = courseFactory.create(addCourseInputData.getName(), addCourseInputData.getCode());
-            final AddCourseOutputData addCourseOutputData = new AddCourseOutputData(course.getCode(), false);
+            final AddCourseOutputData addCourseOutputData = new AddCourseOutputData(course, false);
             coursePresenter.prepareSuccessView(addCourseOutputData);
-            courseDataAccessObject.saveCourse(course);
+            courseDataAccessObject.saveCourse(course, addCourseInputData.getUser());
 
         }
     }
+
     @Override
-    public void switchToAssignmentView(){
-        coursePresenter.switchToAssignmentView();
-    }
+    public void switchToCourseView(){ coursePresenter.switchToCourseView();}
 
 }

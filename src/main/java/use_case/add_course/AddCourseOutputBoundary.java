@@ -1,7 +1,7 @@
 package use_case.add_course;
 
 /**
- * The output boundary for the Change Password Use Case.
+ * The output boundary for the Add Course Use Case.
  */
 public interface AddCourseOutputBoundary {
     /**
@@ -12,13 +12,14 @@ public interface AddCourseOutputBoundary {
 
     /**
      * Prepares the failure view for the Add Course Use Case.
+     * @param outputData the output data
      * @param errorMessage the explanation of the failure
      */
-    void prepareFailView(String errorMessage);
+    void prepareFailView(AddCourseOutputData outputData, String errorMessage);
 
     /**
-     * Switches view to Assignment Vie.
+     * Switches view to Course List View.
      */
-    void switchToAssignmentView();
+    void switchToCourseView();
 
 }

@@ -1,6 +1,7 @@
 package interface_adapter.delete_course;
 
 import entity.Course;
+import entity.User;
 import use_case.delete_course.DeleteCourseInputBoundary;
 import use_case.delete_course.DeleteCourseInputData;
 
@@ -14,8 +15,8 @@ public class DeleteCourseController {
         this.deleteCourseInteractor = deleteCourseInteractor;
     }
 
-    public void execute(String courseCode, String courseName) {
-        final DeleteCourseInputData deleteCourseInputData = new DeleteCourseInputData(courseName, courseCode);
+    public void execute(String courseCode, String courseName, User user) {
+        final DeleteCourseInputData deleteCourseInputData = new DeleteCourseInputData(courseName, courseCode, user);
 
         deleteCourseInteractor.execute(deleteCourseInputData);
     }

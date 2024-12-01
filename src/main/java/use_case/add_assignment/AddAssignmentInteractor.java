@@ -35,7 +35,7 @@ public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
         // assignment name doesn't exist
         else {
         // Save the assignment to the data store
-        assignmentDataAccessObject.saveAssignment(assignment, addAssignmentInputData.getCourse());
+        assignmentDataAccessObject.saveAssignment(assignment, addAssignmentInputData.getCourse(), addAssignmentInputData.getUser());
 
         // Prepare success output and send it to the presenter
         AddAssignmentOutputData outputData = new AddAssignmentOutputData("Assignment added successfully.",

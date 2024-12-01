@@ -2,6 +2,7 @@ package use_case.add_assignment;
 
 import entity.Assignment;
 import entity.Course;
+import entity.User;
 
 public interface AddAssignmentDataAccessInterface {
     /**
@@ -11,5 +12,5 @@ public interface AddAssignmentDataAccessInterface {
      */
     boolean existsByName(String name);
 
-    void saveAssignment(Assignment assignment, Course course);
+    void saveAssignment(Assignment assignment, Course course, User user);
 }

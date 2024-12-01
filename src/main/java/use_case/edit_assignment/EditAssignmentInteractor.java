@@ -1,7 +1,8 @@
-package src.main.java.use_case.edit_assignment;
+package use_case.edit_assignment;
 
 import entity.Assignment;
 import entity.AssignmentFactory;
+
 
 /**
  * The Edit Assignment Interactor.
@@ -20,7 +21,7 @@ public class EditAssignmentInteractor implements EditAssignmentInputBoundary {
     }
 
     @Override
-    public static void execute(EditAssignmentInputData editAssignmentInputData) {
+    public void execute(EditAssignmentInputData editAssignmentInputData) {
         //execute edit assignment functionality to program
         final Assignment assignment = assignmentFactory.create(editAssignmentInputData.getAssignment().getName(),
                 editAssignmentInputData.getNewScore(), editAssignmentInputData.getAssignment().getWeight(),

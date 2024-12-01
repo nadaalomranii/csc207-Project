@@ -6,12 +6,16 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.mail.MessagingException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import interface_adapter.assignment_list.AssignmentListViewModel;
 import interface_adapter.assignment_list.AssignmentListState;
 import interface_adapter.delete_assignment.DeleteAssignmentController;
+import interface_adapter.send_notification.SendNotificationState;
+import interface_adapter.send_notification.SendNotificationViewModel;
+import interface_adapter.send_notification.SendNotificatonController;
 
 /**
  * The view for when the user is adding a course.
@@ -20,6 +24,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
     private final String viewName = "Assignment List";
     private final AssignmentListViewModel assignmentListViewModel;
+    private final SendNotificationViewModel sendNotificationViewModel;
 
     private final JTextField assignmentNameField = new JTextField(15);
     private final JTextField assignmentGradeField = new JTextField(15);
@@ -28,6 +33,9 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
     private final JButton addAssignment;
     private final JButton deleteAssignment;
+    private final JButton scheduleNotification;
+
+    private SendNotificatonController sendNotificationController;
 
     // NEW FOR TABLE
     private final JTable assignmentTable; // The table to display assignment data
@@ -35,6 +43,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
     public AssignmentListView(AssignmentListViewModel assignmentListViewModel) {
         this.assignmentListViewModel = assignmentListViewModel;
+        this.sendNotificationViewModel = new SendNotificationViewModel();
         this.assignmentListViewModel.addPropertyChangeListener(this);
 
         this.setBackground(Color.getHSBColor(28, 73, 69));
@@ -55,6 +64,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         deleteAssignment = new JButton("Delete Assignment");
         buttons.add(deleteAssignment);
         deleteAssignment.addActionListener(this);
+        scheduleNotification = new JButton("Schedule Emails for New Assignments");
 
         this.add(title);
         this.add(assignmentNameInfo);
@@ -90,6 +100,27 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
             assignmentGradeField.setText("");
             assignmentWeightField.setText("");
             assignmentDueDateField.setText("");
+
+        } else if (evt.getSource() == scheduleNotification) {
+            final SendNotificationState currentState = sendNotificationViewModel.getState();
+
+            // run sendNotification Use Case
+            try {
+                sendNotificationController.execute(currentState.getUser(),
+                        currentState.getCourse(),
+                        currentState.getAssignments());
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            }
+
+            // TODO: Pop Up
+            // Logic:
+            // if sendNotificationViewModel property is "notifications scheduled"
+            //      pop up "Notifications scheduled for the following assignments:" + outputData
+            // else
+            //      pop up error message
+
+
         } else if (evt.getSource() == deleteAssignment) {
             // Handle delete assignment button click
             int selectedRow = assignmentTable.getSelectedRow();
@@ -105,7 +136,8 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
                     tableModel.removeRow(selectedRow); // Remove the selected row
                     JOptionPane.showMessageDialog(this, "Assignment deleted successfully.");
                 }
-            } else {
+            }
+            else {
                 JOptionPane.showMessageDialog(this, "No assignment selected. Please select a row to delete.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }

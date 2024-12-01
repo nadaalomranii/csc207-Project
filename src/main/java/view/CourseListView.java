@@ -32,13 +32,20 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
         this.courseListViewModel.addPropertyChangeListener(this);
         this.courseList = courseList;
 
-        this.setBackground(Color.getHSBColor(28, 73, 69));
-        FlowLayout flowLayout = new FlowLayout();
-        this.setLayout(flowLayout);
-
         // title
         final JLabel title = new JLabel("Courses");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Pink text
+        title.setForeground(Color.getHSBColor(0.9F, 0F, 0.05F));
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+
+        // Set up view formatting
+        this.setBackground(Color.getHSBColor(0.9F, 0.2F, 1F));
+        FlowLayout flowLayout = new FlowLayout();
+        this.setLayout(flowLayout);
+        //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Course buttons
         final JPanel allCoursesPanel = new JPanel();

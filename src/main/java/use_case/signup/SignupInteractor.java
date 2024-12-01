@@ -3,6 +3,8 @@ package use_case.signup;
 import entity.User;
 import entity.UserFactory;
 
+import java.util.ArrayList;
+
 /**
  * The signup interactor.
  */
@@ -32,7 +34,7 @@ public class SignupInteractor implements SignupInputBoundary {
                     signupInputData.getUsername(),
                     signupInputData.getPassword(),
                     signupInputData.getEmail());
-            userDataAccessObject.save(user);
+            userDataAccessObject.save(user, new ArrayList<>());
 
             final SignupOutputData signupOutputData = new SignupOutputData(user.getUsername(), false);
             userPresenter.prepareSuccessView(signupOutputData);

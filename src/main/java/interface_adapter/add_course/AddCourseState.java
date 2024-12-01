@@ -8,8 +8,6 @@ public class AddCourseState {
     private String AddCourseError;
     private User user;
 
-    public AddCourseState() {}
-
     public String getCourseName() { return courseName; }
 
     public String getCourseCode() { return courseCode; }
@@ -19,6 +17,8 @@ public class AddCourseState {
     public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
 
     public void setAddCourseError(String error) { this.AddCourseError = error; }
+
+    public void setUser(User user) { this.user = user; }
 
     public String getAddCourseError() { return AddCourseError; }
 

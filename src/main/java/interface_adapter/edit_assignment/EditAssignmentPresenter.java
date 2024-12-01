@@ -1,7 +1,8 @@
-package src.main.java.interface_adapter.edit_assignment;
+package interface_adapter.edit_assignment;
 
-import src.main.java.use_case.edit_assignment.EditAssignmentOutputBoundary;
-import src.main.java.use_case.edit_assignment.EditAssignmentOutputData;
+import use_case.edit_assignment.EditAssignmentOutputBoundary;
+import use_case.edit_assignment.EditAssignmentOutputData;
+import use_case.edit_assignment.EditAssignmentViewModel;
 
 /**
  * The Presenter for the Edit Assignment Use Case.

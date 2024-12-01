@@ -1,4 +1,4 @@
-package src.main.java.interface_adapter.edit_assignment;
+package interface_adapter.edit_assignment;
 
 import interface_adapter.ViewModel;
 

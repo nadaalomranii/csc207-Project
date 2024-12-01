@@ -53,6 +53,17 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
             for (Course course : this.courseList) {
                 courseButton = new JButton(course.getCode());
                 allCoursesPanel.add(courseButton);
+
+                // add button functionality
+                courseButton.addActionListener(
+                        new ActionListener() {
+                            public void actionPerformed(ActionEvent evt) {
+                                if (evt.getSource().equals(courseButton)) {
+                                    // TODO: go to assignment list view of this course
+                                }
+                            }
+                        }
+                );
             }
         }
         allCoursesPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -62,12 +73,26 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
         final JPanel addCoursePanel = new JPanel();
         addCourseButton = new JButton("Add Course");
         addCoursePanel.add(addCourseButton);
+        addCourseButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(addCourseButton)) {
+                            // TODO: go to add course view
+                        }
+                    }
+                }
+        );
         addCoursePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        allCoursesPanel.setBackground(Color.getHSBColor(0.9F, 0F, 0.05F));
+        addCoursePanel.setBackground(Color.getHSBColor(0.9F, 0F, 0.05F));
 
         this.add(title);
         this.add(allCoursesPanel);
         this.add(addCoursePanel);
     }
+
+
 
     @Override
     public void actionPerformed(ActionEvent evt) {System.out.println("Click " + evt.getActionCommand());}
@@ -79,6 +104,7 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
     }
 
     private void setFields(CourseListState state) {
+        // TODO: are there any fields to set?
     }
 
     public String getViewName() {

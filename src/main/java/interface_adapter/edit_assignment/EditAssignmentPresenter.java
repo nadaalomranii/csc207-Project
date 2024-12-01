@@ -1,17 +1,19 @@
 package interface_adapter.edit_assignment;
 
+
 import use_case.edit_assignment.EditAssignmentOutputBoundary;
 import use_case.edit_assignment.EditAssignmentOutputData;
 import use_case.edit_assignment.EditAssignmentViewModel;
+import interface_adapter.assignment_list.AssignmentListViewModel;
 
 /**
  * The Presenter for the Edit Assignment Use Case.
  */
 public class EditAssignmentPresenter implements EditAssignmentOutputBoundary {
 
-    private final EditAssignmentViewModel editAssignmentViewModel;
+    private final AssignmentListViewModel editAssignmentViewModel;
 
-    public EditAssignmentPresenter(EditAssignmentViewModel editAssignmentViewModel) {
+    public EditAssignmentPresenter(AssignmentListViewModel editAssignmentViewModel) {
         this.editAssignmentViewModel = editAssignmentViewModel;
     }
 

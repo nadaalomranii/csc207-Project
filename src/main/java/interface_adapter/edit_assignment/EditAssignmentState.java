@@ -12,7 +12,7 @@ public class EditAssignmentState {
     private float newScore;
 
     public EditAssignmentState() {
-
+        // Comment for sufficiency
     }
 
     public Assignment getAssignment() {return assignment;}

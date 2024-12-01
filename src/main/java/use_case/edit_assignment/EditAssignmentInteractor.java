@@ -8,7 +8,7 @@ import entity.AssignmentFactory;
  * The Edit Assignment Interactor.
  */
 public class EditAssignmentInteractor implements EditAssignmentInputBoundary {
-    private final EditAssignmentDataAccessInterface dataAccess;
+    private final src.main.java.use_case.edit_assignment.EditAssignmentDataAccessInterface dataAccess;
     private final EditAssignmentOutputBoundary editAssignmentPresenter;
     private final AssignmentFactory assignmentFactory;
 

@@ -4,6 +4,7 @@ import entity.Assignment;
 import entity.Course;
 import entity.User;
 
+import use_case.add_assignment.AddAssignmentDataAccessInterface;
 import use_case.add_course.AddCourseDataAccessInterface;
 import use_case.delete_assignment.DeleteAssignmentDataAccessInterface;
 import use_case.delete_course.DeleteCourseDataAccessInterface;
@@ -28,22 +29,23 @@ public class DataAccessInterface implements
         DeleteAssignmentDataAccessInterface,
         SendNotificationDataAccessInterface,
         SignupUserDataAccessInterface,
-        LoginUserDataAccessInterface {
+        LoginUserDataAccessInterface,
+        AddAssignmentDataAccessInterface {
     // The second key is the course code
     private final Map<User, Map<String, Map<Course, List<Assignment>>>> users = new HashMap<>();
 
-//    @Override
-//    public void saveAssignment(Assignment assignment, Course course, User user) {
-//        // The course already exists in courses
-//        // Add the new assignment to the current assignments
-//        Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
-//        List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
-//        if (currentAssignments == null) {
-//            currentAssignments = new ArrayList<>();
-//        }
-//        currentAssignments.add(assignment);
-//        users.get(user).get(course.getCode()).put(course, currentAssignments);
-//    }
+    @Override
+    public void saveAssignment(Assignment assignment, Course course, User user) {
+        // The course already exists in courses
+        // Add the new assignment to the current assignments
+        Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
+        List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
+        if (currentAssignments == null) {
+            currentAssignments = new ArrayList<>();
+        }
+        currentAssignments.add(assignment);
+        users.get(user).get(course.getCode()).put(course, currentAssignments);
+    }
 
     @Override
     public boolean existsByCode(String code, User user) {
@@ -230,6 +232,13 @@ public class DataAccessInterface implements
 
     @Override
     public User get(String username) {
+        Set<User> users = this.users.keySet();
+        for (User user : users) {
+            if (user.getName().equals(username)) {
+                return user;
+            }
+        }
+        // We are at the end of the loop and there is no user with this username
         return null;
     }
 
@@ -241,5 +250,17 @@ public class DataAccessInterface implements
     @Override
     public void setCurrentUsername(String username) {
 
+    }
+
+    @Override
+    public boolean existsByName(String name, Course course, User user) {
+        Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
+        List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
+        for (Assignment assignment : currentAssignments) {
+            if (assignment.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

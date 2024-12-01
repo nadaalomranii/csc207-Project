@@ -68,9 +68,7 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
                 courseButton.addActionListener(
                         new ActionListener() {
                             public void actionPerformed(ActionEvent evt) {
-                                if (evt.getSource().equals(courseButton)) {
-                                    // TODO: go to assignment list view of this course
-                                }
+                                courseListController.switchToCourseListView(viewManagerModel, addCourseViewModel, courseListViewModel);
                             }
                         }
                 );
@@ -86,22 +84,11 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
         addCourseButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(addCourseButton)) {
-                            // TODO: go to add course view
-                        }
-                    }
-                }
-        );
-        addCoursePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        addCourseButton.addActionListener(
-            new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
                         courseListController.switchToCourseListView(viewManagerModel, addCourseViewModel, courseListViewModel);
                     }
                 }
         );
-
+        addCoursePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.add(title);
         this.add(allCoursesPanel);
@@ -120,7 +107,6 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
     }
 
     private void setFields(CourseListState state) {
-        // TODO: are there any fields to set?
     }
 
     public String getViewName() {

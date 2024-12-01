@@ -42,7 +42,12 @@ public class AddCourseInteractor implements AddCourseInputBoundary {
         else {
             final Course course = courseFactory.create(addCourseInputData.getName(), addCourseInputData.getCode(), new ArrayList<>());
             courseDataAccessObject.saveCourse(course, addCourseInputData.getUser());
-            final AddCourseOutputData addCourseOutputData = new AddCourseOutputData(course, false, courseDataAccessObject.getCourses(addCourseInputData.getUser()));
+
+            final AddCourseOutputData addCourseOutputData = new AddCourseOutputData(
+                    course,
+                    false,
+                    courseDataAccessObject.getCourses(addCourseInputData.getUser()));
+
 
             coursePresenter.prepareSuccessView(addCourseOutputData);
         }

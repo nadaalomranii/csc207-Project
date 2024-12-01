@@ -5,11 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import entity.Assignment;
 import interface_adapter.assignment_list.AssignmentListViewModel;
 import interface_adapter.assignment_list.AssignmentListState;
 import interface_adapter.delete_assignment.DeleteAssignmentController;
@@ -130,19 +132,13 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
             // run sendNotification Use Case
             try {
-                sendNotificationController.execute(currentState.getUser(),
+                sendNotificationController.execute(
+                        currentState.getUser(),
                         currentState.getCourse(),
                         currentState.getAssignments());
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             }
-
-            // TODO: Pop Up
-            // Logic:
-            // if sendNotificationViewModel property is "notifications scheduled"
-            //      pop up "Notifications scheduled for the following assignments:" + outputData
-            // else
-            //      pop up error message
 
 
         } else if (evt.getSource() == deleteAssignment) {
@@ -170,12 +166,29 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final AssignmentListState state = (AssignmentListState) evt.getNewValue();
-        setFields(state);
+        // TODO: check this is right
+        // Do we need this?
+        // if (evt.getPropertyName().equals("state")) {}
+
+        // Pop ups for SendNotifications Use Case
+        if (evt.getPropertyName().equals("notifications scheduled")) {
+            // can i do this or does the state have to be AssignmentListState
+            final SendNotificationState state = (SendNotificationState) evt.getNewValue();
+            List<Assignment> scheduledAssignments = state.getNewlyScheduledAssignments();
+            StringBuilder assignmentString = new StringBuilder();
+            for (Assignment assignment : scheduledAssignments) {
+                assignmentString.append(assignment.getName()).append("\n");
+            }
+            JOptionPane.showMessageDialog(null, ("Notifications scheduled for: \n" + assignmentString.toString() ));
+        }
+        else if (evt.getPropertyName().equals("No new assignments to schedule")) {
+            final SendNotificationState state = (SendNotificationState) evt.getNewValue();
+            JOptionPane.showMessageDialog(null, ("No new assignments to schedule for: \n" + state.getCourse()));
+        }
     }
 
-    private void setFields(AssignmentListState state) {
-    }
+    // TODO: do we need this?
+    //private void setFields(AssignmentListState state) {}
 
     public String getViewName() {
         return viewName;

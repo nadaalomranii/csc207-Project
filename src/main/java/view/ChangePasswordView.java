@@ -84,6 +84,8 @@ public class ChangePasswordView extends JPanel implements PropertyChangeListener
 
                         this.changePasswordController.execute(
                                 currentState.getUsername(),
+                                currentState.getName(),
+                                currentState.getEmail(),
                                 currentState.getPassword()
                         );
                     }

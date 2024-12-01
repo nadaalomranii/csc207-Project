@@ -5,20 +5,28 @@ package use_case.change_password;
  */
 public class ChangePasswordInputData {
 
-    private final String password;
     private final String username;
+    private final String name;
+    private final String email;
+    private final String password;
 
-    public ChangePasswordInputData(String password, String username) {
-        this.password = password;
+    public ChangePasswordInputData(String username, String name, String email, String password) {
         this.username = username;
-    }
-
-    String getPassword() {
-        return password;
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
     String getUsername() {
         return username;
+    }
+
+    String getName() {return name;}
+
+    String getEmail() {return email;}
+
+    String getPassword() {
+        return password;
     }
 
 }

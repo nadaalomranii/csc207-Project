@@ -23,6 +23,7 @@ public class EditAssignmentInputData {
 
     public EditAssignmentInputData(User user, Course course, Assignment assignment, float newScore, float newWeight,
                                    String newName, Date newDueDate) {
+
         this.assignment = assignment;
         this.newScore = newScore;
         this.course = course;

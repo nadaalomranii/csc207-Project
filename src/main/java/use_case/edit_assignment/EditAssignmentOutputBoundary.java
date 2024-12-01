@@ -1,4 +1,4 @@
-package src.main.java.use_case.edit_assignment;
+package use_case.edit_assignment;
 
 public interface EditAssignmentOutputBoundary {
     /**

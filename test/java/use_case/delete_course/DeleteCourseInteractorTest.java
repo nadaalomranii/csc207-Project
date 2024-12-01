@@ -9,16 +9,18 @@ public class DeleteCourseInteractorTest {
     @Test
     void successTest() {
         CourseFactory courseFactory = new CommonCourseFactory();
+        UserFactory userFactory = new CommonUserFactory();
 
         // This is the course we want to save then delete
         Course course = courseFactory.create("Software Design", "CSC207");
-
-        DeleteCourseInputData inputData = new DeleteCourseInputData("Software Design", "CSC207");
+        User user = userFactory.create("Nada", "nadaalomrani", "nada", "nada@gmail.com");
+        DeleteCourseInputData inputData = new DeleteCourseInputData("Software Design", "CSC207", user);
 
         DataAccessInterface courseRepository = new DataAccessInterface();
 
         // save the course into the data
-        courseRepository.saveCourse(course);
+        courseRepository.save(user);
+        courseRepository.saveCourse(course, user);
 
         // create a successPresenter that tests if the test cases are like what we expect
 
@@ -41,7 +43,7 @@ public class DeleteCourseInteractorTest {
         interactor.execute(inputData);
 
         // check that the course no longer exists in the data
-        boolean checkExists = courseRepository.existsByCode(course.getCode());
+        boolean checkExists = courseRepository.existsByCode(course.getCode(), user);
         assertFalse(checkExists);
     }
 }

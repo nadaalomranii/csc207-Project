@@ -11,19 +11,22 @@ public class EditCourseInteractorTest {
     @Test
     void successTest() {
         CourseFactory courseFactory = new CommonCourseFactory();
+        UserFactory userFactory = new CommonUserFactory();
 
         Course course = courseFactory.create("Software", "csc207");
+        User user = userFactory.create("Nada", "nadaalomrani", "nada", "nada@gmail.com");
 
-        EditCourseInputData inputData = new EditCourseInputData("Software Design", "csc207");
+        EditCourseInputData inputData = new EditCourseInputData("Software Design", "csc207", user);
 
         DataAccessInterface courseRepository = new DataAccessInterface();
 
-        courseRepository.saveCourse(course);
+        courseRepository.save(user);
+        courseRepository.saveCourse(course, user);
 
         EditCourseOutputBoundary successPresenter = new EditCourseOutputBoundary() {
             @Override
             public void prepareSuccessView(EditCourseOutputData editCourseOutputData) {
-                assertEquals(editCourseOutputData.getCourseName(), courseRepository.checkName(inputData.getCourseCode()));
+                assertEquals(editCourseOutputData.getCourseName(), courseRepository.checkName(inputData.getCourseCode(), user));
             }
 
             @Override
@@ -33,7 +36,7 @@ public class EditCourseInteractorTest {
 
             @Override
             public void switchToAssignmentListView() {
-                // TOOD:
+                // TODO:
             }
         };
 
@@ -41,6 +44,6 @@ public class EditCourseInteractorTest {
         interactor.execute(inputData);
 
         // Check that the course name has been changed
-        assertEquals(inputData.getCourseName(), courseRepository.checkName(inputData.getCourseCode()));
+        assertEquals(inputData.getCourseName(), courseRepository.checkName(inputData.getCourseCode(), user));
     }
 }

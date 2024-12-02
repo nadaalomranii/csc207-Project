@@ -304,4 +304,19 @@ public class DataAccessInterface implements
     public void editAssignment(Assignment assignment, Course course, User user) {
 
     }
+
+    @Override
+    public void changeScore(Assignment assignment, float newScore) {
+
+    }
+
+    @Override
+    public void changeDate(Assignment assignment, Date newDueDate) {
+
+    }
+
+    @Override
+    public void changeWeight(Assignment assignment, float newWeight) {
+
+    }
 }

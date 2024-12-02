@@ -29,7 +29,7 @@ public class EditAssignmentInteractor implements EditAssignmentInputBoundary {
                  editAssignmentInputData.getAssignment().getDueDate());
 
         // get assignment name
-        final String name = editAssignmentInputData.getName();
+        final String name = editAssignmentInputData.getAssignment().getName();
 
         // assignment name already exists; prepare fail view
         if (dataAccess.existsByName(assignment.getName(), editAssignmentInputData.getCourse(), editAssignmentInputData.getUser())) {

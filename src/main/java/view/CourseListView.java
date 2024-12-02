@@ -31,6 +31,10 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
 
     private JButton courseButton;
     private final JButton addCourseButton;
+    private final ViewManagerModel viewManagerModel;
+    private final AddCourseViewModel addCourseViewModel;
+
+    final JPanel allCoursesPanel = new JPanel();
 
 
     public CourseListView(CourseListViewModel courseListViewModel,
@@ -38,6 +42,8 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
                           ViewManagerModel viewManagerModel,
                           AddCourseViewModel addCourseViewModel) {
         this.courseListViewModel = courseListViewModel;
+        this.viewManagerModel = viewManagerModel;
+        this.addCourseViewModel = addCourseViewModel;
         this.courseListViewModel.addPropertyChangeListener(this);
         this.courseList = courseList;
 
@@ -57,7 +63,6 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
         //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Course buttons
-        final JPanel allCoursesPanel = new JPanel();
         List<Course> courses = courseListViewModel.getState().getCourses();
         if (courses != null) {
             for (Course course : courses) {
@@ -107,6 +112,25 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
     }
 
     private void setFields(CourseListState state) {
+        // Here, we want to reset the courses panel to be our current courses
+        // First delete the initial courses panel
+        allCoursesPanel.removeAll();
+        // Then we go through the current courses and add them
+        List<Course> courses = state.getCourses();
+        if (courses != null) {
+            for (Course course : courses) {
+                courseButton = new JButton(course.getCode());
+                allCoursesPanel.add(courseButton);
+
+                // add button functionality
+                courseButton.addActionListener(
+                        new ActionListener() {
+                            public void actionPerformed(ActionEvent evt) {
+                                courseListController.switchToCourseListView(viewManagerModel, addCourseViewModel, courseListViewModel);
+                            }
+                        });
+            }
+        }
     }
 
     public String getViewName() {

@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -17,8 +16,6 @@ import javax.swing.event.DocumentListener;
 
 import interface_adapter.add_assignment.AddAssignmentState;
 import interface_adapter.add_assignment.AddAssignmentViewModel;
-import interface_adapter.add_assignment.AddAssignmentController;
-import raven.datetime.component.date.DatePicker;
 
 import static java.lang.String.valueOf;
 
@@ -38,7 +35,7 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
 
     private final JButton addAssignment;
     private final JButton cancel;
-    private AddAssignmentController addAssignmentController;
+    private interface_adapter.add_assignment.addAssignmentController addAssignmentController;
 
     public AssignmentAddView(AddAssignmentViewModel addAssignmentViewModel) {
         this.addAssignmentViewModel = addAssignmentViewModel;
@@ -234,7 +231,7 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
         return viewName;
     }
 
-    public void setAddAssignmentController(AddAssignmentController addAssignmentController) {
+    public void setAddAssignmentController(interface_adapter.add_assignment.addAssignmentController addAssignmentController) {
         this.addAssignmentController = addAssignmentController;
     }
 }

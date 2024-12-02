@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -13,9 +14,14 @@ import javax.swing.table.DefaultTableModel;
 
 import entity.Assignment;
 import interface_adapter.assignment_list.AssignmentListController;
+import interface_adapter.add_assignment.AddAssignmentController;
+import interface_adapter.add_assignment.AddAssignmentViewModel;
+import interface_adapter.add_assignment.AddAssignmentState;
 import interface_adapter.assignment_list.AssignmentListViewModel;
 import interface_adapter.assignment_list.AssignmentListState;
 import interface_adapter.delete_assignment.DeleteAssignmentController;
+import interface_adapter.delete_assignment.DeleteAssignmentState;
+import interface_adapter.delete_assignment.DeleteAssignmentViewModel;
 import interface_adapter.delete_course.DeleteCourseController;
 import interface_adapter.delete_course.DeleteCourseState;
 import interface_adapter.delete_course.DeleteCourseViewModel;
@@ -33,11 +39,6 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private final SendNotificationViewModel sendNotificationViewModel;
     private final DeleteCourseViewModel deleteCourseViewModel;
 
-    private final JTextField assignmentNameField = new JTextField(15);
-    private final JTextField assignmentGradeField = new JTextField(15);
-    private final JTextField assignmentWeightField = new JTextField(15);
-    private final JTextField assignmentDueDateField = new JTextField(15);
-
     private final JButton addAssignment;
     private final JButton deleteAssignment;
     private final JButton scheduleNotification;
@@ -46,6 +47,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private SendNotificatonController sendNotificationController;
     private DeleteCourseController deleteCourseController;
     private AssignmentListController assignmentListController;
+    private DeleteAssignmentController deleteAssignmentController;
 
     // NEW FOR TABLE
     private final JTable assignmentTable; // The table to display assignment data
@@ -63,11 +65,6 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         final JLabel title = new JLabel("Add Assignment");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        final LabelTextPanel assignmentNameInfo = new LabelTextPanel(new JLabel("Assignment Name: "), assignmentNameField);
-        final LabelTextPanel assignmentGradeInfo = new LabelTextPanel(new JLabel("Assignment Grade: "), assignmentGradeField);
-        final LabelTextPanel assignmentWeightInfo = new LabelTextPanel(new JLabel("Assignment Weight: "), assignmentWeightField);
-        final LabelTextPanel assignmentDueDateInfo = new LabelTextPanel(new JLabel("Assignment DueDate: "), assignmentDueDateField);
-
         // Add buttons
         final JPanel buttons = new JPanel();
         addAssignment = new JButton("Add Assignment");
@@ -80,6 +77,103 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         // The delete course button
         deleteCourse = new JButton("Delete Course");
         buttons.add(deleteCourse);
+
+        // Button Functionality
+        addAssignment.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(addAssignment)) {
+                            final AddAssignmentState currentState = AddAssignmentViewModel.getState();
+
+                            try {
+                                addAssignmentController.execute(
+                                        currentState.getAssignmentName(),
+                                        currentState.getDueDate(),
+                                        currentState.getGrade(),
+                                        currentState.getWeight(),
+                                        currentState.getCourse(),
+                                        currentState.getUser()
+                                );
+                            } catch (ParseException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                }
+        );
+
+        deleteAssignment.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(deleteAssignment)) {
+                            final DeleteAssignmentState currentState = DeleteAssignmentViewModel.getState();
+
+                            int selectedRow = assignmentTable.getSelectedRow();
+                            if (selectedRow != -1) { // Ensure a row is selected
+                                // confirm user wants to delete
+                                int confirm = JOptionPane.showConfirmDialog(
+                                        null,
+                                        "Are you sure you want to delete this assignment?",
+                                        "Delete Confirmation",
+                                        JOptionPane.YES_NO_OPTION
+                                );
+
+                                // run delete assignment use case and remove the row
+                                if (confirm == JOptionPane.YES_OPTION) {
+                                    tableModel.removeRow(selectedRow); // Remove the selected row
+                                    // delete assignment use case
+                                    deleteAssignmentController.execute(currentState.getAssignmentName(),
+                                            currentState.getCourse(),
+                                            currentState.getUser());
+                                    JOptionPane.showMessageDialog(null, "Assignment deleted successfully.");
+                                }
+                            }
+                            else {
+                                JOptionPane.showMessageDialog(null, "No assignment selected. Please select a row to delete.", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                    }
+                }
+        );
+
+        scheduleNotification.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(scheduleNotification)) {
+                            final SendNotificationState currentState = sendNotificationViewModel.getState();
+
+                            // run sendNotification Use Case
+                            try {
+                                sendNotificationController.execute(
+                                        currentState.getUser(),
+                                        currentState.getCourse(),
+                                        currentState.getAssignments());
+                            } catch (MessagingException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+
+                    }
+                });
+
+// Delete Course
+        deleteCourse.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(deleteCourse)) {
+                            final AssignmentListState currentState = assignmentListViewModel.getState();
+
+                            // Executes the delete course use case.
+                            deleteCourseController.execute(currentState.getCourse().getCode(),
+                                    currentState.getCourse().getName(),
+                                    currentState.getUser());
+                        }
+                    }
+                }
+        );
 //        deleteCourse.addActionListener(
 //                new ActionListener() {
 //                    public void actionPerformed(ActionEvent e) {
@@ -93,10 +187,6 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 //        );
 
         this.add(title);
-        this.add(assignmentNameInfo);
-        this.add(assignmentGradeInfo);
-        this.add(assignmentWeightInfo);
-        this.add(assignmentDueDateInfo);
         this.add(buttons);
 
         // Table Panel
@@ -142,23 +232,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
         } else if (evt.getSource() == deleteAssignment) {
             // Handle delete assignment button click
-            int selectedRow = assignmentTable.getSelectedRow();
-            if (selectedRow != -1) { // Ensure a row is selected
-                int confirm = JOptionPane.showConfirmDialog(
-                        this,
-                        "Are you sure you want to delete this assignment?",
-                        "Delete Confirmation",
-                        JOptionPane.YES_NO_OPTION
-                );
 
-                if (confirm == JOptionPane.YES_OPTION) {
-                    tableModel.removeRow(selectedRow); // Remove the selected row
-                    JOptionPane.showMessageDialog(this, "Assignment deleted successfully.");
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "No assignment selected. Please select a row to delete.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
     }
 
 

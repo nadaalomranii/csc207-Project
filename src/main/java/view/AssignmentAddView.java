@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -15,10 +14,9 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import interface_adapter.add_assignment.AddAssignmentController;
 import interface_adapter.add_assignment.AddAssignmentState;
 import interface_adapter.add_assignment.AddAssignmentViewModel;
-import interface_adapter.add_assignment.AddAssignmentController;
-import raven.datetime.component.date.DatePicker;
 
 import static java.lang.String.valueOf;
 

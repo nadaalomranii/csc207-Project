@@ -9,6 +9,7 @@ import interface_adapter.add_assignment.AddAssignmentViewModel;
 import interface_adapter.add_course.AddCourseController;
 import interface_adapter.add_course.AddCoursePresenter;
 import interface_adapter.add_course.AddCourseViewModel;
+import interface_adapter.assignment_list.AssignmentListController;
 import interface_adapter.assignment_list.AssignmentListViewModel;
 import interface_adapter.course_list.CourseListController;
 import interface_adapter.course_list.CourseListState;
@@ -107,6 +108,7 @@ public class AppBuilder {
         return this;
     }
 
+
     /**
      * Adds the Add Course View to the application.
      * @return this builder
@@ -124,10 +126,11 @@ public class AppBuilder {
      */
     public AppBuilder addCourseListView() {
         courseListViewModel = new CourseListViewModel();
+        assignmentListViewModel = new AssignmentListViewModel();
         CourseListState state = courseListViewModel.getState();
         User user = state.getUser();
         List<Course> courses = userDataAccessObject.getCourses(user);
-        courseListView = new CourseListView(courseListViewModel, courses, viewManagerModel, addCourseViewModel);
+        courseListView = new CourseListView(courseListViewModel, courses, viewManagerModel, addCourseViewModel, assignmentListViewModel);
         cardPanel.add(courseListView, courseListView.getViewName());
         return this;
     }
@@ -231,6 +234,13 @@ public class AppBuilder {
         final CourseListController courseListController = new CourseListController();
 
         courseListView.setCourseListController(courseListController);
+        return this;
+    }
+
+    public AppBuilder addAssignmentListUseCase() {
+        final AssignmentListController assignmentListController = new AssignmentListController();
+
+        assignmentListView.setAssignmentListController(assignmentListController);
         return this;
     }
 

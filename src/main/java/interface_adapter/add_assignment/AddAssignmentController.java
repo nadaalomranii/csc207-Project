@@ -8,9 +8,6 @@ import use_case.add_assignment.AddAssignmentInputData;
 import java.text.ParseException;
 import java.util.Date;
 
-/**
- * Controller for the Add Assignment Use Case.
- */
 public class AddAssignmentController {
     private final AddAssignmentInputBoundary addAssignmentUseCaseInteractor;
 

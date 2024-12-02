@@ -26,11 +26,6 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private final AssignmentListViewModel assignmentListViewModel;
     private final SendNotificationViewModel sendNotificationViewModel;
 
-    private final JTextField assignmentNameField = new JTextField(15);
-    private final JTextField assignmentGradeField = new JTextField(15);
-    private final JTextField assignmentWeightField = new JTextField(15);
-    private final JTextField assignmentDueDateField = new JTextField(15);
-
     private final JButton addAssignment;
     private final JButton deleteAssignment;
     private final JButton scheduleNotification;

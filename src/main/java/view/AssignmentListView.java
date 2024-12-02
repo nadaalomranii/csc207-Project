@@ -5,14 +5,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import entity.Assignment;
 import interface_adapter.assignment_list.AssignmentListViewModel;
 import interface_adapter.assignment_list.AssignmentListState;
 import interface_adapter.delete_assignment.DeleteAssignmentController;
+import interface_adapter.delete_course.DeleteCourseController;
+import interface_adapter.delete_course.DeleteCourseState;
+import interface_adapter.delete_course.DeleteCourseViewModel;
 import interface_adapter.send_notification.SendNotificationState;
 import interface_adapter.send_notification.SendNotificationViewModel;
 import interface_adapter.send_notification.SendNotificatonController;
@@ -25,6 +30,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private final String viewName = "Assignment List";
     private final AssignmentListViewModel assignmentListViewModel;
     private final SendNotificationViewModel sendNotificationViewModel;
+    private final DeleteCourseViewModel deleteCourseViewModel;
 
     private final JTextField assignmentNameField = new JTextField(15);
     private final JTextField assignmentGradeField = new JTextField(15);
@@ -34,8 +40,10 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private final JButton addAssignment;
     private final JButton deleteAssignment;
     private final JButton scheduleNotification;
+    private final JButton deleteCourse;
 
     private SendNotificatonController sendNotificationController;
+    private DeleteCourseController deleteCourseController;
 
     // NEW FOR TABLE
     private final JTable assignmentTable; // The table to display assignment data
@@ -43,6 +51,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
     public AssignmentListView(AssignmentListViewModel assignmentListViewModel) {
         this.assignmentListViewModel = assignmentListViewModel;
+        this.deleteCourseViewModel = new DeleteCourseViewModel();
         this.sendNotificationViewModel = new SendNotificationViewModel();
         this.assignmentListViewModel.addPropertyChangeListener(this);
 
@@ -65,6 +74,22 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         buttons.add(deleteAssignment);
         deleteAssignment.addActionListener(this);
         scheduleNotification = new JButton("Schedule Emails for New Assignments");
+        // The delete course button
+        deleteCourse = new JButton("Delete Course");
+        buttons.add(deleteCourse);
+
+        deleteCourse.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(deleteCourse)) {
+                        final AssignmentListState currentState = assignmentListViewModel.getState();
+
+                        // Executes the delete course use case.
+                        deleteCourseController.execute(currentState.getCourse().getCode(),
+                                currentState.getCourse().getName(),
+                                currentState.getUser());
+                    }
+                }
+        );
 
         this.add(title);
         this.add(assignmentNameInfo);
@@ -79,7 +104,6 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         assignmentTable = new JTable(tableModel);
         JScrollPane tableScrollPane = new JScrollPane(assignmentTable); // Add table to scroll pane
         this.add(tableScrollPane, BorderLayout.CENTER); // Add table to the center of the layout
-
     }
 
     @Override
@@ -101,24 +125,20 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
             assignmentWeightField.setText("");
             assignmentDueDateField.setText("");
 
-        } else if (evt.getSource() == scheduleNotification) {
+        }
+
+        else if (evt.getSource() == scheduleNotification) {
             final SendNotificationState currentState = sendNotificationViewModel.getState();
 
             // run sendNotification Use Case
             try {
-                sendNotificationController.execute(currentState.getUser(),
+                sendNotificationController.execute(
+                        currentState.getUser(),
                         currentState.getCourse(),
                         currentState.getAssignments());
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             }
-
-            // TODO: Pop Up
-            // Logic:
-            // if sendNotificationViewModel property is "notifications scheduled"
-            //      pop up "Notifications scheduled for the following assignments:" + outputData
-            // else
-            //      pop up error message
 
 
         } else if (evt.getSource() == deleteAssignment) {
@@ -141,22 +161,43 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
                 JOptionPane.showMessageDialog(this, "No assignment selected. Please select a row to delete.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-        }
+    }
 
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final AssignmentListState state = (AssignmentListState) evt.getNewValue();
-        setFields(state);
+        // TODO: check this is right
+        // Do we need this?
+        // if (evt.getPropertyName().equals("state")) {}
+
+        // Pop ups for SendNotifications Use Case
+        if (evt.getPropertyName().equals("notifications scheduled")) {
+            // can i do this or does the state have to be AssignmentListState
+            final SendNotificationState state = (SendNotificationState) evt.getNewValue();
+            List<Assignment> scheduledAssignments = state.getNewlyScheduledAssignments();
+            StringBuilder assignmentString = new StringBuilder();
+            for (Assignment assignment : scheduledAssignments) {
+                assignmentString.append(assignment.getName()).append("\n");
+            }
+            JOptionPane.showMessageDialog(null, ("Notifications scheduled for: \n" + assignmentString.toString() ));
+        }
+        else if (evt.getPropertyName().equals("No new assignments to schedule")) {
+            final SendNotificationState state = (SendNotificationState) evt.getNewValue();
+            JOptionPane.showMessageDialog(null, ("No new assignments to schedule for: \n" + state.getCourse()));
+        }
     }
 
-    private void setFields(AssignmentListState state) {
-    }
+    // TODO: do we need this?
+    //private void setFields(AssignmentListState state) {}
 
     public String getViewName() {
         return viewName;
     }
 
     public void setDeleteAssignmentController(DeleteAssignmentController deleteAssignmentController) {
+    }
+
+    public void setDeleteCourseController(DeleteCourseController deleteCourseController) {
+        this.deleteCourseController = deleteCourseController;
     }
 }

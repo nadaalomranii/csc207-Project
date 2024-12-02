@@ -24,8 +24,10 @@ public class SendNotificationPresenter implements SendNotificationOutputBoundary
     //TODO: check these
     @Override
     public void prepareSuccessView(SendNotificationOutputData outputData){
-        AssignmentListState addAssignmentState = assignmentListViewModel.getState();
-        this.assignmentListViewModel.setState(addAssignmentState);
+        AssignmentListState assignmentListState = assignmentListViewModel.getState();
+        SendNotificationState sendNotificationState = sendNotificationViewModel.getState();
+        this.assignmentListViewModel.setState(assignmentListState);
+        sendNotificationState.setNewlyScheduledAssignments(outputData.getNewlyScheduledAssignments());
         assignmentListViewModel.firePropertyChanged();
         sendNotificationViewModel.firePropertyChanged("notifications scheduled");
         viewManagerModel.setState(assignmentListViewModel.getViewName());

@@ -20,7 +20,9 @@ public class EditAssignmentInputData {
     private  Date newDueDate;
 
 
+
     public EditAssignmentInputData(User user, Course course, Assignment assignment, float newScore, float newWeight, Date newDueDate) {
+
         this.assignment = assignment;
         this.newScore = newScore;
         this.course = course;

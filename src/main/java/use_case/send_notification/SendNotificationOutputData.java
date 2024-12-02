@@ -16,5 +16,7 @@ public class SendNotificationOutputData {
         this.newlyScheduledAssignments = newlyScheduledAssignments;
     }
 
+    public List<Assignment> getNewlyScheduledAssignments() { return newlyScheduledAssignments; }
+
 
 }

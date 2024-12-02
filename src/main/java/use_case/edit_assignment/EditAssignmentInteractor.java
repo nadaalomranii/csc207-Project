@@ -1,48 +1,37 @@
 package use_case.edit_assignment;
 
-import data_access.DataAccessInterface;
 import entity.Assignment;
-import entity.AssignmentFactory;
-
 
 /**
  * The Edit Assignment Interactor.
  */
 public class EditAssignmentInteractor implements EditAssignmentInputBoundary {
-    private final EditAssignmentDataAccessInterface dataAccess;
+    private final EditAssignmentDataAccessInterface editAssignmentDataAccessObject;
     private final EditAssignmentOutputBoundary editAssignmentPresenter;
-    private final AssignmentFactory assignmentFactory;
 
-    public EditAssignmentInteractor(DataAccessInterface assignmentDataAccess,
-                                    EditAssignmentOutputBoundary editAssignmentOutputBoundary,
-                                    AssignmentFactory assignmentFactory) {
-        this.dataAccess = assignmentDataAccess;
+    public EditAssignmentInteractor(EditAssignmentDataAccessInterface editAssignmentDataAccessInterface,
+                                    EditAssignmentOutputBoundary editAssignmentOutputBoundary) {
+        this.editAssignmentDataAccessObject = editAssignmentDataAccessInterface;
         this.editAssignmentPresenter = editAssignmentOutputBoundary;
-        this.assignmentFactory = assignmentFactory;
     }
 
     @Override
     public void execute(EditAssignmentInputData editAssignmentInputData) {
-        //execute edit assignment functionality to program
-        final Assignment assignment = assignmentFactory.create(editAssignmentInputData.getAssignment().getName(),
-                editAssignmentInputData.getNewScore(), editAssignmentInputData.getAssignment().getWeight(),
-                 editAssignmentInputData.getAssignment().getDueDate());
+        // Get the existing assignment
+        Assignment assignment = editAssignmentInputData.getAssignment();
 
-        // get assignment name
-        final String name = editAssignmentInputData.getName();
-
-        // assignment name already exists; prepare fail view
-        if (dataAccess.existsByName(assignment.getName(), editAssignmentInputData.getCourse(), editAssignmentInputData.getUser())) {
-            editAssignmentPresenter.prepareFailView(name + ": assignment already exists.");
+        // Update fields only if the new value is provided
+        if (editAssignmentInputData.getNewScore() != 0) {
+            editAssignmentDataAccessObject.changeScore(assignment, editAssignmentInputData.getNewScore());
         }
+        if (editAssignmentInputData.getNewDueDate() != null) {
+            editAssignmentDataAccessObject.changeDate(assignment, editAssignmentInputData.getNewDueDate());
+        }
+        if (editAssignmentInputData.getNewWeight() != 0) {
+            editAssignmentDataAccessObject.changeWeight(assignment, editAssignmentInputData.getNewWeight());
+        }
+        EditAssignmentOutputData outputData = new EditAssignmentOutputData(editAssignmentInputData.getNewScore(), false);
 
-        // assignment name doesn't exist
-        else {
-        dataAccess.editAssignment(assignment, editAssignmentInputData.getCourse(), editAssignmentInputData.getUser());
-
-        final EditAssignmentOutputData editAssignmentOutputData = new EditAssignmentOutputData(assignment.getGrade()
-                , false);
-
-        editAssignmentPresenter.prepareSuccessView(editAssignmentOutputData);
+        editAssignmentPresenter.prepareSuccessView(outputData);
     }
-}}
+}

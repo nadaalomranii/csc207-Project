@@ -48,6 +48,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private DeleteCourseController deleteCourseController;
     private AssignmentListController assignmentListController;
     private DeleteAssignmentController deleteAssignmentController;
+    private AddAssignmentController addAssignmentController;
 
     // NEW FOR TABLE
     private final JTable assignmentTable; // The table to display assignment data
@@ -78,64 +79,66 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         deleteCourse = new JButton("Delete Course");
         buttons.add(deleteCourse);
 
-        // Button Functionality
-        addAssignment.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(addAssignment)) {
-                            final AddAssignmentState currentState = AddAssignmentViewModel.getState();
+        //TODO: When we click the add assignment button, we want to go to the add assignmennt view model. In the add assignment view model, we get the actual state.
+//        // Button Functionality
+//        addAssignment.addActionListener(
+//                new ActionListener() {
+//                    public void actionPerformed(ActionEvent evt) {
+//                        if (evt.getSource().equals(addAssignment)) {
+//                            final AssignmentListState currentState = assignmentListViewModel.getState();
+//
+//                            try {
+//                                addAssignmentController.execute(
+//                                        currentState.getAssignmentName(),
+//                                        currentState.getDueDate(),
+//                                        currentState.getGrade(),
+//                                        currentState.getWeight(),
+//                                        currentState.getCourse(),
+//                                        currentState.getUser()
+//                                );
+//                            } catch (ParseException e) {
+//                                throw new RuntimeException(e);
+//                            }
+//                        }
+//                    }
+//                }
+//        );
 
-                            try {
-                                addAssignmentController.execute(
-                                        currentState.getAssignmentName(),
-                                        currentState.getDueDate(),
-                                        currentState.getGrade(),
-                                        currentState.getWeight(),
-                                        currentState.getCourse(),
-                                        currentState.getUser()
-                                );
-                            } catch (ParseException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    }
-                }
-        );
-
-        deleteAssignment.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(deleteAssignment)) {
-                            final DeleteAssignmentState currentState = DeleteAssignmentViewModel.getState();
-
-                            int selectedRow = assignmentTable.getSelectedRow();
-                            if (selectedRow != -1) { // Ensure a row is selected
-                                // confirm user wants to delete
-                                int confirm = JOptionPane.showConfirmDialog(
-                                        null,
-                                        "Are you sure you want to delete this assignment?",
-                                        "Delete Confirmation",
-                                        JOptionPane.YES_NO_OPTION
-                                );
-
-                                // run delete assignment use case and remove the row
-                                if (confirm == JOptionPane.YES_OPTION) {
-                                    tableModel.removeRow(selectedRow); // Remove the selected row
-                                    // delete assignment use case
-                                    deleteAssignmentController.execute(currentState.getAssignmentName(),
-                                            currentState.getCourse(),
-                                            currentState.getUser());
-                                    JOptionPane.showMessageDialog(null, "Assignment deleted successfully.");
-                                }
-                            }
-                            else {
-                                JOptionPane.showMessageDialog(null, "No assignment selected. Please select a row to delete.", "Error", JOptionPane.ERROR_MESSAGE);
-                            }
-                        }
-                    }
-                }
-        );
+        // TODO: You are getting a state that still doesnt exist (Delete Assignment View Model.get state)
+//        deleteAssignment.addActionListener(
+//                new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent evt) {
+//                        if (evt.getSource().equals(deleteAssignment)) {
+//                            final DeleteAssignmentState currentState = DeleteAssignmentViewModel.getState();
+//
+//                            int selectedRow = assignmentTable.getSelectedRow();
+//                            if (selectedRow != -1) { // Ensure a row is selected
+//                                // confirm user wants to delete
+//                                int confirm = JOptionPane.showConfirmDialog(
+//                                        null,
+//                                        "Are you sure you want to delete this assignment?",
+//                                        "Delete Confirmation",
+//                                        JOptionPane.YES_NO_OPTION
+//                                );
+//
+//                                // run delete assignment use case and remove the row
+//                                if (confirm == JOptionPane.YES_OPTION) {
+//                                    tableModel.removeRow(selectedRow); // Remove the selected row
+//                                    // delete assignment use case
+//                                    deleteAssignmentController.execute(currentState.getAssignmentName(),
+//                                            currentState.getCourse(),
+//                                            currentState.getUser());
+//                                    JOptionPane.showMessageDialog(null, "Assignment deleted successfully.");
+//                                }
+//                            }
+//                            else {
+//                                JOptionPane.showMessageDialog(null, "No assignment selected. Please select a row to delete.", "Error", JOptionPane.ERROR_MESSAGE);
+//                            }
+//                        }
+//                    }
+//                }
+//        );
 
         scheduleNotification.addActionListener(
                 new ActionListener() {
@@ -197,26 +200,28 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         this.add(tableScrollPane, BorderLayout.CENTER); // Add table to the center of the layout
     }
 
+    // TODO: not sure what this is?
     @Override
     public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource() == addAssignment) {
-            // Get data from input fields
-            String assignmentNameFieldText = assignmentNameField.getText();
-            String assignmentGradeFieldText = assignmentGradeField.getText();
-            String assignmentWeightFieldText = assignmentWeightField.getText();
-            String assignmentDueDateFieldText = assignmentDueDateField.getText();
-
-            // Add a new row to the table
-            tableModel.addRow(new Object[]{assignmentNameFieldText, assignmentGradeFieldText, assignmentWeightFieldText
-                    , assignmentDueDateFieldText});
-
-            // Clear the input fields (reset to blank)
-            assignmentNameField.setText("");
-            assignmentGradeField.setText("");
-            assignmentWeightField.setText("");
-            assignmentDueDateField.setText("");
-
-        } else if (evt.getSource() == scheduleNotification) {
+//        if (evt.getSource() == addAssignment) {
+//            // Get data from input fields
+//            String assignmentNameFieldText = assignmentNameField.getText();
+//            String assignmentGradeFieldText = assignmentGradeField.getText();
+//            String assignmentWeightFieldText = assignmentWeightField.getText();
+//            String assignmentDueDateFieldText = assignmentDueDateField.getText();
+//
+//            // Add a new row to the table
+//            tableModel.addRow(new Object[]{assignmentNameFieldText, assignmentGradeFieldText, assignmentWeightFieldText
+//                    , assignmentDueDateFieldText});
+//
+//            // Clear the input fields (reset to blank)
+//            assignmentNameField.setText("");
+//            assignmentGradeField.setText("");
+//            assignmentWeightField.setText("");
+//            assignmentDueDateField.setText("");
+//
+//        }
+        if (evt.getSource() == scheduleNotification) {
             final SendNotificationState currentState = sendNotificationViewModel.getState();
 
             // run sendNotification Use Case
@@ -233,6 +238,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         } else if (evt.getSource() == deleteAssignment) {
             // Handle delete assignment button click
 
+        }
     }
 
 
@@ -245,6 +251,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         // Pop ups for SendNotifications Use Case
 
         // Updates the assignment list state?
+        // TODO: Nada is still working on this
         final AssignmentListState currentState = (AssignmentListState) evt.getNewValue();
         assignmentListViewModel.setState((AssignmentListState) evt.getNewValue());
         setFields(currentState);

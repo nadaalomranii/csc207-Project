@@ -5,7 +5,7 @@ import entity.User;
 /**
  * The Login Interactor.
  */
-public class LoginInteractor implements LoginInputBoundary {
+public class  LoginInteractor implements LoginInputBoundary {
     private final LoginUserDataAccessInterface userDataAccessObject;
     private final LoginOutputBoundary loginPresenter;
 

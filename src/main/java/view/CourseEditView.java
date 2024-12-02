@@ -32,7 +32,7 @@ public class CourseEditView extends JPanel implements ActionListener, PropertyCh
         this.editCourseViewModel = editCourseViewModel;
         this.editCourseViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel("EditCourse");
+        final JLabel title = new JLabel("Edit Course");
 
         // Pink text
         title.setForeground(Color.getHSBColor(0.9F, 0F, 0.05F));

@@ -17,25 +17,21 @@ public class EditAssignmentInputData {
     private final Assignment assignment;
     private  float newScore;
     private  float newWeight;
-    private  String newName;
     private  Date newDueDate;
 
 
-    public EditAssignmentInputData(User user, Course course, Assignment assignment, float newScore, float newWeight,
-                                   String newName, Date newDueDate) {
+    public EditAssignmentInputData(User user, Course course, Assignment assignment, float newScore, float newWeight, Date newDueDate) {
         this.assignment = assignment;
         this.newScore = newScore;
         this.course = course;
         this.user = user;
         this.newWeight = newWeight;
-        this.newName = newName;
         this.newDueDate = newDueDate;
     }
 
     // Getters
     public Assignment getAssignment() {return assignment;}
     public float getNewScore() {return newScore;}
-    public String getNewName() {return newName;}
     public Date getNewDueDate() {return newDueDate;}
     public float getNewWeight() {return newWeight;}
     public User getUser() { return this.user; }

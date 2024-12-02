@@ -4,6 +4,8 @@ import entity.Assignment;
 import entity.Course;
 import entity.User;
 
+import java.util.Date;
+
 public interface EditAssignmentDataAccessInterface {
     /**
      * Checks if the course already exists.
@@ -16,4 +18,10 @@ public interface EditAssignmentDataAccessInterface {
      * @param assignment the assignment whose score is to be updated
      */
     void editAssignment(Assignment assignment, Course course, User user);
+
+    void changeScore(Assignment assignment, float newScore);
+
+    void changeDate(Assignment assignment, Date newDueDate);
+
+    void changeWeight(Assignment assignment, float newWeight);
 }

@@ -19,9 +19,9 @@ public interface EditAssignmentDataAccessInterface {
      */
     void editAssignment(Assignment assignment, Course course, User user);
 
-    void changeScore(Assignment assignment, float newScore);
+    void changeScore(Assignment assignment, float newScore, Course course, User user);
 
-    void changeDate(Assignment assignment, Date newDueDate);
+    void changeDate(Assignment assignment, Date newDueDate, Course course, User user);
 
-    void changeWeight(Assignment assignment, float newWeight);
+    void changeWeight(Assignment assignment, float newWeight, Course course, User user);
 }

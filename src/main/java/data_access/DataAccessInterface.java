@@ -4,10 +4,12 @@ import entity.Assignment;
 import entity.Course;
 import entity.User;
 
+//import use_case.add_assignment.AddAssignmentDataAccessInterface;
 import use_case.add_assignment.AddAssignmentDataAccessInterface;
 import use_case.add_course.AddCourseDataAccessInterface;
 import use_case.delete_assignment.DeleteAssignmentDataAccessInterface;
 import use_case.delete_course.DeleteCourseDataAccessInterface;
+import use_case.edit_assignment.EditAssignmentDataAccessInterface;
 import use_case.edit_course.EditCourseDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.send_notification.SendNotificationDataAccessInterface;
@@ -24,6 +26,7 @@ import java.util.Properties;
 
 public class DataAccessInterface implements
         AddCourseDataAccessInterface,
+        EditAssignmentDataAccessInterface,
         DeleteCourseDataAccessInterface,
         EditCourseDataAccessInterface,
         DeleteAssignmentDataAccessInterface,
@@ -277,5 +280,29 @@ public class DataAccessInterface implements
             }
         }
         return false;
+    }
+
+    /**
+     * Check if the assignment exists by name.
+     * @param name the assignment name to look for
+     * @param course
+     * @param user
+     * @return
+     */
+    @Override
+    public boolean existsByName(String name, Course course, User user) {
+        Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
+        List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
+        for (Assignment assignment : currentAssignments) {
+            if (assignment.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void editAssignment(Assignment assignment, Course course, User user) {
+
     }
 }

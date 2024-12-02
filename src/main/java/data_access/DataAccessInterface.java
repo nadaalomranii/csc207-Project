@@ -4,7 +4,6 @@ import entity.Assignment;
 import entity.Course;
 import entity.User;
 
-//import use_case.add_assignment.AddAssignmentDataAccessInterface;
 import use_case.add_assignment.AddAssignmentDataAccessInterface;
 import use_case.add_course.AddCourseDataAccessInterface;
 import use_case.delete_assignment.DeleteAssignmentDataAccessInterface;
@@ -303,6 +302,21 @@ public class DataAccessInterface implements
 
     @Override
     public void editAssignment(Assignment assignment, Course course, User user) {
+
+    }
+
+    @Override
+    public void changeScore(Assignment assignment, float newScore) {
+
+    }
+
+    @Override
+    public void changeDate(Assignment assignment, Date newDueDate) {
+
+    }
+
+    @Override
+    public void changeWeight(Assignment assignment, float newWeight) {
 
     }
 }

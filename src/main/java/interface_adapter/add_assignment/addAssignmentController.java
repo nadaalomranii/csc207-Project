@@ -11,10 +11,10 @@ import java.util.Date;
 /**
  * Controller for the Add Assignment Use Case.
  */
-public class AddAssignmentController {
+public class addAssignmentController {
     private final AddAssignmentInputBoundary addAssignmentUseCaseInteractor;
 
-    public AddAssignmentController(AddAssignmentInputBoundary addAssignmentUseCaseInteractor){
+    public addAssignmentController(AddAssignmentInputBoundary addAssignmentUseCaseInteractor){
         this.addAssignmentUseCaseInteractor = addAssignmentUseCaseInteractor;
     }
 

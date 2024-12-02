@@ -306,17 +306,17 @@ public class DataAccessInterface implements
     }
 
     @Override
-    public void changeScore(Assignment assignment, float newScore) {
+    public void changeScore(Assignment assignment, float newScore, Course course, User user) {
 
     }
 
     @Override
-    public void changeDate(Assignment assignment, Date newDueDate) {
+    public void changeDate(Assignment assignment, Date newDueDate, Course course, User user) {
 
     }
 
     @Override
-    public void changeWeight(Assignment assignment, float newWeight) {
+    public void changeWeight(Assignment assignment, float newWeight, Course course, User user) {
 
     }
 }

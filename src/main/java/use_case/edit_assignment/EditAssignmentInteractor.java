@@ -1,6 +1,8 @@
 package use_case.edit_assignment;
 
 import entity.Assignment;
+import entity.Course;
+import entity.User;
 
 /**
  * The Edit Assignment Interactor.
@@ -19,16 +21,18 @@ public class EditAssignmentInteractor implements EditAssignmentInputBoundary {
     public void execute(EditAssignmentInputData editAssignmentInputData) {
         // Get the existing assignment
         Assignment assignment = editAssignmentInputData.getAssignment();
+        Course course = editAssignmentInputData.getCourse();
+        User user = editAssignmentInputData.getUser();
 
         // Update fields only if the new value is provided
         if (editAssignmentInputData.getNewScore() != 0) {
-            editAssignmentDataAccessObject.changeScore(assignment, editAssignmentInputData.getNewScore());
+            editAssignmentDataAccessObject.changeScore(assignment, editAssignmentInputData.getNewScore(), course, user);
         }
         if (editAssignmentInputData.getNewDueDate() != null) {
-            editAssignmentDataAccessObject.changeDate(assignment, editAssignmentInputData.getNewDueDate());
+            editAssignmentDataAccessObject.changeDate(assignment, editAssignmentInputData.getNewDueDate(),course, user);
         }
         if (editAssignmentInputData.getNewWeight() != 0) {
-            editAssignmentDataAccessObject.changeWeight(assignment, editAssignmentInputData.getNewWeight());
+            editAssignmentDataAccessObject.changeWeight(assignment, editAssignmentInputData.getNewWeight(), course, user);
         }
         EditAssignmentOutputData outputData = new EditAssignmentOutputData(editAssignmentInputData.getNewScore(), false);
 

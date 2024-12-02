@@ -14,6 +14,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import interface_adapter.add_assignment.AddAssignmentController;
 import interface_adapter.add_assignment.AddAssignmentState;
 import interface_adapter.add_assignment.AddAssignmentViewModel;
 
@@ -35,7 +36,7 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
 
     private final JButton addAssignment;
     private final JButton cancel;
-    private interface_adapter.add_assignment.addAssignmentController addAssignmentController;
+    private AddAssignmentController addAssignmentController;
 
     public AssignmentAddView(AddAssignmentViewModel addAssignmentViewModel) {
         this.addAssignmentViewModel = addAssignmentViewModel;
@@ -231,7 +232,7 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
         return viewName;
     }
 
-    public void setAddAssignmentController(interface_adapter.add_assignment.addAssignmentController addAssignmentController) {
+    public void setAddAssignmentController(AddAssignmentController addAssignmentController) {
         this.addAssignmentController = addAssignmentController;
     }
 }

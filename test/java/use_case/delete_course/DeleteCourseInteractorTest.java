@@ -2,6 +2,8 @@ package use_case.delete_course;
 
 import data_access.DataAccessInterface;
 import entity.*;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.course_list.CourseListViewModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ public class DeleteCourseInteractorTest {
     void successTest() {
         CourseFactory courseFactory = new CommonCourseFactory();
         UserFactory userFactory = new CommonUserFactory();
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        CourseListViewModel courseListViewModel = new CourseListViewModel();
 
         // This is the course we want to save then delete
         Course course = courseFactory.create("Software Design", "CSC207", new ArrayList<>());
@@ -32,14 +36,14 @@ public class DeleteCourseInteractorTest {
             public void prepareSuccessView(DeleteCourseOutputData deleteCourseOutputData) {
                 // TODO: Why is the output data only outputs the course code, not the course object?
                 assertEquals(deleteCourseOutputData.getCourseCode(), course.getCode());
+                assertEquals(deleteCourseOutputData.getUser(), user);
             }
 
             @Override
             public void switchToCourseListView() {
-                // This is expected
-                // TODO: this test works but we never reach the switch to course list view in the test
-                // same thing in lab 5
-                // How to reach 100% code coverage
+                viewManagerModel.setState(courseListViewModel.getViewName());
+                viewManagerModel.firePropertyChanged();
+                assertEquals("Course List", viewManagerModel.getState());
             }
         };
         DeleteCourseInputBoundary interactor = new DeleteCourseInteractor(courseRepository, successPresenter, courseFactory);
@@ -48,5 +52,8 @@ public class DeleteCourseInteractorTest {
         // check that the course no longer exists in the data
         boolean checkExists = courseRepository.existsByCode(course.getCode(), user);
         assertFalse(checkExists);
+
+        // Testing that it correctly switches to the course list view
+        interactor.switchToCourseListView();
     }
 }

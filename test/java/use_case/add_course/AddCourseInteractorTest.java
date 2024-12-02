@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import use_case.add_course.AddCourseInputData;
 import use_case.add_course.AddCourseOutputBoundary;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AddCourseInteractorTest {
@@ -14,9 +16,12 @@ class AddCourseInteractorTest {
      * Test adding a course for the first time
      */
     void successTest() {
-        CourseFactory factory = new CommonCourseFactory();
-        AddCourseInputData courseInputData = new AddCourseInputData("Software Design", "CSC207");
-        Course course = factory.create(courseInputData.getName(), courseInputData.getCode());
+        CourseFactory courseFactory = new CommonCourseFactory();
+        UserFactory userfactory = new CommonUserFactory();
+
+        User user = userfactory.create("Miral", "miralyousef", "miral", "miral@gmail.com");
+        AddCourseInputData courseInputData = new AddCourseInputData("Software Design", "CSC207", user);
+        Course course = courseFactory.create(courseInputData.getName(), courseInputData.getCode(), new ArrayList<>());
 
         DataAccessInterface courseRepository = new DataAccessInterface();
 
@@ -36,7 +41,7 @@ class AddCourseInteractorTest {
             public void switchToCourseView() {}
         };
 
-        AddCourseInputBoundary interactor = new AddCourseInteractor(courseRepository, successPresenter, factory);
+        AddCourseInputBoundary interactor = new AddCourseInteractor(courseRepository, successPresenter, courseFactory);
         interactor.execute(courseInputData);
     }
 
@@ -45,13 +50,15 @@ class AddCourseInteractorTest {
      * Test saving the same course twice.
      */
     void failTest() {
-        CourseFactory factory = new CommonCourseFactory();
+        CourseFactory courseFactory = new CommonCourseFactory();
+        UserFactory userfactory = new CommonUserFactory();
         DataAccessInterface courseRepository = new DataAccessInterface();
 
-        AddCourseInputData courseInputData = new AddCourseInputData("Software Design", "CSC207");
+        User user = userfactory.create("Miral", "miralyousef", "miral", "miral@gmail.com");
+        AddCourseInputData courseInputData = new AddCourseInputData("Software Design", "CSC207", user);
+        Course course = courseFactory.create(courseInputData.getName(), courseInputData.getCode(), new ArrayList<>());
 
-        Course course = factory.create(courseInputData.getName(), courseInputData.getCode());
-        courseRepository.saveCourse(course);
+        courseRepository.saveCourse(course, user);
 
         AddCourseOutputBoundary successPresenter = new AddCourseOutputBoundary() {
 
@@ -72,7 +79,7 @@ class AddCourseInteractorTest {
             }
         };
 
-        AddCourseInputBoundary interactor = new AddCourseInteractor(courseRepository, successPresenter, factory);
+        AddCourseInputBoundary interactor = new AddCourseInteractor(courseRepository, successPresenter, courseFactory);
         interactor.execute(courseInputData);
     }
 }

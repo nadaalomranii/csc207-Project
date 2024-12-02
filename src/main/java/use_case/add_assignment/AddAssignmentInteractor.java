@@ -1,6 +1,5 @@
 package use_case.add_assignment;
 
-import data_access.DataAccessInterface;
 import entity.Assignment;
 import entity.AssignmentFactory;
 import entity.Course;
@@ -14,10 +13,11 @@ public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
     private final AddAssignmentOutputBoundary addAssignmentPresenter;
     private final AssignmentFactory assignmentFactory;
 
-    public AddAssignmentInteractor(AddAssignmentDataAccessInterface assignmentDataAccessInterface,
+    public AddAssignmentInteractor(AddAssignmentDataAccessInterface addAssignmentDataAccessInterface,
                                    AddAssignmentOutputBoundary addAssignmentOutputBoundary,
                                    AssignmentFactory assignmentFactory) {
-        this.assignmentDataAccessObject = assignmentDataAccessInterface;
+
+        this.assignmentDataAccessObject = addAssignmentDataAccessInterface;
         this.addAssignmentPresenter = addAssignmentOutputBoundary;
         this.assignmentFactory = assignmentFactory;
     }
@@ -43,7 +43,7 @@ public class AddAssignmentInteractor implements AddAssignmentInputBoundary {
         assignmentDataAccessObject.saveAssignment(assignment, addAssignmentInputData.getCourse(), addAssignmentInputData.getUser());
 
         // Prepare success output and send it to the presenter
-        AddAssignmentOutputData outputData = new AddAssignmentOutputData("Assignment added successfully.",
+        EditAssignmentOutputData outputData = new EditAssignmentOutputData("Assignment added successfully.",
                                                                         addAssignmentInputData.getCourse(), addAssignmentInputData.getUser());
         addAssignmentPresenter.prepareSuccessView(outputData);
     }

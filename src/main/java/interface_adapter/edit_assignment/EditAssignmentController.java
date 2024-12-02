@@ -23,17 +23,14 @@ public class EditAssignmentController {
     /**
      * Executes the edit assignment Use Case.
      * @param newScore the new score
-     * @param newName the new name
      * @param newWeight the new weight
      * @param newDueDate the new due date
      * @param assignment the assignment that can be edited
      * @param user the user editing
      * @param course the course the assignments in
      */
-    public void execute(User user, Course course, Assignment assignment, float newScore, float newWeight,
-                        String newName, Date newDueDate) {
-        final EditAssignmentInputData editAssignmentInputData = new EditAssignmentInputData(user, course, assignment, newScore, newWeight,
-        newName, newDueDate);
+    public void execute(User user, Course course, Assignment assignment, float newScore, float newWeight, Date newDueDate) {
+        final EditAssignmentInputData editAssignmentInputData = new EditAssignmentInputData(user, course, assignment, newScore, newWeight, newDueDate);
 
         userEditAssignmentUseCaseInteractor.execute(editAssignmentInputData);
     }

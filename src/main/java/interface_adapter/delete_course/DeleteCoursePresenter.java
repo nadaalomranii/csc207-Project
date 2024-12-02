@@ -26,6 +26,7 @@ public class DeleteCoursePresenter implements DeleteCourseOutputBoundary {
     public void prepareSuccessView(DeleteCourseOutputData outputData) {
         // On success, switch to the course list view
         CourseListState courseListState = courseListViewModel.getState();
+        courseListState.setCourses(outputData.getCourses());
         this.courseListViewModel.setState(courseListState);
         courseListViewModel.firePropertyChanged();
         deleteCourseViewModel.firePropertyChanged("delete course");

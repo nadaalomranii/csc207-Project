@@ -23,9 +23,12 @@ public class AssignmentListPresenter {
      */
     public void switchToAssignmentListView() {
         CourseListState state = courseListViewModel.getState();
-        viewManagerModel.setState(assignmentListViewModel.getViewName());
+
         // Set the User for the next state
-        assignmentListViewModel.getState().setUser(state.getUser());
+        this.assignmentListViewModel.getState().setUser(state.getUser());
+        assignmentListViewModel.firePropertyChanged();
+
+        viewManagerModel.setState(assignmentListViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

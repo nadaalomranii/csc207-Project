@@ -1,16 +1,18 @@
 package use_case.delete_course;
 
+import data_access.DataAccessInterface;
 import entity.Course;
 import entity.CourseFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DeleteCourseInteractor implements DeleteCourseInputBoundary{
-    private final DeleteCourseDataAccessInterface dataAccessObject;
+    private final DataAccessInterface dataAccessObject;
     private final DeleteCourseOutputBoundary deleteCoursePresenter;
     private final CourseFactory courseFactory;
 
-    public DeleteCourseInteractor(DeleteCourseDataAccessInterface deleteCourseDataAccessObject,
+    public DeleteCourseInteractor(DataAccessInterface deleteCourseDataAccessObject,
                                   DeleteCourseOutputBoundary deleteCoursePresenter,
                                   CourseFactory courseFactory) {
         this.dataAccessObject = deleteCourseDataAccessObject;
@@ -25,7 +27,9 @@ public class DeleteCourseInteractor implements DeleteCourseInputBoundary{
 
         dataAccessObject.deleteCourse(course, deleteCourseInputData.getUser());
 
-        final DeleteCourseOutputData deleteCourseOutputData = new DeleteCourseOutputData(course.getCode(), deleteCourseInputData.getUser());
+        List<Course> currentCourses = dataAccessObject.getCourses(deleteCourseInputData.getUser());
+
+        final DeleteCourseOutputData deleteCourseOutputData = new DeleteCourseOutputData(course.getCode(), deleteCourseInputData.getUser(), currentCourses);
 
         deleteCoursePresenter.prepareSuccessView(deleteCourseOutputData);
     }

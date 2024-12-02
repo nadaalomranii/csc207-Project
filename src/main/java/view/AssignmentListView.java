@@ -54,11 +54,12 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private final JTable assignmentTable; // The table to display assignment data
     private final DefaultTableModel tableModel; // Model to manage table data
 
-    public AssignmentListView(AssignmentListViewModel assignmentListViewModel) {
+    public AssignmentListView(AssignmentListViewModel assignmentListViewModel,
+                              DeleteCourseViewModel deleteCourseViewModel) {
         this.assignmentListViewModel = assignmentListViewModel;
-        this.deleteCourseViewModel = new DeleteCourseViewModel();
-        this.sendNotificationViewModel = new SendNotificationViewModel();
         this.assignmentListViewModel.addPropertyChangeListener(this);
+        this.deleteCourseViewModel = deleteCourseViewModel;
+        this.sendNotificationViewModel = new SendNotificationViewModel();
 
         this.setBackground(Color.getHSBColor(28, 73, 69));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -162,25 +163,25 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
                 });
 
 // Delete Course
-        deleteCourse.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(deleteCourse)) {
-                            final AssignmentListState currentState = assignmentListViewModel.getState();
-
-                            // Executes the delete course use case.
-                            deleteCourseController.execute(currentState.getCourse().getCode(),
-                                    currentState.getCourse().getName(),
-                                    currentState.getUser());
-                        }
-                    }
-                }
-        );
+//        deleteCourse.addActionListener(
+//                new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent evt) {
+//                        if (evt.getSource().equals(deleteCourse)) {
+//                            final AssignmentListState currentState = assignmentListViewModel.getState();
+//
+//                            // Executes the delete course use case.
+//                            deleteCourseController.execute(currentState.getCourse().getCode(),
+//                                    currentState.getCourse().getName(),
+//                                    currentState.getUser());
+//                        }
+//                    }
+//                }
+//        );
+//        AssignmentListState currentState = this.assignmentListViewModel.getState();
 //        deleteCourse.addActionListener(
 //                new ActionListener() {
 //                    public void actionPerformed(ActionEvent e) {
-//                        final AssignmentListState currentState = assignmentListViewModel.getState();
 //                        // Executes the delete course use case.
 //                        deleteCourseController.execute(currentState.getCourse().getCode(),
 //                                currentState.getCourse().getName(),
@@ -201,45 +202,48 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     }
 
     // TODO: not sure what this is?
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-//        if (evt.getSource() == addAssignment) {
-//            // Get data from input fields
-//            String assignmentNameFieldText = assignmentNameField.getText();
-//            String assignmentGradeFieldText = assignmentGradeField.getText();
-//            String assignmentWeightFieldText = assignmentWeightField.getText();
-//            String assignmentDueDateFieldText = assignmentDueDateField.getText();
+//    @Override
+//    public void actionPerformed(ActionEvent evt) {
+////        if (evt.getSource() == addAssignment) {
+////            // Get data from input fields
+////            String assignmentNameFieldText = assignmentNameField.getText();
+////            String assignmentGradeFieldText = assignmentGradeField.getText();
+////            String assignmentWeightFieldText = assignmentWeightField.getText();
+////            String assignmentDueDateFieldText = assignmentDueDateField.getText();
+////
+////            // Add a new row to the table
+////            tableModel.addRow(new Object[]{assignmentNameFieldText, assignmentGradeFieldText, assignmentWeightFieldText
+////                    , assignmentDueDateFieldText});
+////
+////            // Clear the input fields (reset to blank)
+////            assignmentNameField.setText("");
+////            assignmentGradeField.setText("");
+////            assignmentWeightField.setText("");
+////            assignmentDueDateField.setText("");
+////
+////        }
+//        if (evt.getSource() == scheduleNotification) {
+//            final SendNotificationState currentState = sendNotificationViewModel.getState();
 //
-//            // Add a new row to the table
-//            tableModel.addRow(new Object[]{assignmentNameFieldText, assignmentGradeFieldText, assignmentWeightFieldText
-//                    , assignmentDueDateFieldText});
+//            // run sendNotification Use Case
+//            try {
+//                sendNotificationController.execute(
+//                        currentState.getUser(),
+//                        currentState.getCourse(),
+//                        currentState.getAssignments());
+//            } catch (MessagingException e) {
+//                throw new RuntimeException(e);
+//            }
 //
-//            // Clear the input fields (reset to blank)
-//            assignmentNameField.setText("");
-//            assignmentGradeField.setText("");
-//            assignmentWeightField.setText("");
-//            assignmentDueDateField.setText("");
+//
+//        } else if (evt.getSource() == deleteAssignment) {
+//            // Handle delete assignment button click
 //
 //        }
-        if (evt.getSource() == scheduleNotification) {
-            final SendNotificationState currentState = sendNotificationViewModel.getState();
+//    }
 
-            // run sendNotification Use Case
-            try {
-                sendNotificationController.execute(
-                        currentState.getUser(),
-                        currentState.getCourse(),
-                        currentState.getAssignments());
-            } catch (MessagingException e) {
-                throw new RuntimeException(e);
-            }
-
-
-        } else if (evt.getSource() == deleteAssignment) {
-            // Handle delete assignment button click
-
-        }
-    }
+    @Override
+    public void actionPerformed(ActionEvent evt) {System.out.println("Click " + evt.getActionCommand());}
 
 
     @Override
@@ -253,7 +257,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         // Updates the assignment list state?
         // TODO: Nada is still working on this
         final AssignmentListState currentState = (AssignmentListState) evt.getNewValue();
-        assignmentListViewModel.setState((AssignmentListState) evt.getNewValue());
+        assignmentListViewModel.setState(currentState);
         setFields(currentState);
 
         if (evt.getPropertyName().equals("notifications scheduled")) {
@@ -274,6 +278,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     // TODO: do we need this?
     private void setFields(AssignmentListState state) {
         // Sets the state to the new values
+//        deleteCourse.removeActionListener(deleteCourse.getAction());
         deleteCourse.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {

@@ -18,6 +18,7 @@ public class main {
                                             .addEditCourseUseCase()
                                             .addSignUpUseCase()
                                             .deleteAssignmentUseCase()
+                                            .addAssignmentListUseCase()
                                             .addDeleteCourseUseCase()
                                             .loginUseCase()
                                             .addCourseListUseCase()

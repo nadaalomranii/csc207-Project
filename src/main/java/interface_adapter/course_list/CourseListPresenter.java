@@ -16,7 +16,7 @@ public class CourseListPresenter {
         this.courseListViewModel = courseListViewModel;
     }
 
-    public void switchToCourseListView() {
+    public void switchToCourseAddView() {
         CourseListState state = courseListViewModel.getState();
         viewManagerModel.setState(addCourseViewModel.getViewName());
         // Set the user for the next state

@@ -10,8 +10,9 @@ import java.util.List;
 import javax.swing.*;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.add_course.AddCourseState;
 import interface_adapter.add_course.AddCourseViewModel;
+import interface_adapter.assignment_list.AssignmentListState;
+import interface_adapter.assignment_list.AssignmentListViewModel;
 import interface_adapter.course_list.CourseListController;
 import interface_adapter.course_list.CourseListState;
 import interface_adapter.course_list.CourseListViewModel;
@@ -33,6 +34,7 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
     private final JButton addCourseButton;
     private final ViewManagerModel viewManagerModel;
     private final AddCourseViewModel addCourseViewModel;
+    private final AssignmentListViewModel assignmentListViewModel;
 
     final JPanel allCoursesPanel = new JPanel();
 
@@ -40,10 +42,12 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
     public CourseListView(CourseListViewModel courseListViewModel,
                           List<Course> courseList,
                           ViewManagerModel viewManagerModel,
-                          AddCourseViewModel addCourseViewModel) {
+                          AddCourseViewModel addCourseViewModel,
+                          AssignmentListViewModel assignmentListViewModel) {
         this.courseListViewModel = courseListViewModel;
         this.viewManagerModel = viewManagerModel;
         this.addCourseViewModel = addCourseViewModel;
+        this.assignmentListViewModel = assignmentListViewModel;
         this.courseListViewModel.addPropertyChangeListener(this);
         this.courseList = courseList;
 
@@ -73,7 +77,10 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
                 courseButton.addActionListener(
                         new ActionListener() {
                             public void actionPerformed(ActionEvent evt) {
-                                courseListController.switchToCourseListView(viewManagerModel, addCourseViewModel, courseListViewModel);
+                                AssignmentListState assignmentListState = new AssignmentListState();
+                                assignmentListState.setCourse(course);
+                                assignmentListViewModel.setState(assignmentListState);
+                                courseListController.switchToAssignmentListView(viewManagerModel, assignmentListViewModel, courseListViewModel);
                             }
                         }
                 );
@@ -89,7 +96,7 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
         addCourseButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        courseListController.switchToCourseListView(viewManagerModel, addCourseViewModel, courseListViewModel);
+                        courseListController.switchToCourseAddView(viewManagerModel, addCourseViewModel, courseListViewModel);
                     }
                 }
         );
@@ -126,7 +133,12 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
                 courseButton.addActionListener(
                         new ActionListener() {
                             public void actionPerformed(ActionEvent evt) {
-                                courseListController.switchToCourseListView(viewManagerModel, addCourseViewModel, courseListViewModel);
+                                // At the click of the button we need it to switch to the assignment list view of that specific course
+                                // Q: this may switch to the wrong course
+                                AssignmentListState assignmentListState = new AssignmentListState();
+                                assignmentListState.setCourse(course);
+                                assignmentListViewModel.setState(assignmentListState);
+                                courseListController.switchToAssignmentListView(viewManagerModel, assignmentListViewModel, courseListViewModel);
                             }
                         });
             }

@@ -12,6 +12,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import entity.Assignment;
+import interface_adapter.assignment_list.AssignmentListController;
 import interface_adapter.assignment_list.AssignmentListViewModel;
 import interface_adapter.assignment_list.AssignmentListState;
 import interface_adapter.delete_assignment.DeleteAssignmentController;
@@ -44,6 +45,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
     private SendNotificatonController sendNotificationController;
     private DeleteCourseController deleteCourseController;
+    private AssignmentListController assignmentListController;
 
     // NEW FOR TABLE
     private final JTable assignmentTable; // The table to display assignment data
@@ -74,22 +76,21 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         buttons.add(deleteAssignment);
         deleteAssignment.addActionListener(this);
         scheduleNotification = new JButton("Schedule Emails for New Assignments");
+
         // The delete course button
         deleteCourse = new JButton("Delete Course");
         buttons.add(deleteCourse);
-
-        deleteCourse.addActionListener(
-                evt -> {
-                    if (evt.getSource().equals(deleteCourse)) {
-                        final AssignmentListState currentState = assignmentListViewModel.getState();
-
-                        // Executes the delete course use case.
-                        deleteCourseController.execute(currentState.getCourse().getCode(),
-                                currentState.getCourse().getName(),
-                                currentState.getUser());
-                    }
-                }
-        );
+//        deleteCourse.addActionListener(
+//                new ActionListener() {
+//                    public void actionPerformed(ActionEvent e) {
+//                        final AssignmentListState currentState = assignmentListViewModel.getState();
+//                        // Executes the delete course use case.
+//                        deleteCourseController.execute(currentState.getCourse().getCode(),
+//                                currentState.getCourse().getName(),
+//                                currentState.getUser());
+//                    }
+//                }
+//        );
 
         this.add(title);
         this.add(assignmentNameInfo);
@@ -125,9 +126,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
             assignmentWeightField.setText("");
             assignmentDueDateField.setText("");
 
-        }
-
-        else if (evt.getSource() == scheduleNotification) {
+        } else if (evt.getSource() == scheduleNotification) {
             final SendNotificationState currentState = sendNotificationViewModel.getState();
 
             // run sendNotification Use Case
@@ -156,8 +155,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
                     tableModel.removeRow(selectedRow); // Remove the selected row
                     JOptionPane.showMessageDialog(this, "Assignment deleted successfully.");
                 }
-            }
-            else {
+            } else {
                 JOptionPane.showMessageDialog(this, "No assignment selected. Please select a row to delete.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -171,6 +169,12 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         // if (evt.getPropertyName().equals("state")) {}
 
         // Pop ups for SendNotifications Use Case
+
+        // Updates the assignment list state?
+        final AssignmentListState currentState = (AssignmentListState) evt.getNewValue();
+        assignmentListViewModel.setState((AssignmentListState) evt.getNewValue());
+        setFields(currentState);
+
         if (evt.getPropertyName().equals("notifications scheduled")) {
             // can i do this or does the state have to be AssignmentListState
             final SendNotificationState state = (SendNotificationState) evt.getNewValue();
@@ -179,16 +183,28 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
             for (Assignment assignment : scheduledAssignments) {
                 assignmentString.append(assignment.getName()).append("\n");
             }
-            JOptionPane.showMessageDialog(null, ("Notifications scheduled for: \n" + assignmentString.toString() ));
-        }
-        else if (evt.getPropertyName().equals("No new assignments to schedule")) {
+            JOptionPane.showMessageDialog(null, ("Notifications scheduled for: \n" + assignmentString.toString()));
+        } else if (evt.getPropertyName().equals("No new assignments to schedule")) {
             final SendNotificationState state = (SendNotificationState) evt.getNewValue();
             JOptionPane.showMessageDialog(null, ("No new assignments to schedule for: \n" + state.getCourse()));
         }
     }
 
     // TODO: do we need this?
-    //private void setFields(AssignmentListState state) {}
+    private void setFields(AssignmentListState state) {
+        // Sets the state to the new values
+        deleteCourse.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        assignmentListViewModel.setState(state);
+                        final AssignmentListState currentState = assignmentListViewModel.getState();
+                        // Executes the delete course use case.
+                        deleteCourseController.execute(currentState.getCourse().getCode(),
+                                currentState.getCourse().getName(),
+                                currentState.getUser());
+                    }
+                 });
+        }
 
     public String getViewName() {
         return viewName;
@@ -199,5 +215,9 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
     public void setDeleteCourseController(DeleteCourseController deleteCourseController) {
         this.deleteCourseController = deleteCourseController;
+    }
+
+    public void setAssignmentListController(AssignmentListController assignmentListController) {
+        this.assignmentListController = assignmentListController;
     }
 }

@@ -495,16 +495,24 @@ public class DBUserDataAccessObject implements
     }
 
     /// /// /// /// ///
-    //TODO: must be updated to check for assignment
     /**
-     * Checks if the course already exists.
+     * Checks if the assignment already exists.
      * @param name the assignment name to look for
-     * @param course
-     * @param user
+     * @param course the course the assignment should be located in
+     * @param user the user with this assignment
      * @return true if a course with the given code exists; false otherwise
      */
     @Override
     public boolean existsByName(String name, Course course, User user) {
+        List<Course> courses = getCourses(user);
+        int courseIndex = courses.indexOf(course);
+        Course courseWithAssignment = courses.get(courseIndex);
+        List<Assignment> assignmentList = courseWithAssignment.getAssignments();
+        for (Assignment assignment : assignmentList) {
+            if (assignment.getName().equals(name)) {
+                return true;
+            }
+        }
         return false;
     }
 

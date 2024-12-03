@@ -7,7 +7,6 @@ import entity.User;
 
 import use_case.add_assignment.AddAssignmentDataAccessInterface;
 import use_case.add_course.AddCourseDataAccessInterface;
-import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.delete_assignment.DeleteAssignmentDataAccessInterface;
 import use_case.delete_course.DeleteCourseDataAccessInterface;
 import use_case.edit_assignment.EditAssignmentDataAccessInterface;
@@ -36,7 +35,6 @@ public class DataAccessInterface implements
         SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         AddAssignmentDataAccessInterface,
-        ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface {
     // The second key is the course code
     private final Map<User, Map<String, Map<Course, List<Assignment>>>> users = new HashMap<>();
@@ -362,17 +360,5 @@ public class DataAccessInterface implements
         Assignment newAssignment = new CommonAssignment(assignmentName, assignmentGrade, newWeight, dueDate);
         // Add that assignment
         this.users.get(user).get(course.getCode()).get(course).add(newAssignment);
-    }
-
-    @Override
-    public void changePassword(User user) {
-        // changes the password of a user
-        // The user that is passed in contains the changed password
-        Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
-        // Remove the old user
-        this.users.remove(user);
-        // Add the new users (which has the changed password
-        this.users.put(user, courses);
-      
     }
 }

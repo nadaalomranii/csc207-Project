@@ -135,7 +135,11 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addCourseListView() {
-        courseListView = new CourseListView(courseListViewModel, new ArrayList<>(), viewManagerModel, addCourseViewModel, assignmentListViewModel);
+        courseListView = new CourseListView(courseListViewModel,
+                new ArrayList<>(),
+                viewManagerModel,
+                addCourseViewModel,
+                assignmentListViewModel);
         cardPanel.add(courseListView, courseListView.getViewName());
         return this;
     }
@@ -249,7 +253,6 @@ public class AppBuilder {
      */
     public AppBuilder addCourseListUseCase() {
         final CourseListController courseListController = new CourseListController();
-
         courseListView.setCourseListController(courseListController);
         return this;
     }

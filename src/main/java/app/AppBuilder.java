@@ -17,6 +17,7 @@ import interface_adapter.course_list.CourseListViewModel;
 import interface_adapter.delete_course.DeleteCourseController;
 import interface_adapter.delete_course.DeleteCoursePresenter;
 import interface_adapter.delete_course.DeleteCourseViewModel;
+import interface_adapter.edit_assignment.EditAssignmentViewModel;
 import interface_adapter.edit_course.EditCourseController;
 import interface_adapter.edit_course.EditCoursePresenter;
 import interface_adapter.edit_course.EditCourseState;
@@ -80,12 +81,14 @@ public class AppBuilder {
     private CourseListViewModel courseListViewModel;
 
     private AssignmentListView assignmentListView;
-    private AssignmentListViewModel assignmentListViewModel;
+    private AssignmentListViewModel assignmentListViewModel = new AssignmentListViewModel();
 
     private CourseEditView courseEditView;
-    private EditCourseViewModel editCourseViewModel;
+    private EditCourseViewModel editCourseViewModel = new EditCourseViewModel();
 
     private DeleteAssignmentViewModel deleteAssignmentViewModel;
+
+    private EditAssignmentViewModel editAssignmentViewModel;
 
     private DeleteCourseViewModel deleteCourseViewModel;
 
@@ -108,6 +111,11 @@ public class AppBuilder {
         return this;
     }
 
+//    public AppBuilder addEditAssignmentView() {
+//        editAssignmentViewModel = new EditAssignmentViewModel();
+//
+//    }
+
 
     /**
      * Adds the Add Course View to the application.
@@ -126,7 +134,6 @@ public class AppBuilder {
      */
     public AppBuilder addCourseListView() {
         courseListViewModel = new CourseListViewModel();
-        assignmentListViewModel = new AssignmentListViewModel();
         CourseListState state = courseListViewModel.getState();
         User user = state.getUser();
         List<Course> courses = userDataAccessObject.getCourses(user);
@@ -140,8 +147,8 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addAssignmentListView() {
-        assignmentListViewModel = new AssignmentListViewModel();
-        assignmentListView = new AssignmentListView(assignmentListViewModel);
+        deleteCourseViewModel = new DeleteCourseViewModel();
+        assignmentListView = new AssignmentListView(assignmentListViewModel, deleteCourseViewModel, viewManagerModel, editCourseViewModel);
         cardPanel.add(assignmentListView, assignmentListView.getViewName());
         return this;
     }
@@ -151,7 +158,6 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addCourseEditView() {
-        editCourseViewModel = new EditCourseViewModel();
         courseEditView = new CourseEditView(editCourseViewModel);
         cardPanel.add(courseEditView, courseEditView.getViewName());
         return this;

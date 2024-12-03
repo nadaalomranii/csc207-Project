@@ -15,9 +15,9 @@ public class EditCourseState {
         return courseCode;
     }
 
-//    public void setCourseCode(String courseCode) {
-//        this.courseCode = courseCode;
-//    }
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
 
     public String getCourseName() {
         return courseName;

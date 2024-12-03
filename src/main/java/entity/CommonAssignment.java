@@ -8,8 +8,8 @@ import java.util.Date;
 public class CommonAssignment implements Assignment {
     private final String name;
     private float grade;
-    private final float weight;
-    private final Date dueDate;
+    private float weight;
+    private Date dueDate;
     private boolean scheduled;
 
     public CommonAssignment(String name, float grade, float weight, Date dueDate) {
@@ -26,9 +26,10 @@ public class CommonAssignment implements Assignment {
     }
 
     @Override
-    public float getGrade() {
-        return grade;
-    }
+    public float getGrade() {return grade;}
+
+    @Override
+    public void changeGrade(float newGrade) {this.grade = newGrade;}
 
     @Override
     public float getWeight() {
@@ -36,16 +37,16 @@ public class CommonAssignment implements Assignment {
     }
 
     @Override
-    public Date getDueDate() {
-        return dueDate;
-    }
+    public void changeWeight(float newWeight) {this.weight = newWeight;}
 
-    // setter
-    public void updateGrade(float newGrade) {
-        this.grade = newGrade;
-    }
+    @Override
+    public Date getDueDate() {return dueDate;}
+
+    @Override
+    public void changeDueDate(Date newDueDate) {this.dueDate = newDueDate;}
 
     @Override
     public boolean isScheduled() {return scheduled;}
+
     public void setScheduled(boolean scheduled) {this.scheduled = scheduled;}
 }

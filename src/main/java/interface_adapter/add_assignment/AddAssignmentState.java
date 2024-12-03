@@ -3,7 +3,10 @@ package interface_adapter.add_assignment;
 import entity.Course;
 import entity.User;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class AddAssignmentState {
     private String assignmentName;
@@ -13,17 +16,15 @@ public class AddAssignmentState {
     private Course course;
     private User user;
 
-    public AddAssignmentState() {
-
-    }
-
     public String getAssignmentName() {return assignmentName;}
 
     public void setAssignmentName(String assignmentName) {this.assignmentName = assignmentName;}
 
     public Date getDueDate() {return dueDate;}
 
-    public void setDueDate(Date dueDate) {this.dueDate = dueDate;}
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
 
     public String getGrade() {return grade;}
 

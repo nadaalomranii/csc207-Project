@@ -25,6 +25,7 @@ public class DeleteAssignmentPresenter implements DeleteAssignmentOutputBoundary
     public void prepareSuccessView(DeleteAssignmentOutputData outputData) {
         // On success, switch to the assignment list view
         AssignmentListState assignmentListState = assignmentListViewModel.getState();
+
         this.assignmentListViewModel.setState(assignmentListState);
         assignmentListViewModel.firePropertyChanged("delete assignment");
         viewManagerModel.setState(assignmentListViewModel.getViewName());

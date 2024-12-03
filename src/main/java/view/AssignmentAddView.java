@@ -168,6 +168,9 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
                 Date date = formatter.parse(assignmentDueDateInput);
                 currentState.setDueDate(date);
                 addAssignmentViewModel.setState(currentState);
+//                final AddAssignmentState currentState = addAssignmentViewModel.getState();
+//                currentState.setDueDate(assignmentDueDateField.getText());
+//                addAssignmentViewModel.setState(currentState);
             }
 
             @Override
@@ -216,12 +219,10 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
     }
 
     private void setFields(AddAssignmentState state) {
-        assignmentNameField.setText(state.getAssignmentName());
-        assignmentGradeField.setText(state.getGrade());
-        assignmentWeightField.setText(state.getWeight());
-        //Here
-        String dateText = state.getDueDate().toString();
-        assignmentDueDateField.setText(dateText);
+        assignmentNameField.setText("");
+        assignmentGradeField.setText("");
+        assignmentWeightField.setText("");
+        assignmentDueDateField.setText("");
 
     }
 

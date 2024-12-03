@@ -173,6 +173,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Login view to the application.
+     * @return this builder
+     */
     public AppBuilder addLoginView() {
         loginViewModel = new LoginViewModel();
         loginView = new LoginView(loginViewModel);
@@ -225,6 +229,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Sign up use case to the application
+     * @return this builder
+     */
     public AppBuilder addSignUpUseCase() {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(
                 viewManagerModel, signupViewModel, courseListViewModel);
@@ -235,6 +243,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Course list use case
+     * @return this builder
+     */
     public AppBuilder addCourseListUseCase() {
         final CourseListController courseListController = new CourseListController();
 
@@ -242,6 +254,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the add assignment list use case to the application
+     * @return this builder
+     */
     public AppBuilder addAssignmentListUseCase() {
         final AssignmentListController assignmentListController = new AssignmentListController();
 
@@ -249,6 +265,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the delete assignment use case to the application
+     * @return this builder
+     */
     public AppBuilder deleteAssignmentUseCase() {
         final DeleteAssignmentOutputBoundary deleteAssignmentOutputBoundary = new DeleteAssignmentPresenter(assignmentListViewModel, viewManagerModel);
         final DeleteAssignmentInputBoundary deleteAssignmentInteractor = new DeleteAssignmentInteractor(
@@ -259,6 +279,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the login use case to the application
+     * @return this builder
+     */
     public AppBuilder loginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, courseListViewModel, loginViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(userDataAccessObject, loginOutputBoundary);
@@ -268,6 +292,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the delete course use case to the application
+     * @return this builder
+     */
     public AppBuilder addDeleteCourseUseCase() {
         final DeleteCourseOutputBoundary deleteCourseOutputBoundary = new DeleteCoursePresenter(deleteCourseViewModel,
                 courseListViewModel,

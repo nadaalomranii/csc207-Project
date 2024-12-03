@@ -54,7 +54,7 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
 
         final LabelTextPanel assignmentNameInfo = new LabelTextPanel(new JLabel("Assignment Name: "), assignmentNameField);
         final LabelTextPanel assignmentGradeInfo = new LabelTextPanel(new JLabel("Obtained Grade: "), assignmentGradeField);
-        final LabelTextPanel assignmentWeightInfo = new LabelTextPanel(new JLabel("Assignment Name: "), assignmentWeightField);
+        final LabelTextPanel assignmentWeightInfo = new LabelTextPanel(new JLabel("Weight: "), assignmentWeightField);
         final LabelTextPanel assignmentDueDateInfo = new LabelTextPanel(new JLabel("Due Date: "), assignmentDueDateField);
 
         // Add buttons

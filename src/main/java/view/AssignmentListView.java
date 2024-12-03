@@ -61,7 +61,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private DefaultTableModel assignmentTableModel;
     private JTable assignmentTable;
     private String[] columns;
-    private String[][] assignmentList;
+    private String[][] assignmentList = new String[0][0];
 
     public AssignmentListView(AssignmentListViewModel assignmentListViewModel,
                               AddAssignmentViewModel addAssignmentViewModel,
@@ -83,9 +83,29 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // empty table
+//        String[] columnNames = {"Name", "Grade", "Weight", "Due Date"}; // Define table headers
+//        tableModel = new DefaultTableModel(columnNames, 0); // Initialize with no rows
+//        assignmentTable = new JTable(tableModel);
+//        JScrollPane tableScrollPane = new JScrollPane(assignmentTable); // Add table to scroll pane
+//        this.add(tableScrollPane, BorderLayout.CENTER); // Add table to the center of the layout
+
         final JPanel tablePanel = new JPanel();
-        assignmentTable = new JTable();
-        tablePanel.add(assignmentTable);
+        columns = new String[]{"Assignment", "Due Date", "Weight", "Grade"};
+        assignmentTableModel = new DefaultTableModel(assignmentList, columns);
+        assignmentTable = new JTable(assignmentTableModel);
+        JScrollPane tableScrollPane = new JScrollPane(assignmentTable); // Add table to scroll pane
+        assignmentTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        JTable totalGrade = new JTable(1,2);
+        float grade = 0 ;
+        String totalGradeLabel = "Total Grade Acquired";
+        totalGrade.setValueAt(totalGradeLabel, 0, 0);
+        totalGrade.setValueAt(grade, 0, 1);
+
+        totalGrade.getColumnModel().getColumn(0).setPreferredWidth(200);
+        tablePanel.add(tableScrollPane, BorderLayout.CENTER);
+        tablePanel.add(totalGrade,BorderLayout.CENTER);
+
 
         // Add buttons
         final JPanel buttons = new JPanel();

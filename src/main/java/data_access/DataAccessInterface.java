@@ -56,6 +56,7 @@ public class DataAccessInterface implements
 
     @Override
     public boolean existsByCode(String code, User user) {
+        // checks if the course exists by the course code
         Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
         if (courses != null) {
             return courses.containsKey(code);
@@ -74,6 +75,7 @@ public class DataAccessInterface implements
 
     @Override
     public List<Course> getCourses(User user) {
+        // Gets the courses of a specific user
         List<Course> courseObjects = new ArrayList<>();
         Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
         if (courses != null) {
@@ -87,11 +89,13 @@ public class DataAccessInterface implements
 
     @Override
     public void deleteCourse(Course course, User user) {
+        // Deletes the course from the user
         users.get(user).remove(course.getCode());
     }
 
     @Override
     public void editCourse(Course course, User user) {
+        // Edits the course
         Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
         Set<Course> currentCourse = courses.get(course.getCode()).keySet();
         // This set only contains one course
@@ -102,6 +106,7 @@ public class DataAccessInterface implements
 
     @Override
     public String checkName(String courseCode, User user) {
+        // Returns the name of the course
         Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
         Set<Course> currentCourse = courses.get(courseCode).keySet();
         // This set only contains one course
@@ -115,6 +120,7 @@ public class DataAccessInterface implements
 
     @Override
     public void deleteAssignment(String assignmentName, Course course, User user) {
+        // Deletes the assignment from the course given the assignment name
         Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
         List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
         for (Assignment assignment: currentAssignments){
@@ -224,6 +230,7 @@ public class DataAccessInterface implements
 
     @Override
     public boolean userExistsByName(String username) {
+        // checks if the user exists by the name
         boolean exists = false;
         Set<User> allUsers = users.keySet();
         for (User user : allUsers) {
@@ -237,6 +244,7 @@ public class DataAccessInterface implements
 
     @Override
     public void save(User user, List<Course> courses) {
+        // saves the user along a list of courses
         Map<String, Map<Course, List<Assignment>>> courseList = new HashMap<>();
         for (Course course : courses) {
             String courseCode = course.getCode();
@@ -249,11 +257,13 @@ public class DataAccessInterface implements
 
     @Override
     public void save(User user) {
+        // Saves a user with no courses
         users.put(user, new HashMap<>());
     }
 
     @Override
     public User get(String username) {
+        // Get the user entity of a user with a username
         Set<User> allUsers = this.users.keySet();
         for (User user : allUsers) {
             if (user.getName().equals(username)) {
@@ -276,6 +286,7 @@ public class DataAccessInterface implements
 
     @Override
     public boolean assignmentExistsByName(String name, Course course, User user) {
+        // Checks if an assignment exists for a course of a user using the name
         Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
         List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
         for (Assignment assignment : currentAssignments) {
@@ -286,15 +297,10 @@ public class DataAccessInterface implements
         return false;
     }
 
-    /**
-     * Check if the assignment exists by name.
-     * @param name the assignment name to look for
-     * @param course
-     * @param user
-     * @return
-     */
+
     @Override
     public boolean existsByName(String name, Course course, User user) {
+        // checks if the assignment exists by name
         Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
         List<Assignment> currentAssignments = courses.get(course.getCode()).get(course);
         for (Assignment assignment : currentAssignments) {
@@ -312,6 +318,7 @@ public class DataAccessInterface implements
 
     @Override
     public void changeScore(Assignment assignment, float newScore, Course course, User user) {
+        // change the score of an assignment
         // First, we remove the current assignment
         this.users.get(user).get(course.getCode()).get(course).remove(assignment);
         String assignmentName = assignment.getName();
@@ -326,6 +333,7 @@ public class DataAccessInterface implements
 
     @Override
     public void changeDate(Assignment assignment, Date newDueDate, Course course, User user) {
+        // changes the date of an assignment
         // First, we remove the current assignment
         this.users.get(user).get(course.getCode()).get(course).remove(assignment);
         String assignmentName = assignment.getName();
@@ -341,6 +349,7 @@ public class DataAccessInterface implements
 
     @Override
     public void changeWeight(Assignment assignment, float newWeight, Course course, User user) {
+        // changes the weight of an assignment
         // First, we remove the current assignment
         this.users.get(user).get(course.getCode()).get(course).remove(assignment);
         String assignmentName = assignment.getName();
@@ -355,11 +364,13 @@ public class DataAccessInterface implements
 
     @Override
     public void changePassword(User user) {
+        // changes the password of a user
         // The user that is passed in contains the changed password
         Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
         // Remove the old user
         this.users.remove(user);
         // Add the new users (which has the changed password
         this.users.put(user, courses);
+      
     }
 }

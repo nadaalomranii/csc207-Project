@@ -6,6 +6,7 @@ import entity.User;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.course_list.CourseListViewModel;
+import interface_adapter.login.LoginViewModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ class SignupInteractorTest {
         SignupUserDataAccessInterface userRepository = new DataAccessInterface();
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         CourseListViewModel courseListViewModel = new CourseListViewModel();
+        LoginViewModel loginViewModel = new LoginViewModel();
 
         // This creates a successPresenter that tests whether the test case is as we expect.
         SignupOutputBoundary successPresenter = new SignupOutputBoundary() {
@@ -46,11 +48,19 @@ class SignupInteractorTest {
                 viewManagerModel.firePropertyChanged();
                 assertEquals("Course List", viewManagerModel.getState());
             }
+
+            @Override
+            public void switchToLoginView() {
+                viewManagerModel.setState(loginViewModel.getViewName());
+                viewManagerModel.firePropertyChanged();
+                assertEquals("log in", viewManagerModel.getState());
+            }
         };
 
         SignupInputBoundary interactor = new SignupInteractor(userRepository, successPresenter, new CommonUserFactory());
         interactor.execute(inputData);
         interactor.switchToCourseListView();
+        interactor.switchToLoginView();
     }
 
     @Test
@@ -63,6 +73,7 @@ class SignupInteractorTest {
         SignupUserDataAccessInterface userRepository = new DataAccessInterface();
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         CourseListViewModel courseListViewModel = new CourseListViewModel();
+        LoginViewModel loginViewModel = new LoginViewModel();
 
         // This creates a presenter that tests whether the test case is as we expect.
         SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
@@ -83,11 +94,19 @@ class SignupInteractorTest {
                 viewManagerModel.firePropertyChanged();
                 assertEquals("Course List", viewManagerModel.getState());
             }
+
+            @Override
+            public void switchToLoginView() {
+                viewManagerModel.setState(loginViewModel.getViewName());
+                viewManagerModel.firePropertyChanged();
+                assertEquals("log in", viewManagerModel.getState());
+            }
         };
 
         SignupInputBoundary interactor = new SignupInteractor(userRepository, failurePresenter, new CommonUserFactory());
         interactor.execute(inputData);
         interactor.switchToCourseListView();
+        interactor.switchToLoginView();
     }
 
     @Test
@@ -100,6 +119,7 @@ class SignupInteractorTest {
         SignupUserDataAccessInterface userRepository = new DataAccessInterface();
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         CourseListViewModel courseListViewModel = new CourseListViewModel();
+        LoginViewModel loginViewModel = new LoginViewModel();
 
         // Add Sarah to the repo so that when we check later they already exist
         UserFactory factory = new CommonUserFactory();
@@ -126,10 +146,18 @@ class SignupInteractorTest {
                 viewManagerModel.firePropertyChanged();
                 assertEquals("Course List", viewManagerModel.getState());
             }
+
+            @Override
+            public void switchToLoginView() {
+                viewManagerModel.setState(loginViewModel.getViewName());
+                viewManagerModel.firePropertyChanged();
+                assertEquals("log in", viewManagerModel.getState());
+            }
         };
 
         SignupInputBoundary interactor = new SignupInteractor(userRepository, failurePresenter, new CommonUserFactory());
         interactor.execute(inputData);
+        interactor.switchToCourseListView();
         interactor.switchToCourseListView();
     }
 }

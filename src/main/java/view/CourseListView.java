@@ -19,6 +19,8 @@ import interface_adapter.course_list.CourseListViewModel;
 
 
 import entity.Course;
+import interface_adapter.signup.SignupState;
+import interface_adapter.signup.SignupViewModel;
 
 /**
  * The view for when the user is adding a course.
@@ -84,7 +86,6 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
             }
         }
         allCoursesPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
 
         // add course button
         final JPanel addCoursePanel = new JPanel();
@@ -152,4 +153,5 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
     public void setCourseListController(CourseListController courseListController) {
         this.courseListController = courseListController;
     }
+
 }

@@ -15,4 +15,9 @@ public interface SignupInputBoundary {
      * Executes the switch to course list view use case.
      */
     void switchToCourseListView();
+
+    /**
+     * Executes the switch to login view use case.
+     */
+    void switchToLoginView();
 }

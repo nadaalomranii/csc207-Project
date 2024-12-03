@@ -3,6 +3,7 @@ package interface_adapter.signup;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.course_list.CourseListState;
 import interface_adapter.course_list.CourseListViewModel;
+import interface_adapter.login.LoginViewModel;
 import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupOutputData;
 
@@ -13,13 +14,16 @@ public class SignupPresenter implements SignupOutputBoundary {
 
     private final SignupViewModel signupViewModel;
     private final CourseListViewModel courseListViewModel;
+    private final LoginViewModel loginViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public SignupPresenter(ViewManagerModel viewManagerModel,
                            SignupViewModel signupViewModel,
-                           CourseListViewModel courseListViewModel) {
+                           CourseListViewModel courseListViewModel,
+                           LoginViewModel loginViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.signupViewModel = signupViewModel;
+        this.loginViewModel = loginViewModel;
         this.courseListViewModel = courseListViewModel;
     }
 
@@ -44,6 +48,12 @@ public class SignupPresenter implements SignupOutputBoundary {
     @Override
     public void switchToCourseListView() {
         viewManagerModel.setState(courseListViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void switchToLoginView() {
+        viewManagerModel.setState(loginViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

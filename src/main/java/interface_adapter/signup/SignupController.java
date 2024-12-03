@@ -33,4 +33,11 @@ public class SignupController {
     public void switchToCourseListView() {
         userSignupUseCaseInteractor.switchToCourseListView();
     }
+
+    /**
+     * Executes the "switch to Course List View" use case.
+     */
+    public void switchToLoginView() {
+        userSignupUseCaseInteractor.switchToLoginView();
+    }
 }

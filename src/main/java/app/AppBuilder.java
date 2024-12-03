@@ -1,6 +1,6 @@
 package app;
 
-import data_access.DataAccessInterface;
+import data_access.DBUserDataAccessObject;
 import entity.*;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_assignment.AddAssignmentController;
@@ -20,7 +20,6 @@ import interface_adapter.delete_course.DeleteCourseViewModel;
 import interface_adapter.edit_assignment.EditAssignmentViewModel;
 import interface_adapter.edit_course.EditCourseController;
 import interface_adapter.edit_course.EditCoursePresenter;
-import interface_adapter.edit_course.EditCourseState;
 import interface_adapter.edit_course.EditCourseViewModel;
 import interface_adapter.delete_assignment.DeleteAssignmentController;
 import interface_adapter.delete_assignment.DeleteAssignmentPresenter;
@@ -42,7 +41,6 @@ import use_case.delete_course.DeleteCourseInputBoundary;
 import use_case.delete_course.DeleteCourseInteractor;
 import use_case.delete_course.DeleteCourseOutputBoundary;
 import use_case.edit_course.EditCourseInputBoundary;
-import use_case.edit_course.EditCourseInputData;
 import use_case.edit_course.EditCourseInteractor;
 import use_case.edit_course.EditCourseOutputBoundary;
 import use_case.delete_assignment.DeleteAssignmentInputBoundary;
@@ -71,7 +69,7 @@ public class AppBuilder {
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-    private final DataAccessInterface userDataAccessObject = new DataAccessInterface();
+    private final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userFactory, courseFactory, assignmentFactory);
 
     private AddAssignmentViewModel addAssignmentViewModel;
     private AssignmentAddView assignmentAddView;
@@ -233,7 +231,7 @@ public class AppBuilder {
      */
     public AppBuilder addSignUpUseCase() {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(
-                viewManagerModel, signupViewModel, courseListViewModel);
+                viewManagerModel, signupViewModel, courseListViewModel, loginViewModel);
         final SignupInputBoundary signupInteractor = new SignupInteractor(
                 userDataAccessObject, signupOutputBoundary, userFactory);
         final SignupController signupController = new SignupController(signupInteractor);
@@ -247,7 +245,6 @@ public class AppBuilder {
      */
     public AppBuilder addCourseListUseCase() {
         final CourseListController courseListController = new CourseListController();
-
         courseListView.setCourseListController(courseListController);
         return this;
     }
@@ -282,7 +279,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder loginUseCase() {
-        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, courseListViewModel, loginViewModel);
+        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, courseListViewModel, loginViewModel, signupViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(userDataAccessObject, loginOutputBoundary);
 
         final LoginController loginController = new LoginController(loginInteractor);
@@ -306,10 +303,6 @@ public class AppBuilder {
         assignmentListView.setDeleteCourseController(deleteCourseController);
         return this;
     }
-
-//    public AppBuilder addDeleteAssignmentUseCase() {
-////        final DeleteAssignmentOutputBoundary deleteAssignmentOutputBoundary = new DeleteAssignmentPresenter(assignmentListViewModel, viewManagerModel);
-//    }
 
     /**
      * Creates the JFrame for the application and initially sets the Course List View to be displayed.

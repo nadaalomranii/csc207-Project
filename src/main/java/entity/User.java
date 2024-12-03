@@ -26,8 +26,6 @@ public class User implements CommonUser {
     public String getPassword() { return password; }
 
     @Override
-    public String getEmail() { return password; }
-
-
+    public String getEmail() { return email; }
 
 }

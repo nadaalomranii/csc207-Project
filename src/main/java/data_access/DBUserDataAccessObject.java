@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import use_case.add_assignment.AddAssignmentDataAccessInterface;
 import use_case.add_course.AddCourseDataAccessInterface;
-import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.delete_assignment.DeleteAssignmentDataAccessInterface;
 import use_case.delete_course.DeleteCourseDataAccessInterface;
 import use_case.edit_assignment.EditAssignmentDataAccessInterface;
@@ -43,7 +42,6 @@ public class DBUserDataAccessObject implements
         SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         AddAssignmentDataAccessInterface,
-        ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface {
     private static final int SUCCESS_CODE = 200;
     private static final String CONTENT_TYPE_LABEL = "Content-Type";
@@ -119,6 +117,11 @@ public class DBUserDataAccessObject implements
 
     /// /// /// /// ///
 
+    /**
+     * Update the user information stored in the API
+     * @param user the user to be updated
+     * @param courses the courses to be updated
+     */
     public void updateUserInfo(User user, List<Course> courses) {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -162,6 +165,11 @@ public class DBUserDataAccessObject implements
         }
     }
 
+    /**
+     * Helper function to convert the courses and their information into a storable JSON object.
+     * @param course the user's associated username
+     * @return a JSON of the course information for storage
+     */
     private JSONObject generateCourseInfo(Course course) {
         final JSONObject courseInfo = new JSONObject();
         courseInfo.put("course-name", course.getName());
@@ -211,7 +219,7 @@ public class DBUserDataAccessObject implements
                 final JSONObject information = userJSONObject.getJSONObject(INFO);
                 final String name = information.getString(NAME);
                 final String email = information.getString(EMAIL);
-                return userFactory.create(username, password, name, email);
+                return userFactory.create(name, username, password, email);
             } else {
                 throw new RuntimeException(responseBody.getString(MESSAGE));
             }
@@ -279,6 +287,11 @@ public class DBUserDataAccessObject implements
         }
     }
 
+    /**
+     * Helper function to get the assignments for a given course from a JSON array.
+     * @param assignments the assignments stored in the JSON array
+     * @return a list of assignments for this course
+     */
     private List<Assignment> getCourseAssignments(JSONArray assignments) throws ParseException {
         List<Assignment> courseAssignments = new ArrayList<>();
         for (int i = 0; i < assignments.length(); i++) {
@@ -326,40 +339,6 @@ public class DBUserDataAccessObject implements
             final JSONObject responseBody = new JSONObject(response.body().string());
 
             return responseBody.getInt(STATUS_CODE_LABEL) == SUCCESS_CODE;
-        }
-        catch (IOException | JSONException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    /// /// /// /// ///
-
-    public void changePassword(User user) {
-        final OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-
-        // POST METHOD
-        final MediaType mediaType = MediaType.parse(CONTENT_TYPE_JSON);
-        final JSONObject requestBody = new JSONObject();
-        requestBody.put(USERNAME, user.getUsername());
-        requestBody.put(PASSWORD, user.getPassword());
-        final RequestBody body = RequestBody.create(requestBody.toString(), mediaType);
-        final Request request = new Request.Builder()
-                .url("http://vm003.teach.cs.toronto.edu:20112/user")
-                .method("PUT", body)
-                .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_JSON)
-                .build();
-        try {
-            final Response response = client.newCall(request).execute();
-
-            final JSONObject responseBody = new JSONObject(response.body().string());
-
-            if (responseBody.getInt(STATUS_CODE_LABEL) == SUCCESS_CODE) {
-                // success!
-            }
-            else {
-                throw new RuntimeException(responseBody.getString(MESSAGE));
-            }
         }
         catch (IOException | JSONException ex) {
             throw new RuntimeException(ex);

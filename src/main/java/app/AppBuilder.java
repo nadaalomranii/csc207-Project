@@ -1,6 +1,6 @@
 package app;
 
-import data_access.DataAccessInterface;
+import data_access.DBUserDataAccessObject;
 import entity.*;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_assignment.AddAssignmentController;
@@ -20,7 +20,6 @@ import interface_adapter.delete_course.DeleteCourseViewModel;
 import interface_adapter.edit_assignment.EditAssignmentViewModel;
 import interface_adapter.edit_course.EditCourseController;
 import interface_adapter.edit_course.EditCoursePresenter;
-import interface_adapter.edit_course.EditCourseState;
 import interface_adapter.edit_course.EditCourseViewModel;
 import interface_adapter.delete_assignment.DeleteAssignmentController;
 import interface_adapter.delete_assignment.DeleteAssignmentPresenter;
@@ -42,7 +41,6 @@ import use_case.delete_course.DeleteCourseInputBoundary;
 import use_case.delete_course.DeleteCourseInteractor;
 import use_case.delete_course.DeleteCourseOutputBoundary;
 import use_case.edit_course.EditCourseInputBoundary;
-import use_case.edit_course.EditCourseInputData;
 import use_case.edit_course.EditCourseInteractor;
 import use_case.edit_course.EditCourseOutputBoundary;
 import use_case.delete_assignment.DeleteAssignmentInputBoundary;
@@ -70,7 +68,7 @@ public class AppBuilder {
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-    private final DataAccessInterface userDataAccessObject = new DataAccessInterface();
+    private final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userFactory, courseFactory, assignmentFactory);
 
     private AddAssignmentViewModel addAssignmentViewModel;
     private AssignmentAddView assignmentAddView;

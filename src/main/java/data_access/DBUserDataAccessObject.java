@@ -34,7 +34,6 @@ import java.util.*;
  * The DAO for user data.
  */
 public class DBUserDataAccessObject implements
-        DataAccessObjectInterface,
         AddCourseDataAccessInterface,
         EditAssignmentDataAccessInterface,
         DeleteCourseDataAccessInterface,

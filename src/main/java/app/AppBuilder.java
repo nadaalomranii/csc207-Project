@@ -57,6 +57,7 @@ import view.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppBuilder {
@@ -134,10 +135,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addCourseListView() {
-        CourseListState state = courseListViewModel.getState();
-        User user = state.getUser();
-        List<Course> courses = userDataAccessObject.getCourses(user);
-        courseListView = new CourseListView(courseListViewModel, courses, viewManagerModel, addCourseViewModel, assignmentListViewModel);
+        courseListView = new CourseListView(courseListViewModel, new ArrayList<>(), viewManagerModel, addCourseViewModel, assignmentListViewModel);
         cardPanel.add(courseListView, courseListView.getViewName());
         return this;
     }

@@ -346,6 +346,7 @@ public class DataAccessInterface implements
         this.users.get(user).get(course.getCode()).get(course).add(newAssignment);
     }
 
+
     @Override
     public void changeWeight(Assignment assignment, float newWeight, Course course, User user) {
         // changes the weight of an assignment
@@ -370,6 +371,6 @@ public class DataAccessInterface implements
         this.users.remove(user);
         // Add the new users (which has the changed password
         this.users.put(user, courses);
-
+      
     }
 }

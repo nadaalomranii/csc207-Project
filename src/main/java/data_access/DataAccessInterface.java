@@ -13,6 +13,7 @@ import use_case.edit_course.EditCourseDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.send_notification.SendNotificationDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
+import use_case.logout.LogoutUserDataAccessInterface;
 
 import java.util.*;
 import javax.mail.*;
@@ -32,9 +33,12 @@ public class DataAccessInterface implements
         SendNotificationDataAccessInterface,
         SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
-        AddAssignmentDataAccessInterface {
+        AddAssignmentDataAccessInterface,
+        LogoutUserDataAccessInterface {
     // The second key is the course code
     private final Map<User, Map<String, Map<Course, List<Assignment>>>> users = new HashMap<>();
+
+    String currentUsername;
 
     @Override
     public void saveAssignment(Assignment assignment, Course course, User user) {
@@ -222,7 +226,7 @@ public class DataAccessInterface implements
         boolean exists = false;
         Set<User> allUsers = users.keySet();
         for (User user : allUsers) {
-            if (user.getName().equals(username)) {
+            if (user.getUsername().equals(username)) {
                 exists = true;
                 break;
             }
@@ -251,7 +255,7 @@ public class DataAccessInterface implements
     public User get(String username) {
         Set<User> allUsers = this.users.keySet();
         for (User user : allUsers) {
-            if (user.getName().equals(username)) {
+            if (user.getUsername().equals(username)) {
                 return user;
             }
         }
@@ -261,12 +265,12 @@ public class DataAccessInterface implements
 
     @Override
     public String getCurrentUsername() {
-        return "";
+        return this.currentUsername;
     }
 
     @Override
     public void setCurrentUsername(String username) {
-
+        this.currentUsername = username;
     }
 
     @Override

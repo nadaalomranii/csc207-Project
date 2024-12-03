@@ -59,6 +59,7 @@ import view.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppBuilder {
@@ -114,11 +115,6 @@ public class AppBuilder {
         return this;
     }
 
-//    public AppBuilder addEditAssignmentView() {
-//        editAssignmentViewModel = new EditAssignmentViewModel();
-//
-//    }
-
 
     /**
      * Adds the Add Course View to the application.
@@ -136,9 +132,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addCourseListView() {
-        CourseListState state = courseListViewModel.getState();
-        User user = state.getUser();
-        List<Course> courses = userDataAccessObject.getCourses(user);
+        List<Course> courses = new ArrayList<>();
         courseListView = new CourseListView(courseListViewModel, courses, viewManagerModel, addCourseViewModel, assignmentListViewModel);
         cardPanel.add(courseListView, courseListView.getViewName());
         return this;
@@ -312,6 +306,10 @@ public class AppBuilder {
         assignmentListView.setDeleteCourseController(deleteCourseController);
         return this;
     }
+
+//    public AppBuilder addDeleteAssignmentUseCase() {
+////        final DeleteAssignmentOutputBoundary deleteAssignmentOutputBoundary = new DeleteAssignmentPresenter(assignmentListViewModel, viewManagerModel);
+//    }
 
     /**
      * Creates the JFrame for the application and initially sets the Course List View to be displayed.

@@ -8,7 +8,7 @@ import java.util.List;
 public class CommonCourse implements Course {
     private String name;
     private final String courseCode;
-    private final List<Assignment> assignments;
+    private List<Assignment> assignments;
 
     public CommonCourse(String name, String courseCode, List<Assignment> assignments) {
         this.name = name;
@@ -29,6 +29,11 @@ public class CommonCourse implements Course {
     @Override
     public void changeName(String newName) {
         this.name = newName;
+    }
+
+    @Override
+    public void editAssignments(List<Assignment> newAssignments) {
+        this.assignments = newAssignments;
     }
 
     public List<Assignment> getAssignments() {

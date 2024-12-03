@@ -51,6 +51,7 @@ public class DataAccessInterface implements
             currentAssignments = new ArrayList<>();
         }
         currentAssignments.add(assignment);
+        course.editAssignments(currentAssignments);
         users.get(user).get(course.getCode()).put(course, currentAssignments);
     }
 

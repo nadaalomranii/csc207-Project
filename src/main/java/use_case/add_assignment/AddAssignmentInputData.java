@@ -21,10 +21,9 @@ public class AddAssignmentInputData {
     private final User user;
 
     public AddAssignmentInputData(String name, Date dueDate, String score, String weight, Course course, User user) {
-    //throws ParseException {
         this.name = name;
-        //SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-        //this.dueDate = formatter.parse(dueDate);
+//        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+//        this.dueDate = formatter.parse(dueDate);
         this.dueDate = dueDate;
         this.score = Float.parseFloat(score);
         this.weight = Float.parseFloat(weight);

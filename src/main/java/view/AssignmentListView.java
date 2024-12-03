@@ -61,6 +61,8 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
     // NEW FOR TABLE
     private JScrollPane jScrollPane;
+    final JPanel tablePanel = new JPanel();
+    final JPanel title = new JPanel();
     private DefaultTableModel assignmentTableModel;
     private JTable assignmentTable;
     private String[] columns;
@@ -94,7 +96,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 //        JScrollPane tableScrollPane = new JScrollPane(assignmentTable); // Add table to scroll pane
 //        this.add(tableScrollPane, BorderLayout.CENTER); // Add table to the center of the layout
 
-        final JPanel tablePanel = new JPanel();
+//        final JPanel tablePanel = new JPanel();
         columns = new String[]{"Assignment", "Due Date", "Weight", "Grade"};
         assignmentTableModel = new DefaultTableModel(assignmentList, columns);
         assignmentTable = new JTable(assignmentTableModel);
@@ -110,7 +112,6 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         totalGrade.getColumnModel().getColumn(0).setPreferredWidth(200);
         tablePanel.add(tableScrollPane, BorderLayout.CENTER);
         tablePanel.add(totalGrade,BorderLayout.CENTER);
-
 
         // Add buttons
         final JPanel buttons = new JPanel();
@@ -136,6 +137,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
         //set up screen
         this.add(tablePanel);
+        this.add(title);
         this.add(buttons);
 
         //Button Functionality
@@ -227,17 +229,25 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
             final SendNotificationState state = (SendNotificationState) evt.getNewValue();
             JOptionPane.showMessageDialog(null, ("No new assignments to schedule for: \n" + state.getCourse()));
         }
+        else if (evt.getPropertyName().equals("delete assignment")) {
+            setFields(currentState);
+        }
     }
 
     private void setFields(AssignmentListState state) {
         assignmentListViewModel.setState(state);
+        tablePanel.removeAll();
+        title.removeAll();
+
+        //Add the title
+        title.add(new JLabel("Assignments for " + state.getCourse().getName()));
 
         // CREATE A TABLE
         // date format
         String pattern = "dd-MM-yyyy";
         DateFormat dateFormat = new SimpleDateFormat(pattern);
 
-        List<Assignment> assignmentObjects = assignmentListViewModel.getState().getAssignmentList();
+        List<Assignment> assignmentObjects = assignmentListViewModel.getState().getCourse().getAssignments();
 
         //get info for table
         String[][] assignmentList = new String[assignmentObjects.size()][4];
@@ -250,6 +260,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
                 assignmentInfo[2] = String.valueOf(assignment.getWeight());
                 assignmentInfo[3] = String.valueOf(assignment.getGrade());
                 assignmentList[counter] = assignmentInfo;
+                counter += 1;
             }
         }
         // table
@@ -258,7 +269,23 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         assignmentTable = new JTable(assignmentTableModel);
         jScrollPane = new JScrollPane(assignmentTable);
         assignmentTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablePanel.add(jScrollPane);
+//        this.add(tablePanel);
 
+        float grade = 0;
+        if (!assignmentObjects.isEmpty()) {
+            for (Assignment assignment: assignmentObjects) {
+                grade += (assignment.getWeight()/100 * assignment.getGrade());
+            }
+        }
+        JTable totalGrade = new JTable(1,2);
+        String totalGradeLabel = "Total Grade Acquired";
+        totalGrade.setValueAt(totalGradeLabel, 0, 0);
+        totalGrade.setValueAt(grade, 0, 1);
+
+        totalGrade.getColumnModel().getColumn(0).setPreferredWidth(200);
+        tablePanel.add(totalGrade,BorderLayout.CENTER);
+        this.add(tablePanel);
 
         deleteCourse.addActionListener(
                 new ActionListener() {
@@ -291,6 +318,59 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
                     }
                 }
         );
+
+        deleteAssignment.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        int selectedRow = assignmentTable.getSelectedRow();
+                        if (selectedRow != -1) { // Ensure a row is selected
+                            // confirm user wants to delete
+                            int confirm = JOptionPane.showConfirmDialog(
+                                    null,
+                                    "Are you sure you want to delete this assignment?",
+                                    "Delete Confirmation",
+                                    JOptionPane.YES_NO_OPTION
+                            );
+
+                            // run delete assignment use case and remove the row
+                            if (confirm == JOptionPane.YES_OPTION) {
+                                // delete assignment use case
+                                deleteAssignmentController.execute((String) assignmentTableModel.getValueAt(selectedRow, 0), assignmentListViewModel.getState().getCourse(), assignmentListViewModel.getState().getUser());
+                                tablePanel.removeAll();
+                                String pattern = "dd-MM-yyyy";
+                                DateFormat dateFormat = new SimpleDateFormat(pattern);
+
+                                List<Assignment> assignmentObjects = assignmentListViewModel.getState().getCourse().getAssignments();
+
+                                //get info for table
+                                String[][] assignmentList = new String[assignmentObjects.size()][4];
+                                if (!assignmentObjects.isEmpty()) {
+                                    int counter = 0;
+                                    for (Assignment assignment : assignmentObjects) {
+                                        String[] assignmentInfo = new String[4];
+                                        assignmentInfo[0] = assignment.getName();
+                                        assignmentInfo[1] = dateFormat.format(assignment.getDueDate());
+                                        assignmentInfo[2] = String.valueOf(assignment.getWeight());
+                                        assignmentInfo[3] = String.valueOf(assignment.getGrade());
+                                        assignmentList[counter] = assignmentInfo;
+                                        counter += 1;
+                                    }
+                                }
+                                // table
+                                columns = new String[]{"Assignment", "Due Date", "Weight", "Grade"};
+                                assignmentTableModel = new DefaultTableModel(assignmentList, columns);
+                                assignmentTable = new JTable(assignmentTableModel);
+                                jScrollPane = new JScrollPane(assignmentTable);
+                                assignmentTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+                                tablePanel.add(jScrollPane);
+//                                assignmentTableModel.removeRow(selectedRow); // Remove the selected row
+                                JOptionPane.showMessageDialog(null, "Assignment deleted successfully. In order to update your assignment list, please reload this page.");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No assignment selected. Please select a row to delete.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                });
         }
 
     public String getViewName() {
@@ -298,6 +378,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     }
 
     public void setDeleteAssignmentController(DeleteAssignmentController deleteAssignmentController) {
+        this.deleteAssignmentController = deleteAssignmentController;
     }
 
     public void setDeleteCourseController(DeleteCourseController deleteCourseController) {
@@ -307,4 +388,6 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     public void setAssignmentListController(AssignmentListController assignmentListController) {
         this.assignmentListController = assignmentListController;
     }
+//
+//    public void setEditAssignmentController(EditAss)
 }

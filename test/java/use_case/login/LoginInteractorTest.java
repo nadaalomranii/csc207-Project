@@ -57,7 +57,7 @@ class LoginInteractorTest {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         SignupViewModel signupViewModel = new SignupViewModel();
 
-        // For the success test, we need to add Paul to the data access repository before we log in.
+        // For the success test, we need to add Sarah to the data access repository before we log in.
         UserFactory factory = new CommonUserFactory();
         User user = factory.create("Sarah", "sarahhira", "password", "test@gmail.com");
         userRepository.save(user);

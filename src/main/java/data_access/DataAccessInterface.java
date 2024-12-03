@@ -41,6 +41,8 @@ public class DataAccessInterface implements
     // The second key is the course code
     private final Map<User, Map<String, Map<Course, List<Assignment>>>> users = new HashMap<>();
 
+    String currentUsername;
+
     @Override
     public void saveAssignment(Assignment assignment, Course course, User user) {
         // The course already exists in courses
@@ -266,7 +268,7 @@ public class DataAccessInterface implements
         // Get the user entity of a user with a username
         Set<User> allUsers = this.users.keySet();
         for (User user : allUsers) {
-            if (user.getName().equals(username)) {
+            if (user.getUsername().equals(username)) {
                 return user;
             }
         }
@@ -276,12 +278,12 @@ public class DataAccessInterface implements
 
     @Override
     public String getCurrentUsername() {
-        return "";
+        return currentUsername;
     }
 
     @Override
     public void setCurrentUsername(String username) {
-
+        this.currentUsername = username;
     }
 
     @Override

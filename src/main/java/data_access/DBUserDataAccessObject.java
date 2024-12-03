@@ -221,7 +221,7 @@ public class DBUserDataAccessObject implements
                 final JSONObject information = userJSONObject.getJSONObject(INFO);
                 final String name = information.getString(NAME);
                 final String email = information.getString(EMAIL);
-                return userFactory.create(username, password, name, email);
+                return userFactory.create(name, username, password, email);
             } else {
                 throw new RuntimeException(responseBody.getString(MESSAGE));
             }

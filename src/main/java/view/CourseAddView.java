@@ -144,8 +144,8 @@ public class CourseAddView extends JPanel implements ActionListener, PropertyCha
     }
 
     private void setFields(AddCourseState state) {
-        courseNameField.setText(state.getCourseName());
-        courseCodeField.setText(state.getCourseCode());
+//        courseNameField.setText(state.getCourseName());
+//        courseCodeField.setText(state.getCourseCode());
     }
 
     public String getViewName() {

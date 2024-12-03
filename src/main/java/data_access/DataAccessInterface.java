@@ -1,20 +1,21 @@
 package data_access;
 
 import entity.Assignment;
+import entity.CommonAssignment;
 import entity.Course;
 import entity.User;
 
 import use_case.add_assignment.AddAssignmentDataAccessInterface;
 import use_case.add_course.AddCourseDataAccessInterface;
+import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.delete_assignment.DeleteAssignmentDataAccessInterface;
 import use_case.delete_course.DeleteCourseDataAccessInterface;
 import use_case.edit_assignment.EditAssignmentDataAccessInterface;
 import use_case.edit_course.EditCourseDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
+import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.send_notification.SendNotificationDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
-import use_case.logout.LogoutUserDataAccessInterface;
-import use_case.change_password.ChangePasswordUserDataAccessInterface;
 
 import java.util.*;
 import javax.mail.*;
@@ -35,12 +36,10 @@ public class DataAccessInterface implements
         SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         AddAssignmentDataAccessInterface,
-        LogoutUserDataAccessInterface,
-        ChangePasswordUserDataAccessInterface {
+        ChangePasswordUserDataAccessInterface,
+        LogoutUserDataAccessInterface {
     // The second key is the course code
     private final Map<User, Map<String, Map<Course, List<Assignment>>>> users = new HashMap<>();
-
-    String currentUsername;
 
     @Override
     public void saveAssignment(Assignment assignment, Course course, User user) {
@@ -257,7 +256,7 @@ public class DataAccessInterface implements
     public User get(String username) {
         Set<User> allUsers = this.users.keySet();
         for (User user : allUsers) {
-            if (user.getUsername().equals(username)) {
+            if (user.getName().equals(username)) {
                 return user;
             }
         }
@@ -267,12 +266,12 @@ public class DataAccessInterface implements
 
     @Override
     public String getCurrentUsername() {
-        return this.currentUsername;
+        return "";
     }
 
     @Override
     public void setCurrentUsername(String username) {
-        this.currentUsername = username;
+
     }
 
     @Override
@@ -313,22 +312,57 @@ public class DataAccessInterface implements
 
     @Override
     public void changeScore(Assignment assignment, float newScore, Course course, User user) {
+        // First, we remove the current assignment
+        this.users.get(user).get(course.getCode()).get(course).remove(assignment);
+        String assignmentName = assignment.getName();
+        float assignmentWeight = assignment.getWeight();
+        Date dueDate = assignment.getDueDate();
 
+        // Create an assignment with the new score
+        Assignment newAssignment = new CommonAssignment(assignmentName, newScore, assignmentWeight, dueDate);
+        // Add that assignment
+        this.users.get(user).get(course.getCode()).get(course).add(newAssignment);
     }
 
     @Override
     public void changeDate(Assignment assignment, Date newDueDate, Course course, User user) {
+        // First, we remove the current assignment
+        this.users.get(user).get(course.getCode()).get(course).remove(assignment);
+        String assignmentName = assignment.getName();
+        float assignmentGrade = assignment.getGrade();
+        float assignmentWeight = assignment.getWeight();
 
+        // Create an assignment with the new score
+        Assignment newAssignment = new CommonAssignment(assignmentName, assignmentGrade, assignmentWeight, newDueDate);
+        // Add that assignment
+        this.users.get(user).get(course.getCode()).get(course).add(newAssignment);
     }
+
 
     @Override
     public void changeWeight(Assignment assignment, float newWeight, Course course, User user) {
+        // First, we remove the current assignment
+        this.users.get(user).get(course.getCode()).get(course).remove(assignment);
+        String assignmentName = assignment.getName();
+        float assignmentGrade = assignment.getGrade();
+        Date dueDate = assignment.getDueDate();
 
+        // Create an assignment with the new score
+        Assignment newAssignment = new CommonAssignment(assignmentName, assignmentGrade, newWeight, dueDate);
+        // Add that assignment
+        this.users.get(user).get(course.getCode()).get(course).add(newAssignment);
     }
-
 
     @Override
     public void changePassword(User user) {
+        // The user that is passed in contains the changed password
+        Map<String, Map<Course, List<Assignment>>> courses = this.users.get(user);
+        // Remove the old user
+        this.users.remove(user);
+        // Add the new users (which has the changed password
+        this.users.put(user, courses);
+      
+    public void changeWeight(Assignment assignment, float newWeight, Course course, User user) {
 
     }
 }

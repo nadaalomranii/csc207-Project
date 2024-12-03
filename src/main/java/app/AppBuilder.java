@@ -17,6 +17,7 @@ import interface_adapter.course_list.CourseListViewModel;
 import interface_adapter.delete_course.DeleteCourseController;
 import interface_adapter.delete_course.DeleteCoursePresenter;
 import interface_adapter.delete_course.DeleteCourseViewModel;
+import interface_adapter.edit_assignment.EditAssignmentViewModel;
 import interface_adapter.edit_course.EditCourseController;
 import interface_adapter.edit_course.EditCoursePresenter;
 import interface_adapter.edit_course.EditCourseState;
@@ -83,9 +84,11 @@ public class AppBuilder {
     private AssignmentListViewModel assignmentListViewModel = new AssignmentListViewModel();
 
     private CourseEditView courseEditView;
-    private EditCourseViewModel editCourseViewModel;
+    private EditCourseViewModel editCourseViewModel = new EditCourseViewModel();
 
     private DeleteAssignmentViewModel deleteAssignmentViewModel;
+
+    private EditAssignmentViewModel editAssignmentViewModel;
 
     private DeleteCourseViewModel deleteCourseViewModel;
 
@@ -107,6 +110,11 @@ public class AppBuilder {
         cardPanel.add(assignmentAddView, assignmentAddView.getViewName());
         return this;
     }
+
+//    public AppBuilder addEditAssignmentView() {
+//        editAssignmentViewModel = new EditAssignmentViewModel();
+//
+//    }
 
 
     /**
@@ -140,7 +148,7 @@ public class AppBuilder {
      */
     public AppBuilder addAssignmentListView() {
         deleteCourseViewModel = new DeleteCourseViewModel();
-        assignmentListView = new AssignmentListView(assignmentListViewModel, deleteCourseViewModel);
+        assignmentListView = new AssignmentListView(assignmentListViewModel, deleteCourseViewModel, viewManagerModel, editCourseViewModel);
         cardPanel.add(assignmentListView, assignmentListView.getViewName());
         return this;
     }
@@ -150,7 +158,6 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addCourseEditView() {
-        editCourseViewModel = new EditCourseViewModel();
         courseEditView = new CourseEditView(editCourseViewModel);
         cardPanel.add(courseEditView, courseEditView.getViewName());
         return this;

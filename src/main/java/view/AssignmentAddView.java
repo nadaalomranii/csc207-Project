@@ -54,7 +54,7 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
 
         final LabelTextPanel assignmentNameInfo = new LabelTextPanel(new JLabel("Assignment Name: "), assignmentNameField);
         final LabelTextPanel assignmentGradeInfo = new LabelTextPanel(new JLabel("Obtained Grade: "), assignmentGradeField);
-        final LabelTextPanel assignmentWeightInfo = new LabelTextPanel(new JLabel("Weight: "), assignmentWeightField);
+        final LabelTextPanel assignmentWeightInfo = new LabelTextPanel(new JLabel("Assignment Weight: "), assignmentWeightField);
         final LabelTextPanel assignmentDueDateInfo = new LabelTextPanel(new JLabel("Due Date: "), assignmentDueDateField);
 
         // Add buttons
@@ -72,7 +72,6 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
                         if (evt.getSource().equals(addAssignment)) {
                             final AddAssignmentState currentState = addAssignmentViewModel.getState();
 
-                            try {
                                 addAssignmentController.execute(
                                         currentState.getAssignmentName(),
                                         currentState.getDueDate(),
@@ -81,12 +80,9 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
                                         currentState.getCourse(),
                                         currentState.getUser()
                                 );
-                            } catch (ParseException e) {
-                                throw new RuntimeException(e);
                             }
                         }
                     }
-                }
         );
 
         cancel.addActionListener(this);
@@ -119,7 +115,7 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
 
             private void documentListenerHelper() {
                 final AddAssignmentState currentState = addAssignmentViewModel.getState();
-                currentState.setGrade(assignmentNameField.getText());
+                currentState.setGrade(assignmentGradeField.getText());
                 addAssignmentViewModel.setState(currentState);
             }
 
@@ -143,7 +139,7 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
 
             private void documentListenerHelper() {
                 final AddAssignmentState currentState = addAssignmentViewModel.getState();
-                currentState.setWeight(assignmentNameField.getText());
+                currentState.setWeight(assignmentWeightField.getText());
                 addAssignmentViewModel.setState(currentState);
             }
 
@@ -226,6 +222,7 @@ public class AssignmentAddView extends JPanel implements ActionListener, Propert
         //Here
         String dateText = state.getDueDate().toString();
         assignmentDueDateField.setText(dateText);
+
     }
 
     public String getViewName() {

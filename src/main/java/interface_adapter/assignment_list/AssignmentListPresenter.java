@@ -1,6 +1,7 @@
 package interface_adapter.assignment_list;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_assignment.AddAssignmentState;
 import interface_adapter.add_assignment.AddAssignmentViewModel;
 import interface_adapter.course_list.CourseListState;
 import interface_adapter.course_list.CourseListViewModel;
@@ -100,9 +101,14 @@ public class AssignmentListPresenter {
 
     public void switchToAddAssignmentView() {
         AssignmentListState state = assignmentListViewModel.getState();
+        AddAssignmentState addAssignmentState = new AddAssignmentState();
+
+        addAssignmentState.setUser(state.getUser());
+        addAssignmentState.setCourse(state.getCourse());
+
+        addAssignmentViewModel.setState(addAssignmentState);
         viewManagerModel.setState(addAssignmentViewModel.getViewName());
         //set the user for the next state
-        addAssignmentViewModel.getState().setUser(state.getUser());
         viewManagerModel.firePropertyChanged();
     }
 

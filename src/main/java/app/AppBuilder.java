@@ -151,7 +151,7 @@ public class AppBuilder {
     public AppBuilder addAssignmentListView() {
         deleteCourseViewModel = new DeleteCourseViewModel();
         assignmentListView = new AssignmentListView(assignmentListViewModel, addAssignmentViewModel,
-                deleteCourseViewModel, viewManagerModel, editCourseViewModel, sendNotificationViewModel);
+                deleteCourseViewModel, viewManagerModel, editCourseViewModel, courseListViewModel, sendNotificationViewModel);
         cardPanel.add(assignmentListView, assignmentListView.getViewName());
         return this;
     }

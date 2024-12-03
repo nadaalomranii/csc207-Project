@@ -362,7 +362,5 @@ public class DataAccessInterface implements
         // Add the new users (which has the changed password
         this.users.put(user, courses);
       
-    public void changeWeight(Assignment assignment, float newWeight, Course course, User user) {
-
     }
 }

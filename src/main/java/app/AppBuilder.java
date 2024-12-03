@@ -28,6 +28,7 @@ import interface_adapter.delete_assignment.DeleteAssignmentViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.send_notification.SendNotificationViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -90,6 +91,8 @@ public class AppBuilder {
 
     private EditAssignmentViewModel editAssignmentViewModel;
 
+    private SendNotificationViewModel sendNotificationViewModel;
+
     private DeleteCourseViewModel deleteCourseViewModel;
 
     private SignupView signupView;
@@ -148,7 +151,8 @@ public class AppBuilder {
      */
     public AppBuilder addAssignmentListView() {
         deleteCourseViewModel = new DeleteCourseViewModel();
-        assignmentListView = new AssignmentListView(assignmentListViewModel, deleteCourseViewModel, viewManagerModel, editCourseViewModel);
+        assignmentListView = new AssignmentListView(assignmentListViewModel, addAssignmentViewModel,
+                deleteCourseViewModel, viewManagerModel, editCourseViewModel, sendNotificationViewModel);
         cardPanel.add(assignmentListView, assignmentListView.getViewName());
         return this;
     }

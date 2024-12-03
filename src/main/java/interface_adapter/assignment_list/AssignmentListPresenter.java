@@ -54,7 +54,8 @@ public class AssignmentListPresenter {
         viewManagerModel.setState(editCourseViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
 
-        }
+    }
+
     /**
      * Switch from the course list view to the assignment list view for that course.
      */

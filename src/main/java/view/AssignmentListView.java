@@ -38,6 +38,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
     private final String viewName = "Assignment List";
     private final AssignmentListViewModel assignmentListViewModel;
+    private final AddAssignmentViewModel addAssignmentViewModel;
     private final SendNotificationViewModel sendNotificationViewModel;
     private final DeleteCourseViewModel deleteCourseViewModel;
     private final EditCourseViewModel editCourseViewModel;
@@ -56,7 +57,6 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private AddAssignmentController addAssignmentController;
 
     // NEW FOR TABLE
-    private JFrame jFrame;
     private JScrollPane jScrollPane;
     private DefaultTableModel assignmentTableModel;
     private JTable assignmentTable;
@@ -64,12 +64,14 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private String[][] assignmentList;
 
     public AssignmentListView(AssignmentListViewModel assignmentListViewModel,
+                              AddAssignmentViewModel addAssignmentViewModel,
                               DeleteCourseViewModel deleteCourseViewModel,
                               ViewManagerModel viewManagerModel,
                               EditCourseViewModel editCourseViewModel,
                               SendNotificationViewModel sendNotificationViewModel) {
 
         this.assignmentListViewModel = assignmentListViewModel;
+        this.addAssignmentViewModel = addAssignmentViewModel;
         this.sendNotificationViewModel = new SendNotificationViewModel();
         this.assignmentListViewModel.addPropertyChangeListener(this);
         this.deleteCourseViewModel = deleteCourseViewModel;
@@ -80,39 +82,10 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         this.setBackground(Color.getHSBColor(0.9F, 0.2F, 1F));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-
-        // date format
-        String pattern = "dd-MM-yyyy";
-        DateFormat dateFormat = new SimpleDateFormat(pattern);
-
-        List<Assignment> assignmentObjects = assignmentListViewModel.getState().getAssignmentList();
-
-        // TODO: move to property change thing?
-        //get info for table
-        String[][] assignmentList = new String[assignmentObjects.size()][4];
-        if (!assignmentObjects.isEmpty()) {
-            int counter = 0;
-            for (Assignment assignment : assignmentObjects) {
-                String[] assignmentInfo = new String[4];
-                assignmentInfo[0] = assignment.getName();
-                assignmentInfo[1] = dateFormat.format(assignment.getDueDate());
-                assignmentInfo[2] = String.valueOf(assignment.getWeight());
-                assignmentInfo[3] = String.valueOf(assignment.getGrade());
-                assignmentList[counter] = assignmentInfo;
-            }
-        }
-
-        // table
-        jFrame = new JFrame(String.valueOf(assignmentListViewModel.getState().getCourse().getCode() + ": " + assignmentListViewModel.getState().getCourse().getName()));
-        columns = new String[]{"Assignment", "Due Date", "Weight", "Grade"};
-        assignmentTableModel = new DefaultTableModel(assignmentList, columns);
-        assignmentTable = new JTable(assignmentTableModel);
-        jScrollPane = new JScrollPane(assignmentTable);
-        assignmentTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jFrame.add(jScrollPane);
-        jFrame.setSize(500, 200);
-        jFrame.setVisible(true);
-
+        // empty table
+        final JPanel tablePanel = new JPanel();
+        assignmentTable = new JTable();
+        tablePanel.add(assignmentTable);
 
         // Add buttons
         final JPanel buttons = new JPanel();
@@ -134,7 +107,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         buttons.add(editCourse);
 
         //set up screen
-        this.add(assignmentTable);
+        this.add(tablePanel);
         this.add(buttons);
 
         //Button Functionality
@@ -196,10 +169,12 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
                     }
                 });
-        }
+    }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {System.out.println("Click " + evt.getActionCommand());}
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
+    }
 
 
     @Override
@@ -227,6 +202,36 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     }
 
     private void setFields(AssignmentListState state) {
+        assignmentListViewModel.setState(state);
+
+        // CREATE A TABLE
+        // date format
+        String pattern = "dd-MM-yyyy";
+        DateFormat dateFormat = new SimpleDateFormat(pattern);
+
+        List<Assignment> assignmentObjects = assignmentListViewModel.getState().getAssignmentList();
+
+        //get info for table
+        String[][] assignmentList = new String[assignmentObjects.size()][4];
+        if (!assignmentObjects.isEmpty()) {
+            int counter = 0;
+            for (Assignment assignment : assignmentObjects) {
+                String[] assignmentInfo = new String[4];
+                assignmentInfo[0] = assignment.getName();
+                assignmentInfo[1] = dateFormat.format(assignment.getDueDate());
+                assignmentInfo[2] = String.valueOf(assignment.getWeight());
+                assignmentInfo[3] = String.valueOf(assignment.getGrade());
+                assignmentList[counter] = assignmentInfo;
+            }
+        }
+        // table
+        columns = new String[]{"Assignment", "Due Date", "Weight", "Grade"};
+        assignmentTableModel = new DefaultTableModel(assignmentList, columns);
+        assignmentTable = new JTable(assignmentTableModel);
+        jScrollPane = new JScrollPane(assignmentTable);
+        assignmentTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+
         deleteCourse.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {

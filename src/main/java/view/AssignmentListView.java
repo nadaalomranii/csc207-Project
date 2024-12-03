@@ -65,6 +65,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private JTable assignmentTable;
     private String[] columns;
     private String[][] assignmentList;
+    final JPanel tablePanel = new JPanel();
 
     public AssignmentListView(AssignmentListViewModel assignmentListViewModel,
                               AddAssignmentViewModel addAssignmentViewModel,
@@ -88,7 +89,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // empty table
-        final JPanel tablePanel = new JPanel();
+//        final JPanel tablePanel = new JPanel();
         assignmentTable = new JTable();
         tablePanel.add(assignmentTable);
 
@@ -210,8 +211,8 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     }
 
     private void setFields(AssignmentListState state) {
-        assignmentListViewModel.setState(state);
 
+        tablePanel.removeAll();
         // CREATE A TABLE
         // date format
         String pattern = "dd-MM-yyyy";
@@ -238,6 +239,8 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         assignmentTable = new JTable(assignmentTableModel);
         jScrollPane = new JScrollPane(assignmentTable);
         assignmentTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablePanel.add(assignmentTable);
+        this.add(tablePanel);
 
 
         deleteCourse.addActionListener(

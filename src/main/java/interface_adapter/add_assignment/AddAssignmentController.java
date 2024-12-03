@@ -22,7 +22,7 @@ public class AddAssignmentController {
      * @param score The score (grade) of the assignment
      * @param weight The weight (in percentage)
      */
-    public void execute(String name, Date dueDate, String score, String weight, Course course, User user) throws ParseException {
+    public void execute(String name, Date dueDate, String score, String weight, Course course, User user) {
         final AddAssignmentInputData addAssignmentInputData = new AddAssignmentInputData(
                 name, dueDate, score, weight, course, user);
 

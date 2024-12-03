@@ -133,6 +133,8 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
         //CHECK: When we click the add assignment button, we want to go to the add assignmennt view model. In the add assignment view model, we get the actual state.
         // Button Functionality
+
+        // SET FIELDS
         addAssignment.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -141,6 +143,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
                 }
         );
 
+        // SET FIELDS
         deleteAssignment.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -167,7 +170,6 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
                     }
                 });
 
-        // TODO: use state not course, user
 
         scheduleNotification.addActionListener(
                 new ActionListener() {
@@ -190,6 +192,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
                 });
 
 // Delete Course
+
         deleteCourse.addActionListener(
                 new ActionListener() {
                     @Override
@@ -208,12 +211,12 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     @Override
     public void actionPerformed(ActionEvent evt) {System.out.println("Click " + evt.getActionCommand());}
 
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // Pop ups for SendNotifications Use Case
 
         // Updates the assignment list state?
-        // TODO: Nada is still working on this
         final AssignmentListState currentState = (AssignmentListState) evt.getNewValue();
         assignmentListViewModel.setState((AssignmentListState) evt.getNewValue());
         setFields(currentState);
@@ -233,7 +236,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         }
     }
 
-    // TODO: do we need this?
+    // TODO: add stuff here
     private void setFields(AssignmentListState state) {
 //        // Sets the state to the new values
 //        deleteCourse.addActionListener(

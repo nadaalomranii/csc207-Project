@@ -22,6 +22,7 @@ import interface_adapter.add_assignment.AddAssignmentController;
 import interface_adapter.add_assignment.AddAssignmentViewModel;
 import interface_adapter.assignment_list.AssignmentListViewModel;
 import interface_adapter.assignment_list.AssignmentListState;
+import interface_adapter.course_list.CourseListViewModel;
 import interface_adapter.delete_assignment.DeleteAssignmentController;
 import interface_adapter.delete_course.DeleteCourseController;
 import interface_adapter.delete_course.DeleteCourseViewModel;
@@ -42,6 +43,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private final SendNotificationViewModel sendNotificationViewModel;
     private final DeleteCourseViewModel deleteCourseViewModel;
     private final EditCourseViewModel editCourseViewModel;
+    private final CourseListViewModel courseListViewModel;
     private final ViewManagerModel viewManagerModel;
 
     private final JButton addAssignment;
@@ -49,6 +51,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     private final JButton scheduleNotification;
     private final JButton deleteCourse;
     private final JButton editCourse;
+    private final JButton backButton;
 
     private SendNotificatonController sendNotificationController;
     private DeleteCourseController deleteCourseController;
@@ -68,15 +71,17 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
                               DeleteCourseViewModel deleteCourseViewModel,
                               ViewManagerModel viewManagerModel,
                               EditCourseViewModel editCourseViewModel,
+                              CourseListViewModel courseListViewModel,
                               SendNotificationViewModel sendNotificationViewModel) {
 
         this.assignmentListViewModel = assignmentListViewModel;
         this.addAssignmentViewModel = addAssignmentViewModel;
-        this.sendNotificationViewModel = new SendNotificationViewModel();
         this.assignmentListViewModel.addPropertyChangeListener(this);
         this.deleteCourseViewModel = deleteCourseViewModel;
         this.viewManagerModel = viewManagerModel;
         this.editCourseViewModel = editCourseViewModel;
+        this.courseListViewModel = courseListViewModel;
+        this.sendNotificationViewModel = new SendNotificationViewModel();
 
         // set up
         this.setBackground(Color.getHSBColor(0.9F, 0.2F, 1F));
@@ -121,6 +126,9 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 
         editCourse = new JButton("Edit Course");
         buttons.add(editCourse);
+        backButton = new JButton("Back");
+        buttons.add(backButton);
+
 
         //set up screen
         this.add(tablePanel);
@@ -278,7 +286,17 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
                         assignmentListViewModel.setState(state);
                         final AssignmentListState currentState = assignmentListViewModel.getState();
                         // Switch to the edit course view
-                            assignmentListController.switchToEditCourseView(viewManagerModel, editCourseViewModel, assignmentListViewModel);
+                        assignmentListController.switchToEditCourseView(viewManagerModel, editCourseViewModel, assignmentListViewModel);
+                    }
+                }
+        );
+
+        backButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        assignmentListViewModel.setState(state);
+                        // Switches to the course list view
+                        assignmentListController.switchToCourseListView(viewManagerModel, courseListViewModel, assignmentListViewModel);
                     }
                 }
         );

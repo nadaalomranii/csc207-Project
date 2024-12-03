@@ -89,6 +89,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         this.setBackground(Color.getHSBColor(0.9F, 0.2F, 1F));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+
         // empty table
 //        String[] columnNames = {"Name", "Grade", "Weight", "Due Date"}; // Define table headers
 //        tableModel = new DefaultTableModel(columnNames, 0); // Initialize with no rows
@@ -97,19 +98,24 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
 //        this.add(tableScrollPane, BorderLayout.CENTER); // Add table to the center of the layout
 
 //        final JPanel tablePanel = new JPanel();
+
+        //empty table
+
         columns = new String[]{"Assignment", "Due Date", "Weight", "Grade"};
         assignmentTableModel = new DefaultTableModel(assignmentList, columns);
         assignmentTable = new JTable(assignmentTableModel);
         JScrollPane tableScrollPane = new JScrollPane(assignmentTable); // Add table to scroll pane
         assignmentTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
+        // total grade place holder
         JTable totalGrade = new JTable(1,2);
         float grade = 0 ;
         String totalGradeLabel = "Total Grade Acquired";
         totalGrade.setValueAt(totalGradeLabel, 0, 0);
         totalGrade.setValueAt(grade, 0, 1);
-
         totalGrade.getColumnModel().getColumn(0).setPreferredWidth(200);
+
+        // add assignment table and total grade placeholder to panel
         tablePanel.add(tableScrollPane, BorderLayout.CENTER);
         tablePanel.add(totalGrade,BorderLayout.CENTER);
 
@@ -278,6 +284,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
                 grade += (assignment.getWeight()/100 * assignment.getGrade());
             }
         }
+
         JTable totalGrade = new JTable(1,2);
         String totalGradeLabel = "Total Grade Acquired";
         totalGrade.setValueAt(totalGradeLabel, 0, 0);
@@ -286,6 +293,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         totalGrade.getColumnModel().getColumn(0).setPreferredWidth(200);
         tablePanel.add(totalGrade,BorderLayout.CENTER);
         this.add(tablePanel);
+
 
         deleteCourse.addActionListener(
                 new ActionListener() {

@@ -11,7 +11,7 @@ import view.AssignmentListView;
 public class AssignmentListPresenter {
     private final ViewManagerModel viewManagerModel;
     private final AssignmentListViewModel assignmentListViewModel;
-    private CourseListViewModel courseListViewModel = null;
+    private CourseListViewModel courseListViewModel = new CourseListViewModel();
     private EditCourseViewModel editCourseViewModel = new EditCourseViewModel();
     private AddAssignmentViewModel addAssignmentViewModel;
 
@@ -31,6 +31,17 @@ public class AssignmentListPresenter {
         this.editCourseViewModel = editCourseViewModel;
     }
 
+    public AssignmentListPresenter(ViewManagerModel viewManagerModel,
+                                   CourseListViewModel courseListViewModel,
+                                   AssignmentListViewModel assignmentListViewModel) {
+        this.viewManagerModel = viewManagerModel;
+        this.assignmentListViewModel = assignmentListViewModel;
+        this.courseListViewModel = courseListViewModel;
+    }
+
+    /**
+     * Switches from the assignment list view to the course edit view
+     */
     public AssignmentListPresenter(ViewManagerModel viewManagerModel,
                                    AddAssignmentViewModel addAssignmentViewModel,
                                    AssignmentListViewModel assignmentListViewModel) {
@@ -54,6 +65,23 @@ public class AssignmentListPresenter {
         viewManagerModel.setState(editCourseViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
 
+    }
+
+    /**
+     * Switches from the assignment list view to the course list view
+     */
+    public void switchToCourseListView() {
+        AssignmentListState state = assignmentListViewModel.getState();
+        CourseListState courseState = new CourseListState();
+
+        // Set the values for the next state
+        courseState.setUser(state.getUser());
+
+        courseListViewModel.setState(courseState);
+
+        // Set the next state
+        viewManagerModel.setState(courseListViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 
     /**

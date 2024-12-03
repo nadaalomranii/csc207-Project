@@ -26,13 +26,14 @@ public class EditAssignmentInteractor implements EditAssignmentInputBoundary {
 
         // Update fields only if the new value is provided
         if (editAssignmentInputData.getNewScore() != 0) {
-            editAssignmentDataAccessObject.changeScore(assignment, editAssignmentInputData.getNewScore(), course, user);
+            editAssignmentDataAccessObject.changeScore(assignment, editAssignmentInputData.getNewScore(), editAssignmentInputData.getCourse(), editAssignmentInputData.getUser());
         }
         if (editAssignmentInputData.getNewDueDate() != null) {
-            editAssignmentDataAccessObject.changeDate(assignment, editAssignmentInputData.getNewDueDate(),course, user);
+            editAssignmentDataAccessObject.changeDate(assignment, editAssignmentInputData.getNewDueDate(), editAssignmentInputData.getCourse(), editAssignmentInputData.getUser());
         }
         if (editAssignmentInputData.getNewWeight() != 0) {
-            editAssignmentDataAccessObject.changeWeight(assignment, editAssignmentInputData.getNewWeight(), course, user);
+            editAssignmentDataAccessObject.changeWeight(assignment, editAssignmentInputData.getNewWeight(), editAssignmentInputData.getCourse(), editAssignmentInputData.getUser());
+
         }
         EditAssignmentOutputData outputData = new EditAssignmentOutputData(editAssignmentInputData.getNewScore(), false);
 

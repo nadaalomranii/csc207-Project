@@ -77,10 +77,7 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
                 courseButton.addActionListener(
                         new ActionListener() {
                             public void actionPerformed(ActionEvent evt) {
-                                AssignmentListState assignmentListState = new AssignmentListState();
-                                assignmentListState.setCourse(course);
-                                assignmentListViewModel.setState(assignmentListState);
-                                courseListController.switchToAssignmentListView(viewManagerModel, assignmentListViewModel, courseListViewModel);
+                                courseListController.switchToAssignmentListView(viewManagerModel, addCourseViewModel, assignmentListViewModel, courseListViewModel, course);
                             }
                         }
                 );
@@ -96,7 +93,7 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
         addCourseButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        courseListController.switchToCourseAddView(viewManagerModel, addCourseViewModel, courseListViewModel);
+                        courseListController.switchToCourseAddView(viewManagerModel, addCourseViewModel, courseListViewModel, assignmentListViewModel);
                     }
                 }
         );
@@ -114,8 +111,14 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final CourseListState state = (CourseListState) evt.getNewValue();
-        setFields(state);
+        if (evt.getNewValue().getClass().equals(CourseListState.class)) {
+            final CourseListState state = (CourseListState) evt.getNewValue();
+            setFields(state);
+        }
+        else if (evt.getNewValue().getClass().equals(AssignmentListState.class)) {
+            final AssignmentListState state = (AssignmentListState) evt.getNewValue();
+            assignmentListViewModel.setState(state);
+        }
     }
 
     private void setFields(CourseListState state) {
@@ -135,10 +138,7 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
                             public void actionPerformed(ActionEvent evt) {
                                 // At the click of the button we need it to switch to the assignment list view of that specific course
                                 // Q: this may switch to the wrong course
-                                AssignmentListState assignmentListState = new AssignmentListState();
-                                assignmentListState.setCourse(course);
-                                assignmentListViewModel.setState(assignmentListState);
-                                courseListController.switchToAssignmentListView(viewManagerModel, assignmentListViewModel, courseListViewModel);
+                                courseListController.switchToAssignmentListView(viewManagerModel, addCourseViewModel, assignmentListViewModel, courseListViewModel, course);
                             }
                         });
             }

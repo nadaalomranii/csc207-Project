@@ -78,7 +78,7 @@ public class AppBuilder {
     private CourseAddView courseAddView;
 
     private CourseListView courseListView;
-    private CourseListViewModel courseListViewModel;
+    private CourseListViewModel courseListViewModel = new CourseListViewModel();
 
     private AssignmentListView assignmentListView;
     private AssignmentListViewModel assignmentListViewModel = new AssignmentListViewModel();
@@ -133,7 +133,6 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addCourseListView() {
-        courseListViewModel = new CourseListViewModel();
         CourseListState state = courseListViewModel.getState();
         User user = state.getUser();
         List<Course> courses = userDataAccessObject.getCourses(user);
@@ -148,7 +147,7 @@ public class AppBuilder {
      */
     public AppBuilder addAssignmentListView() {
         deleteCourseViewModel = new DeleteCourseViewModel();
-        assignmentListView = new AssignmentListView(assignmentListViewModel, deleteCourseViewModel, viewManagerModel, editCourseViewModel);
+        assignmentListView = new AssignmentListView(assignmentListViewModel, deleteCourseViewModel, viewManagerModel, editCourseViewModel, courseListViewModel);
         cardPanel.add(assignmentListView, assignmentListView.getViewName());
         return this;
     }

@@ -1,5 +1,6 @@
 package use_case.delete_course;
 
+import data_access.DBUserDataAccessObject;
 import data_access.DataAccessInterface;
 import entity.Course;
 import entity.CourseFactory;

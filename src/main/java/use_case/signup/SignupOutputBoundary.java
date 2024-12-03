@@ -21,4 +21,9 @@ public interface SignupOutputBoundary {
      * Switches to the Course List View.
      */
     void switchToCourseListView();
+
+    /**
+     * Switches to the Course List View.
+     */
+    void switchToLoginView();
 }

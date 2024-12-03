@@ -119,6 +119,11 @@ public class DBUserDataAccessObject implements
 
     /// /// /// /// ///
 
+    /**
+     * Update the user information stored in the API
+     * @param user the user to be updated
+     * @param courses the courses to be updated
+     */
     public void updateUserInfo(User user, List<Course> courses) {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -162,6 +167,11 @@ public class DBUserDataAccessObject implements
         }
     }
 
+    /**
+     * Helper function to convert the courses and their information into a storable JSON object.
+     * @param course the user's associated username
+     * @return a JSON of the course information for storage
+     */
     private JSONObject generateCourseInfo(Course course) {
         final JSONObject courseInfo = new JSONObject();
         courseInfo.put("course-name", course.getName());
@@ -279,6 +289,11 @@ public class DBUserDataAccessObject implements
         }
     }
 
+    /**
+     * Helper function to get the assignments for a given course from a JSON array.
+     * @param assignments the assignments stored in the JSON array
+     * @return a list of assignments for this course
+     */
     private List<Assignment> getCourseAssignments(JSONArray assignments) throws ParseException {
         List<Assignment> courseAssignments = new ArrayList<>();
         for (int i = 0; i < assignments.length(); i++) {
@@ -334,6 +349,10 @@ public class DBUserDataAccessObject implements
 
     /// /// /// /// ///
 
+    /**
+     * Change the password of the user by updating their information.
+     * @param user the user with the new password
+     */
     public void changePassword(User user) {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();

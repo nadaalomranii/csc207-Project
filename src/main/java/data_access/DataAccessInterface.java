@@ -361,8 +361,5 @@ public class DataAccessInterface implements
         this.users.remove(user);
         // Add the new users (which has the changed password
         this.users.put(user, courses);
-      
-    public void changeWeight(Assignment assignment, float newWeight, Course course, User user) {
-
     }
 }

@@ -151,7 +151,7 @@ public class AppBuilder {
     public AppBuilder addAssignmentListView() {
         deleteCourseViewModel = new DeleteCourseViewModel();
         assignmentListView = new AssignmentListView(assignmentListViewModel, addAssignmentViewModel,
-                deleteCourseViewModel, viewManagerModel, editCourseViewModel, sendNotificationViewModel);
+                deleteCourseViewModel, viewManagerModel, editCourseViewModel, courseListViewModel, sendNotificationViewModel);
         cardPanel.add(assignmentListView, assignmentListView.getViewName());
         return this;
     }
@@ -239,7 +239,7 @@ public class AppBuilder {
      */
     public AppBuilder addSignUpUseCase() {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(
-                viewManagerModel, signupViewModel, courseListViewModel);
+                viewManagerModel, signupViewModel, courseListViewModel, loginViewModel);
         final SignupInputBoundary signupInteractor = new SignupInteractor(
                 userDataAccessObject, signupOutputBoundary, userFactory);
         final SignupController signupController = new SignupController(signupInteractor);
@@ -288,7 +288,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder loginUseCase() {
-        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, courseListViewModel, loginViewModel);
+        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, courseListViewModel, loginViewModel, signupViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(userDataAccessObject, loginOutputBoundary);
 
         final LoginController loginController = new LoginController(loginInteractor);

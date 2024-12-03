@@ -4,7 +4,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.assignment_list.AssignmentListState;
 import interface_adapter.assignment_list.AssignmentListViewModel;
 import use_case.add_assignment.AddAssignmentOutputBoundary;
-import use_case.add_assignment.EditAssignmentOutputData;
+import use_case.add_assignment.AddAssignmentOutputData;
 
 public class AddAssignmentPresenter implements AddAssignmentOutputBoundary {
     private final AssignmentListViewModel assignmentListViewModel;
@@ -17,10 +17,11 @@ public class AddAssignmentPresenter implements AddAssignmentOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(EditAssignmentOutputData outputData) {
+    public void prepareSuccessView(AddAssignmentOutputData outputData) {
         final AssignmentListState assignmentListState = assignmentListViewModel.getState();
 
         assignmentListState.setCourse(outputData.getCourse());
+        assignmentListState.setAssignmentList(outputData.getCourse().getAssignments());
         assignmentListState.setUser(outputData.getUser());
         // TODO: add the assignment from the output data to the assignment list state
 

@@ -37,7 +37,7 @@ class AddAssignmentInteractorTest {
         // create a successPresenter that tests if the test cases are like what we expect
         AddAssignmentOutputBoundary successPresenter = new AddAssignmentOutputBoundary() {
             @Override
-            public void prepareSuccessView(EditAssignmentOutputData outputData) {
+            public void prepareSuccessView(AddAssignmentOutputData outputData) {
                 assertEquals(outputData.getCourse(), course);
                 assertEquals(outputData.getUser(), user);
             }
@@ -81,7 +81,7 @@ class AddAssignmentInteractorTest {
 
         AddAssignmentOutputBoundary successPresenter = new AddAssignmentOutputBoundary() {
             @Override
-            public void prepareSuccessView(EditAssignmentOutputData outputData) {
+            public void prepareSuccessView(AddAssignmentOutputData outputData) {
                 fail("Use case success is unexpected");
             }
 

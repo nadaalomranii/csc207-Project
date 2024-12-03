@@ -29,4 +29,10 @@ public interface Course {
      * Changes the name of the course
      */
     void changeName(String newName);
+
+    /**
+     * Edits the assignments refering to the course.
+     * @param newAssignments: the new assignments
+     */
+    void editAssignments(List<Assignment> newAssignments);
 }

@@ -113,11 +113,6 @@ public class AppBuilder {
         return this;
     }
 
-//    public AppBuilder addEditAssignmentView() {
-//        editAssignmentViewModel = new EditAssignmentViewModel();
-//
-//    }
-
 
     /**
      * Adds the Add Course View to the application.
@@ -135,11 +130,8 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addCourseListView() {
-        courseListView = new CourseListView(courseListViewModel,
-                new ArrayList<>(),
-                viewManagerModel,
-                addCourseViewModel,
-                assignmentListViewModel);
+        List<Course> courses = new ArrayList<>();
+        courseListView = new CourseListView(courseListViewModel, courses, viewManagerModel, addCourseViewModel, assignmentListViewModel);
         cardPanel.add(courseListView, courseListView.getViewName());
         return this;
     }

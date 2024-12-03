@@ -14,6 +14,7 @@ import use_case.login.LoginUserDataAccessInterface;
 import use_case.send_notification.SendNotificationDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
+import use_case.change_password.ChangePasswordUserDataAccessInterface;
 
 import java.util.*;
 import javax.mail.*;
@@ -34,7 +35,8 @@ public class DataAccessInterface implements
         SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         AddAssignmentDataAccessInterface,
-        LogoutUserDataAccessInterface {
+        LogoutUserDataAccessInterface,
+        ChangePasswordUserDataAccessInterface {
     // The second key is the course code
     private final Map<User, Map<String, Map<Course, List<Assignment>>>> users = new HashMap<>();
 
@@ -321,6 +323,12 @@ public class DataAccessInterface implements
 
     @Override
     public void changeWeight(Assignment assignment, float newWeight, Course course, User user) {
+
+    }
+
+
+    @Override
+    public void changePassword(User user) {
 
     }
 }

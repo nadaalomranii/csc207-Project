@@ -158,7 +158,7 @@ public class DataAccessInterface implements
         String emailSubject = String.format("REMINDER: %s (%s) IS COMING UP!", assignment.getName(), course.getCode());
         String emailBody = String.format("Hey %s!%nYou have an assessment coming up and you should lock in.%n%n" +
                         "Course: %s - %s%nAssessment: %s%nDeadline: %s%nWeight: %s%n" +
-                        "(you're an academic weapon, go get em queen <3)",
+                        "(you're an academic weapon, go get em <3)",
                 user.getName(),
                 course.getCode(),
                 course.getName(),

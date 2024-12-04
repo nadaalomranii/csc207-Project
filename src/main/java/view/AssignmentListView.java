@@ -263,6 +263,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
                 grade += (assignment.getWeight()/100 * assignment.getGrade());
             }
         }
+
         JTable totalGrade = new JTable(1,2);
         String totalGradeLabel = "Total Grade Acquired";
         totalGrade.setValueAt(totalGradeLabel, 0, 0);
@@ -271,6 +272,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         totalGrade.getColumnModel().getColumn(0).setPreferredWidth(200);
         tablePanel.add(totalGrade,BorderLayout.CENTER);
         this.add(tablePanel);
+
 
         deleteCourse.addActionListener(
                 new ActionListener() {

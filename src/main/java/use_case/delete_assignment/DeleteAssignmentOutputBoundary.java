@@ -16,8 +16,8 @@ public interface DeleteAssignmentOutputBoundary {
      */
     void prepareFailView(DeleteAssignmentOutputData deleteAssignmentOutputData);
 
-    /**
-     * Switches to the assignment list view.
-     */
-    void switchToAssignmentView();
+//    /**
+//     * Switches to the assignment list view.
+//     */
+//    void switchToAssignmentView();
 }

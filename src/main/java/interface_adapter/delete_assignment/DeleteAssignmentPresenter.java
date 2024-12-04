@@ -40,10 +40,11 @@ public class DeleteAssignmentPresenter implements DeleteAssignmentOutputBoundary
         // TODO: is it going to be by click, or will the user enter the name of the thing?
     }
 
-    @Override
-    public void switchToAssignmentView() {
-        viewManagerModel.setState(assignmentListViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-    }
+
+//    @Override
+//    public void switchToAssignmentView() {
+//        viewManagerModel.setState(assignmentListViewModel.getViewName());
+//        viewManagerModel.firePropertyChanged();
+    //}
 }
 //TODO: where is this used?

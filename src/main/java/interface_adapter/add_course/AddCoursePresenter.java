@@ -39,7 +39,7 @@ public class AddCoursePresenter implements AddCourseOutputBoundary {
     }
 
     // TODO: implement this?
-    @Override
+    //@Override
     public void switchToCourseView() {
         viewManagerModel.setState(courseListViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

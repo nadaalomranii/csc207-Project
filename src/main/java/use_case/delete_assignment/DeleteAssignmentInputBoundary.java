@@ -10,10 +10,10 @@ public interface DeleteAssignmentInputBoundary {
      */
     void execute(DeleteAssignmentInputData deleteAssignmentInputData);
 
-    /**
-     * Executes the switch to course list view.
-     */
-    void switchToAssignmentView();
+//    /**
+//     * Executes the switch to course list view.
+//     */
+//    void switchToAssignmentView();
 
 }
 //DONE

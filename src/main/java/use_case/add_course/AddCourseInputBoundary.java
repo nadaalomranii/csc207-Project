@@ -11,8 +11,8 @@ public interface AddCourseInputBoundary {
      */
     void execute(AddCourseInputData addCourseInputData);
 
-    /**
-     * Switches view to Course List View.
-     */
-    void switchToCourseView();
+//    /**
+//     * Switches view to Course List View.
+//     */
+//    void switchToCourseView();
 }

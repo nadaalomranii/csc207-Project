@@ -17,9 +17,9 @@ public interface AddCourseOutputBoundary {
      */
     void prepareFailView(AddCourseOutputData outputData, String errorMessage);
 
-    /**
-     * Switches view to Course List View.
-     */
-    void switchToCourseView();
+//    /**
+//     * Switches view to Course List View.
+//     */
+//    void switchToCourseView();
 
 }

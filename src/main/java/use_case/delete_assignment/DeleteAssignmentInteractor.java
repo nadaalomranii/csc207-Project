@@ -24,8 +24,8 @@ public class DeleteAssignmentInteractor implements DeleteAssignmentInputBoundary
         deleteAssignmentPresenter.prepareSuccessView(deleteAssignmentOutputData);
     }
 
-    @Override
-    public void switchToAssignmentView() {
-        deleteAssignmentPresenter.switchToAssignmentView();
-    }
+    //@Override
+    //public void switchToAssignmentView() {
+      //  deleteAssignmentPresenter.switchToAssignmentView();
+    //}
 }

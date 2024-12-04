@@ -53,7 +53,4 @@ public class AddCourseInteractor implements AddCourseInputBoundary {
         }
     }
 
-    @Override
-    public void switchToCourseView(){ coursePresenter.switchToCourseView();}
-
 }

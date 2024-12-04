@@ -29,7 +29,7 @@ public class DeleteAssignmentController {
     /***
      * Executes the "swtich to AssignmentView" Use case
      */
-    public void switchToAssignmentView() { deleteAssignmentInteractor.switchToAssignmentView(); }
+    //public void switchToAssignmentView() { deleteAssignmentInteractor.switchToAssignmentView(); }
 }
 
 //TODO: where is this stuff used?

@@ -6,9 +6,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -26,7 +24,6 @@ import interface_adapter.course_list.CourseListViewModel;
 import interface_adapter.delete_assignment.DeleteAssignmentController;
 import interface_adapter.delete_course.DeleteCourseController;
 import interface_adapter.delete_course.DeleteCourseViewModel;
-import interface_adapter.edit_course.EditCourseController;
 import interface_adapter.edit_course.EditCourseViewModel;
 import interface_adapter.send_notification.SendNotificationState;
 import interface_adapter.send_notification.SendNotificationViewModel;
@@ -89,14 +86,6 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         this.setBackground(Color.getHSBColor(0.9F, 0.2F, 1F));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        // empty table
-//        String[] columnNames = {"Name", "Grade", "Weight", "Due Date"}; // Define table headers
-//        tableModel = new DefaultTableModel(columnNames, 0); // Initialize with no rows
-//        assignmentTable = new JTable(tableModel);
-//        JScrollPane tableScrollPane = new JScrollPane(assignmentTable); // Add table to scroll pane
-//        this.add(tableScrollPane, BorderLayout.CENTER); // Add table to the center of the layout
-
-//        final JPanel tablePanel = new JPanel();
         columns = new String[]{"Assignment", "Due Date", "Weight", "Grade"};
         assignmentTableModel = new DefaultTableModel(assignmentList, columns);
         assignmentTable = new JTable(assignmentTableModel);
@@ -135,16 +124,13 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         buttons.add(backButton);
 
 
-        //set up screen
+        //Set up screen
         this.add(tablePanel);
         this.add(title);
         this.add(buttons);
 
-        //Button Functionality
-        //CHECK: When we click the add assignment button, we want to go to the add assignmennt view model. In the add assignment view model, we get the actual state.
-        // Button Functionality
 
-        // SET FIELDS
+        // BUTTON FUNCTIONALITY
         addAssignment.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -211,7 +197,7 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     public void propertyChange(PropertyChangeEvent evt) {
         // Pop ups for SendNotifications Use Case
 
-        // Updates the assignment list state?
+        // Updates the assignment list state
         final AssignmentListState currentState = (AssignmentListState) evt.getNewValue();
         assignmentListViewModel.setState(currentState);
         setFields(currentState);
@@ -270,7 +256,6 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
         jScrollPane = new JScrollPane(assignmentTable);
         assignmentTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tablePanel.add(jScrollPane);
-//        this.add(tablePanel);
 
         float grade = 0;
         if (!assignmentObjects.isEmpty()) {
@@ -363,7 +348,6 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
                                 jScrollPane = new JScrollPane(assignmentTable);
                                 assignmentTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
                                 tablePanel.add(jScrollPane);
-//                                assignmentTableModel.removeRow(selectedRow); // Remove the selected row
                                 JOptionPane.showMessageDialog(null, "Assignment deleted successfully. In order to update your assignment list, please reload this page.");
                             }
                         } else {
@@ -388,6 +372,4 @@ public class AssignmentListView extends JPanel implements ActionListener, Proper
     public void setAssignmentListController(AssignmentListController assignmentListController) {
         this.assignmentListController = assignmentListController;
     }
-//
-//    public void setEditAssignmentController(EditAss)
 }

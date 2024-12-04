@@ -29,13 +29,6 @@ public class CourseAddView extends JPanel implements ActionListener, PropertyCha
     private final JButton cancel;
     private AddCourseController addCourseController;
 
-    // Some suggestions from IntelliJ
-//    private final JTextField courseDescriptionField = new JTextField(15);
-//    private final JTextField courseStartTimeField = new JTextField(15);
-//    private final JTextField courseEndTimeField = new JTextField(15);
-//    private final JTextField courseStartDateField = new JTextField(15);
-//    private final JTextField courseEndDateField = new JTextField(15);
-
     public CourseAddView(AddCourseViewModel addCourseViewModel) {
         this.addCourseViewModel = addCourseViewModel;
         this.addCourseViewModel.addPropertyChangeListener(this);
@@ -144,8 +137,6 @@ public class CourseAddView extends JPanel implements ActionListener, PropertyCha
     }
 
     private void setFields(AddCourseState state) {
-//        courseNameField.setText(state.getCourseName());
-//        courseCodeField.setText(state.getCourseCode());
     }
 
     public String getViewName() {

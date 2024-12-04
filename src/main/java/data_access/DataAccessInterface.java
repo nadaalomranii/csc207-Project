@@ -26,6 +26,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
+/**
+ * IN MEMORY DATA ACCESS OBJECT
+ * (We accidentally named it an interface and renaming introduced new bugs ;| )
+ */
 public class DataAccessInterface implements
         AddCourseDataAccessInterface,
         EditAssignmentDataAccessInterface,
@@ -277,12 +281,13 @@ public class DataAccessInterface implements
 
     @Override
     public String getCurrentUsername() {
+        // Currently unused by the in memory DAO, so it has not been implemented.
         return "";
     }
 
     @Override
     public void setCurrentUsername(String username) {
-
+        // Currently unused by the in memory DAO, so it has not been implemented.
     }
 
     @Override
@@ -314,7 +319,7 @@ public class DataAccessInterface implements
 
     @Override
     public void editAssignment(Assignment assignment, Course course, User user) {
-
+        // Unimplemented due to the inability to complete edit assignment.
     }
 
     @Override

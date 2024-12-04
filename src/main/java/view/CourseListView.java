@@ -27,7 +27,6 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
 
     private final String viewName = "Course List";
     private final CourseListViewModel courseListViewModel;
-    private final List<Course> courseList;
     private CourseListController courseListController;
 
     private JButton courseButton;
@@ -40,7 +39,6 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
 
 
     public CourseListView(CourseListViewModel courseListViewModel,
-                          List<Course> courseList,
                           ViewManagerModel viewManagerModel,
                           AddCourseViewModel addCourseViewModel,
                           AssignmentListViewModel assignmentListViewModel) {
@@ -49,7 +47,6 @@ public class CourseListView extends JPanel implements ActionListener, PropertyCh
         this.addCourseViewModel = addCourseViewModel;
         this.assignmentListViewModel = assignmentListViewModel;
         this.courseListViewModel.addPropertyChangeListener(this);
-        this.courseList = courseList;
 
         // title
         final JLabel title = new JLabel("Courses");

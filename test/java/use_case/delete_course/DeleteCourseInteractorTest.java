@@ -7,6 +7,7 @@ import interface_adapter.course_list.CourseListViewModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,6 +38,7 @@ public class DeleteCourseInteractorTest {
                 // TODO: Why is the output data only outputs the course code, not the course object?
                 assertEquals(deleteCourseOutputData.getCourseCode(), course.getCode());
                 assertEquals(deleteCourseOutputData.getUser(), user);
+                assertEquals(deleteCourseOutputData.getCourses(), new ArrayList<>());
             }
 
             @Override
